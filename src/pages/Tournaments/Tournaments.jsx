@@ -1,7 +1,7 @@
 import React from "react";
 
-const Clients = () => {
+const Tournaments = () => {
     return (<p>Clients</p>);
 };
 
-export default Clients;
+export default Tournaments;
