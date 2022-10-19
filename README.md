@@ -1,15 +1,18 @@
-# Advanced Databases - Project 2
+# World Cup Online - Frontend
+This repository contains the front-end implementation for the **World Cup Online** project.\
+The project was developed using _React_ and was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## How to run app in local environment
 
-## Available Scripts
+1) Clone repository
+2) Install dependencies:
+```
+npm install
+```
+3) Run app in development mode
+```
+npm start
+```
 
-In the project directory, you can run:
-
-### `npm start`
-
-Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
