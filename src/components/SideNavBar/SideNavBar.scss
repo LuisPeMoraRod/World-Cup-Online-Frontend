@@ -1,0 +1,35 @@
+.navbar-color {
+    color: white;
+    background-color: #2b9d3c;
+  }
+  
+  .div-navbar {
+    display: flex;
+    height: 94vh;
+  }
+  
+  .navbar-footer {
+    text-align: center;
+  }
+  
+  .navbar-menu {
+    color: inherit;
+  }
+  
+  .navbar-item:after {
+      background: none repeat scroll 0 0 transparent;
+      content: "";
+      display: block;
+      height: 3px;
+      left: 50%;
+      position: absolute;
+      background: #fff;
+      transition: width 0.3s ease 0s, left 0.3s ease 0s;
+      width: 0;
+  }
+  
+  .navbar-item:hover:after{
+      width: 100%; 
+      left: 0; 
+  }
+  
