@@ -26,7 +26,7 @@ const SideNavBar = () => {
           <CDBSidebarMenu>
             <div title="Data load">
               <NavLink exact to="/data-load" activeClassName="activeClicked">
-                <CDBSidebarMenuItem icon="home" className="navbar-item">
+                <CDBSidebarMenuItem icon="fa-solid fa-upload" className="navbar-item">
                   Data Load
                 </CDBSidebarMenuItem>
               </NavLink>
@@ -39,7 +39,7 @@ const SideNavBar = () => {
                   activeClassName="activeClicked"
                 >
                   <CDBSidebarMenuItem
-                    icon="fa-regular fa-list-ul"
+                    icon="fa-solid fa-users"
                     className="navbar-item"
                   >
                     Clients
@@ -53,7 +53,7 @@ const SideNavBar = () => {
                   to="/products"
                   activeClassName="activeClicked"
                 >
-                  <CDBSidebarMenuItem icon="table" className="navbar-item">
+                  <CDBSidebarMenuItem icon="fa-solid fa-tags" className="navbar-item">
                     Products
                   </CDBSidebarMenuItem>
                 </NavLink>
@@ -65,7 +65,7 @@ const SideNavBar = () => {
                   to="/purchases"
                   activeClassName="activeClicked"
                 >
-                  <CDBSidebarMenuItem icon="envelope" className="navbar-item">
+                  <CDBSidebarMenuItem icon="fa-solid fa-cart-plus" className="navbar-item">
                     Purchases
                   </CDBSidebarMenuItem>
                 </NavLink>
@@ -77,7 +77,7 @@ const SideNavBar = () => {
                   to="/queries"
                   activeClassName="activeClicked"
                 >
-                  <CDBSidebarMenuItem icon="toolbox" className="navbar-item">
+                  <CDBSidebarMenuItem icon="fa-solid fa-database" className="navbar-item">
                     Queries
                   </CDBSidebarMenuItem>
                 </NavLink>
