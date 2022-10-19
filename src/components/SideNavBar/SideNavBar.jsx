@@ -10,14 +10,14 @@ import {
 import { NavLink } from "react-router-dom";
 import "./SideNavBar.scss";
 
-const green = "#2b9d3c";
+const blue = "#1277d9";
 const white = "#fff";
 
 const SideNavBar = () => {
 
   return (
     <div className="div-navbar">
-      <CDBSidebar backgroundColor={green} textColor={white} toggled={false}>
+      <CDBSidebar backgroundColor={blue} textColor={white} toggled={false}>
         <CDBSidebarHeader prefix={<i className="fa fa-bars fa-large"></i>}>
           <h4 className="text-decoration-none navbar-menu">Menu</h4>
         </CDBSidebarHeader>
