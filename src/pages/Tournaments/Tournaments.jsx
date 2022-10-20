@@ -1,7 +1,7 @@
 import React from "react";
 
 const Tournaments = () => {
-    return (<p>Clients</p>);
+    return (<p>Torneos</p>);
 };
 
 export default Tournaments;
