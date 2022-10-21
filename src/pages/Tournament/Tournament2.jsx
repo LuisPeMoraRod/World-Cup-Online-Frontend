@@ -3,13 +3,16 @@ import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import MultipleValueTextInput from "react-multivalue-text-input";
+import "./Tournament.scss";
 
 const ENTER = 13; //ASCII code for enter key
 
 const MAX_DESCRIPTION = 1000; // max amount of characters in description text input
 
 const Tournament2 = ({ tournament, updateTournament, lastStep, nextStep }) => {
-  const [descriptionChars, setDescriptionChars] = useState(0); // amount of chars typed in description
+  const [descriptionChars, setDescriptionChars] = useState(
+    tournament.rules.length
+  ); // amount of chars typed in description
 
   const phases = tournament.phases;
 
@@ -48,28 +51,33 @@ const Tournament2 = ({ tournament, updateTournament, lastStep, nextStep }) => {
             defaultValue={tournament.rules}
             maxLength={MAX_DESCRIPTION}
             onChange={(e) => {
-              updateTournament({ rues: e.target.value }); //updates rules field in tournament object
+              updateTournament({ rules: e.target.value }); //updates rules field in tournament object
               setDescriptionChars(e.target.value.length); //update value of text length indicator
             }}
           />
         </Form.Group>
       </Container>
-      <Container className="d-flex flex-row mb-3">
-        <Button
-          variant="outline-secondary"
-          onClick={lastStep}
-          className="mt-3 mx-1"
-        >
-          Atrás
-        </Button>
+      <Container className="bottom-container">
+        <div className="d-flex flex-row mb-3">
+          <Button
+            variant="outline-secondary"
+            onClick={lastStep}
+            className="mt-3 mx-1"
+          >
+            Atrás
+          </Button>
 
-        <Button
-          variant="outline-primary"
-          onClick={nextStep}
-          className="mt-3 mr-3"
-        >
-          Enviar
-        </Button>
+          <Button
+            variant="outline-primary"
+            onClick={nextStep}
+            className="mt-3 mr-3"
+          >
+            Enviar
+          </Button>
+        </div>
+        <h6 className="fw-light">
+          {descriptionChars}/{MAX_DESCRIPTION}
+        </h6>{" "}
       </Container>
     </div>
   );
