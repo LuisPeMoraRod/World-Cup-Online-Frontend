@@ -25,9 +25,16 @@ const SideNavBar = () => {
         <CDBSidebarContent className="sidebar-content">
           <CDBSidebarMenu>
             <div title="Torneos">
-              <NavLink exact to="/tournaments" activeClassName="activeClicked">
+              <NavLink exact="true" to="/tournaments" >
                 <CDBSidebarMenuItem icon="fa-solid fa-trophy" className="navbar-item">
                   Torneos
+                </CDBSidebarMenuItem>
+              </NavLink>
+            </div>
+            <div title="Partidos">
+              <NavLink exact="true" to="/matches" >
+                <CDBSidebarMenuItem icon="fa-thin fa-futbol" className="navbar-item">
+                  Partidos
                 </CDBSidebarMenuItem>
               </NavLink>
             </div>
