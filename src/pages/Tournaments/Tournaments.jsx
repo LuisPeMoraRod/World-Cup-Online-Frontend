@@ -42,7 +42,7 @@ const Tournaments = () => {
                         className="mb-3 mx-1"
                         title="Crear torneo"
                     >
-                        <FontAwesomeIcon icon={faPlus} />
+                        <FontAwesomeIcon icon={faPlus} /> Crear torneo
                     </Button>
                 </Link>
             </Col>
