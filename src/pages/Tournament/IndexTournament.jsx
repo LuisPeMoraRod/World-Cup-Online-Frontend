@@ -52,7 +52,11 @@ const IndexTournament = ({ oldTournament }) => {
   switch (step) {
     case FIRST:
       return (
-        <Tournament1 tournament={tournament} nextStep={nextStep}></Tournament1>
+        <Tournament1
+          tournament={tournament}
+          updateTournament={updateTournament}
+          nextStep={nextStep}
+        ></Tournament1>
       );
 
     default:

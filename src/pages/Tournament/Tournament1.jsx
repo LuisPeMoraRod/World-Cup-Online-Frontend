@@ -12,68 +12,74 @@ const TOURNAMENT_TYPES = [
   { value: "selecciones", label: "Selecciones" },
   { value: "clubes", label: "Clubes" },
 ];
-const Tournament1 = ({ tournament, nextStep }) => {
-  const [startDate, setStartDate] = useState(null);
-  const [endDate, setEndDate] = useState(null);
 
+/**
+ * First stage of Tournament form
+ * @param {Object}: props
+ *  - @tournament : new Tournament object
+ *  - @updateTournament : method to update tournament's fields
+ * `- @nextStep : method to go to next section of form
+ * @returns
+ */
+const Tournament1 = ({ tournament, updateTournament, nextStep }) => {
   return (
     <div className="centered">
       <h3 className="mb-5 fw-light">Crear nuevo torneo</h3>
       <Form>
-        <Container className="mb-3">
+        <Container>
           <Row>
             <Col>
-              <Form.Group controlId="name">
+              <Form.Group className="mb-3" controlId="name">
                 <Form.Label>Nombre</Form.Label>
                 <Form.Control
                   as="textarea"
                   rows={1}
                   placeholder="Ingrese el nombre..."
                   onChange={(e) => {
-                    console.log(e.target.value);
+                    updateTournament({ name: e.target.value });
                   }}
                 />
               </Form.Group>
             </Col>
           </Row>
         </Container>
-        <Container className="mb-3">
+        <Container>
           <Row>
             <Col>
-              <Form.Group controlId="startDate">
+              <Form.Group className="mb-3" controlId="startDate">
                 <Form.Label>Fecha de inicio</Form.Label>
                 <DatePicker
-                  selected={startDate}
+                  selected={tournament.startDate}
                   minDate={new Date()}
                   onChange={(date) => {
-                    setStartDate(date);
+                    updateTournament({ startDate: date });
                   }}
                   placeholderText="Select a date..."
                 />
               </Form.Group>
             </Col>
             <Col>
-              <Form.Group controlId="endDate">
+              <Form.Group className="mb-3" controlId="endDate">
                 <Form.Label>Fecha de finalización</Form.Label>
                 <DatePicker
-                  selected={endDate}
+                  selected={tournament.endDate}
                   onChange={(date) => {
-                    setEndDate(date);
+                    updateTournament({ endDate: date });
                   }}
-                  minDate={startDate}
+                  minDate={tournament.startDate}
                   placeholderText="Select a date..."
                 />
               </Form.Group>
             </Col>
             <Col>
-              <Form.Group controlId="tournamentType">
+              <Form.Group className="mb-3" controlId="tournamentType">
                 <Form.Label>Tipo de torneo</Form.Label>
                 <Select
                   id="tournamentType"
                   options={TOURNAMENT_TYPES}
                   placeholder="Escoja un tipo..."
                   onChange={(e) => {
-                    console.log(e);
+                    updateTournament({ type: e });
                   }}
                   // onBlur={}
                   // defaultInputValue={}
@@ -83,8 +89,8 @@ const Tournament1 = ({ tournament, nextStep }) => {
             </Col>
           </Row>
         </Container>
-        <Container className="mb-3">
-          <Form.Group controlId="tournamentType">
+        <Container>
+          <Form.Group className="mb-3" controlId="tournamentType">
             <Form.Label>Equipos participantes</Form.Label>
           </Form.Group>
         </Container>
