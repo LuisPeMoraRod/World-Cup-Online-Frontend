@@ -3,6 +3,7 @@ import Form from "react-bootstrap/Form";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import Button from "react-bootstrap/Button";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Select from "react-select";
@@ -66,7 +67,7 @@ const Tournament1 = ({ tournament, updateTournament, nextStep }) => {
 
   return (
     <div className="centered">
-      <h3 className="mb-5 fw-light">Crear nuevo torneo</h3>
+      <h3 className="mb-5 fw-light">Creación de nuevo torneo</h3>
       <Form>
         <Container>
           <Row>
@@ -74,6 +75,7 @@ const Tournament1 = ({ tournament, updateTournament, nextStep }) => {
               <Form.Group className="mb-3" controlId="name">
                 <Form.Label>Nombre</Form.Label>
                 <Form.Control
+                  defaultValue={tournament.name}
                   as="textarea"
                   rows={1}
                   placeholder="Ingrese el nombre..."
@@ -124,7 +126,7 @@ const Tournament1 = ({ tournament, updateTournament, nextStep }) => {
                     updateTournament({ type: e });
                   }}
                   // onBlur={}
-                  // defaultInputValue={}
+                  defaultValue={tournament.type}
                   // isDisabled={}
                 />
               </Form.Group>
@@ -132,7 +134,7 @@ const Tournament1 = ({ tournament, updateTournament, nextStep }) => {
           </Row>
         </Container>
         <Container>
-          <Form.Group className="mb-3" controlId="tournamentType">
+          <Form.Group className="mb-5" controlId="tournamentType">
             <Form.Label>Equipos participantes</Form.Label>
             <Typeahead
               multiple
@@ -150,6 +152,11 @@ const Tournament1 = ({ tournament, updateTournament, nextStep }) => {
           </Form.Group>
         </Container>
       </Form>
+      <Container>
+        <Button variant="outline-primary" onClick={nextStep}>
+          Siguiente
+        </Button>
+      </Container>
     </div>
   );
 };

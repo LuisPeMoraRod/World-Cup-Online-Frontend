@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Tournament1 from "./Tournament1";
+import Tournament2 from "./Tournament2";
 
 const FIRST = 0;
 const SECOND = 1;
@@ -59,8 +60,24 @@ const IndexTournament = ({ oldTournament }) => {
         ></Tournament1>
       );
 
+    case SECOND:
+      return (
+        <Tournament2
+          tournament={tournament}
+          updateTournament={updateTournament}
+          nextStep={resetStep}
+          lastStep={resetStep}
+        ></Tournament2>
+      );
+
     default:
-      break;
+      return (
+        <Tournament1
+          tournament={tournament}
+          updateTournament={updateTournament}
+          nextStep={nextStep}
+        ></Tournament1>
+      );
   }
 };
 
