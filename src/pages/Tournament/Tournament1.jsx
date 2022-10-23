@@ -9,6 +9,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import Select from "react-select";
 import { Typeahead } from "react-bootstrap-typeahead";
 import "react-bootstrap-typeahead/css/Typeahead.css";
+import useTextInput from "../../hooks/useTextInput";
 
 // Raw data just for testing visualization.
 // MUST be changed to Redux Store approach
@@ -54,6 +55,10 @@ const TEAMS = [
   { label: "República de Corea" },
 ];
 
+// characters range for the tournament name
+const MIN_NAME = 5;
+const MAX_NAME = 30;
+
 /**
  * First stage of Tournament form
  * @param {Object}: props
@@ -64,6 +69,25 @@ const TEAMS = [
  */
 const Tournament1 = ({ tournament, updateTournament, nextStep }) => {
   const typeaheadRef = useRef(null);
+
+  /**
+   * Check if name is valid
+   * @param {String} name
+   * @returns
+   */
+  const checkName = (name) => {
+    const nameLength = name.length;
+    console.log(nameLength);
+    return nameLength >= MIN_NAME && nameLength <= MAX_NAME;
+  };
+
+  const {
+    value: name,
+    isValid: nameIsValid,
+    hasError: nameHasError,
+    valueChangedHandler: nameChangedHandler,
+    inputBlurHandler: nameBlurHandler,
+  } = useTextInput(updateTournament, checkName, "name", tournament.name);
 
   return (
     <div className="centered">
@@ -80,9 +104,17 @@ const Tournament1 = ({ tournament, updateTournament, nextStep }) => {
                   rows={1}
                   placeholder="Ingrese el nombre..."
                   onChange={(e) => {
-                    updateTournament({ name: e.target.value });
+                    nameChangedHandler(e.target.value);
                   }}
+                  isInvalid={nameHasError}
+                  onBlur={nameBlurHandler}
                 />
+                {nameHasError && (
+                  <p className="error-text">
+                    {" "}
+                    El nombre debe tener entre 5 y 30 caracteres
+                  </p>
+                )}
               </Form.Group>
             </Col>
           </Row>
