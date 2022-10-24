@@ -38,6 +38,7 @@ const Tournament2 = ({ tournament, updateTournament, lastStep, nextStep }) => {
             values={phases.map((phase) => phase)}
             placeholder="Digite la fase y presione la tecla 'ENTER' para agregarla..."
             charCodes={[ENTER]}
+            className="invalid-multi"
           />
         </Form.Group>
       </Container>

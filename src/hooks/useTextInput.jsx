@@ -17,8 +17,8 @@ const useTextInput = (updateTournament, checkInput, field, defaultValue) => {
    * @param {event} event
    */
   const valueChangedHandler = (event) => {
-    setEnteredValue(event);
-    updateTournament({ [field]: event });
+    setEnteredValue(event.target.value);
+    updateTournament({ [field]: event.target.value });
   };
 
   /**

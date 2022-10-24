@@ -48,7 +48,9 @@ const IndexTournament = ({ oldTournament }) => {
   const [step, setStep] = useState(FIRST);
 
   const resetStep = () => setStep(FIRST);
-  const nextStep = () => setStep((last) => last + 1);
+  const nextStep = () => {
+    setStep((last) => last + 1);
+  };
 
   switch (step) {
     case FIRST:
