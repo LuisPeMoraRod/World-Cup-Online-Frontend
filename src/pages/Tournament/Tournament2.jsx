@@ -4,6 +4,7 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import MultipleValueTextInput from "react-multivalue-text-input";
 import "./Tournament.scss";
+import useMultiValue from "../../hooks/useMultiValue";
 
 const ENTER = 13; //ASCII code for enter key
 
@@ -16,14 +17,35 @@ const Tournament2 = ({ tournament, updateTournament, lastStep, nextStep }) => {
 
   const phases = tournament.phases;
 
-  const addPhase = (phase) => {
-    updateTournament({ phases: [...tournament.phases, phase] });
+  // const addPhase = (phase) => {
+  //   updateTournament({ phases: [...tournament.phases, phase] });
+  // };
+
+  // const deletePhase = (deletedPhase, phases) => {
+  //   const updatedPhases = phases.filter((phase) => phase !== deletedPhase);
+  //   updateTournament({ phases: updatedPhases });
+  // };
+
+  /**
+   * Check if phases input is valid
+   * @param {Array} phases
+   */
+  const checkPhases = (phases) => {
+    console.log(phases);
+    return phases.length > 0;
   };
 
-  const deletePhase = (deletedPhase, phases) => {
-    const updatedPhases = phases.filter((phase) => phase !== deletedPhase);
-    updateTournament({ phases: updatedPhases });
-  };
+  /**
+   * Hook used to handle phases input validation
+   */
+  const {
+    isValid: phasesIsValid,
+    hasError: phasesHasError,
+    addItem: addPhase,
+    deleteItem: deletePhase,
+    inputBlurHandler: phasesBlurHandler,
+    style: multiValueStyle,
+  } = useMultiValue(updateTournament, checkPhases, "phases", tournament.phases);
 
   return (
     <div className="centered">
@@ -38,8 +60,15 @@ const Tournament2 = ({ tournament, updateTournament, lastStep, nextStep }) => {
             values={phases.map((phase) => phase)}
             placeholder="Digite la fase y presione la tecla 'ENTER' para agregarla..."
             charCodes={[ENTER]}
-            className="invalid-multi"
+            className={multiValueStyle}
+            onBlur={phasesBlurHandler}
           />
+          {phasesHasError && (
+            <p className="error-text">
+              {" "}
+              Se debe ingresar por lo menos una fase por torneo
+            </p>
+          )}
         </Form.Group>
       </Container>
       <Container>
