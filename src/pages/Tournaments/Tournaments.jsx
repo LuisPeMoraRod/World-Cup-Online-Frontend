@@ -17,15 +17,15 @@ const data = [
   {
     id: "0",
     name: "FIFA World Cup - Catar 2022",
-    startDate: "26-11-2022T00:00:00",
-    endDate: "26-12-2022T00:00:00",
+    startDate: "11-26-2022",
+    endDate: "12-26-2022",
     type: "Copa",
   },
   {
     id: "1",
     name: "Copa Libertadores - 2023",
-    startDate: "26-11-2023T00:00:00",
-    endDate: "26-12-2023T00:00:00",
+    startDate: "11-26-2023",
+    endDate: "12-26-2023",
     type: "Copa",
   },
 ];

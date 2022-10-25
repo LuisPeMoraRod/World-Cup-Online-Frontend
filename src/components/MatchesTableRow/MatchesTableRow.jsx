@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
 
 const MatchesTableRow = ({ tournament: match }) => {
+  const startDate = new Date(match.startdate);
   return (
     <tr className="rowClass">
       <td>
@@ -12,7 +13,13 @@ const MatchesTableRow = ({ tournament: match }) => {
           </Button>
         </Link>
       </td>
-      <td>{match.startdate}</td>
+      <td>
+        {startDate.toLocaleDateString("es-UK", {
+          day: "2-digit",
+          month: "short",
+          year: "numeric",
+        })}
+      </td>
       <td>{match.starttime}</td>
       <td>{match.location}</td>
       <td>{match.state}</td>

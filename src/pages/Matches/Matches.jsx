@@ -15,7 +15,7 @@ const MATCHES = [
   {
     id: 1,
     name: "Argentina",
-    startdate: "2004-05-23T14:25:10",
+    startdate: "11-26-2022",
     starttime: "14:25:10",
     location: "Milan",
     state: "Pendiente",
@@ -24,7 +24,7 @@ const MATCHES = [
   {
     id: 1,
     name: "Inglaterra",
-    startdate: "2004-05-23T14:25:10",
+    startdate: "11-26-2022",
     starttime: "14:25:10",
     location: "Milan",
     state: "Pendiente",
@@ -33,7 +33,7 @@ const MATCHES = [
   {
     id: 2,
     name: "Costa Rica",
-    startdate: "2004-05-23T14:25:10",
+    startdate: "11-26-2022",
     starttime: "14:25:10",
     location: "Milan",
     state: "Pendiente",
@@ -42,7 +42,7 @@ const MATCHES = [
   {
     id: 2,
     name: "España",
-    startdate: "2004-05-23T14:25:10",
+    startdate: "11-26-2022",
     starttime: "14:25:10",
     location: "Milan",
     state: "Pendiente",
@@ -52,6 +52,7 @@ const MATCHES = [
 const Matches = () => {
   const { tournamentId } = useParams();
 
+  const [tournament, setTournament] = useState(null);
   const [matches, setMatches] = useState(MATCHES); //state to handle matches data
   //   const [matches, setMatches] = useState([]); //state to handle matches data
   const [rowsData, setRowsData] = useState([]);
@@ -60,6 +61,8 @@ const Matches = () => {
   //     const options = {
   //       method: "GET",
   //     };
+
+  //     //get tournament's matches
   //     fetch(
   //       config.resources.tournaments.concat(`/${tournamentId}/Matches`),
   //       options
@@ -68,6 +71,15 @@ const Matches = () => {
   //       .then((res) => res.json())
   //       .then((data) => {
   //         setMatches(data);
+  //         console.log(data);
+  //       })
+  //       .catch((error) => console.log(error));
+
+  //     //get tournament's data
+  //     fetch(config.resources.tournaments.concat(`/${tournamentId}`), options)
+  //       .then((res) => res.json())
+  //       .then((data) => {
+  //         setTournament(data);
   //         console.log(data);
   //       })
   //       .catch((error) => console.log(error));
@@ -95,12 +107,12 @@ const Matches = () => {
 
   useEffect(() => {
     const parsedData = parseMatches(matches); //parse matches data to be compatible with table
-    console.log(parsedData);
     setRowsData(parsedData);
   }, [matches]);
 
   return (
     <div className="table-position">
+      <h3 className="mb-5 fw-light">Torneo: {tournament}</h3>
       <Row>
         <Col>
           <Link to="/new-match">
