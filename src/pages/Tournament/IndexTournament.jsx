@@ -23,7 +23,7 @@ const IndexTournament = ({ oldTournament }) => {
       name: "",
       startDate: null,
       endDate: null,
-      type: "",
+      type: null,
       teams: [],
       phases: [],
       rules: "",

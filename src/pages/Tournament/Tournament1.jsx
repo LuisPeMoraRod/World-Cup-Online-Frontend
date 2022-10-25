@@ -11,6 +11,8 @@ import { Typeahead } from "react-bootstrap-typeahead";
 import "react-bootstrap-typeahead/css/Typeahead.css";
 import useTextInput from "../../hooks/useTextInput";
 import useTypeahead from "../../hooks/useTypeahead";
+import useSelect from "../../hooks/useSelect";
+import "./Tournament.scss";
 
 // Raw data just for testing visualization.
 // MUST be changed to Redux Store approach
@@ -112,6 +114,25 @@ const Tournament1 = ({ tournament, updateTournament, nextStep }) => {
     inputBlurHandler: teamsBlurHandler,
   } = useTypeahead(updateTournament, checkTeams, "teams", tournament.teams);
 
+  /**
+   * Check if user already chose a type
+   * @param {Object} type
+   */
+  const checkType = (type) => {
+    return !!type;
+  };
+
+  /**
+   * Hook used to handle tournament type validation
+   */
+  const {
+    value: type,
+    isValid: typeIsValid,
+    hasError: typeHasError,
+    valueSelectedHandler: typSelectedHandler,
+    inputBlurHandler: typeBlurHandler,
+  } = useSelect(updateTournament, checkType, "type", tournament.type);
+
   return (
     <div className="centered">
       <h3 className="mb-5 fw-light">Creación de nuevo torneo</h3>
@@ -175,13 +196,17 @@ const Tournament1 = ({ tournament, updateTournament, nextStep }) => {
                   id="tournamentType"
                   options={TOURNAMENT_TYPES}
                   placeholder="Escoja un tipo..."
-                  onChange={(e) => {
-                    updateTournament({ type: e });
-                  }}
-                  // onBlur={}
+                  onChange={typSelectedHandler}
                   defaultValue={tournament.type}
-                  // isDisabled={}
+                  isInvalid={typeHasError}
+                  onBlur={typeBlurHandler}
                 />
+                {typeHasError && (
+                  <p className="error-text">
+                    {" "}
+                    Debe seleccionar un tipo de torneo
+                  </p>
+                )}
               </Form.Group>
             </Col>
           </Row>
