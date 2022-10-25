@@ -17,15 +17,6 @@ const Tournament2 = ({ tournament, updateTournament, lastStep, nextStep }) => {
 
   const phases = tournament.phases;
 
-  // const addPhase = (phase) => {
-  //   updateTournament({ phases: [...tournament.phases, phase] });
-  // };
-
-  // const deletePhase = (deletedPhase, phases) => {
-  //   const updatedPhases = phases.filter((phase) => phase !== deletedPhase);
-  //   updateTournament({ phases: updatedPhases });
-  // };
-
   /**
    * Check if phases input is valid
    * @param {Array} phases

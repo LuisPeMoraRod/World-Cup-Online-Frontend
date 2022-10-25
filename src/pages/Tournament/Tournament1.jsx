@@ -241,7 +241,19 @@ const Tournament1 = ({ tournament, updateTournament, nextStep }) => {
         </Container>
       </Form>
       <Container>
-        <Button variant="outline-primary" onClick={nextStep}>
+        <Button
+          variant="outline-primary"
+          onClick={nextStep}
+          disabled={
+            !(
+              nameIsValid &&
+              typeIsValid &&
+              teamsIsValid &&
+              !!tournament.startDate &&
+              !!tournament.endDate
+            )
+          }
+        >
           Siguiente
         </Button>
       </Container>
