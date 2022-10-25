@@ -36,7 +36,7 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (!isMount) dispatch(fetchCatalogs());
+    if (!isMount) dispatch(fetchCatalogs()); //fetch all catalogs data from API
   }, []);
 
   return (

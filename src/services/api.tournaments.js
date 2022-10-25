@@ -12,6 +12,18 @@ export const getTournaments = async () => {
     });
 };
 
+export const getTypes = async () => {
+  const options = {
+    method: "GET",
+  };
+
+  return fetch(config.resources.types, options)
+    .then((response) => response)
+    .catch((error) => {
+      throw new Error(error);
+    });
+};
+
 export const getMatchesInTournament = async (tournamentId) => {
   const options = {
     method: "GET",

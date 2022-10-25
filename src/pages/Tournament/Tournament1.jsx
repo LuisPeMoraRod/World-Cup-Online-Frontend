@@ -74,6 +74,7 @@ const MIN_TEAMS = 2;
  */
 const Tournament1 = ({ tournament, updateTournament, nextStep }) => {
   const teamsOptions = useSelector((state) => state.catalogs.teams);
+  const typesOptions = useSelector((state) => state.catalogs.types);
 
   const typeaheadRef = useRef(null);
 

@@ -32,16 +32,6 @@ const SideNavBar = () => {
                 </CDBSidebarMenuItem>
               </NavLink>
             </div>
-            <div title="Partidos">
-              <NavLink exact="true" to="/matches">
-                <CDBSidebarMenuItem
-                  icon="fa-thin fa-futbol"
-                  className="navbar-item"
-                >
-                  Partidos
-                </CDBSidebarMenuItem>
-              </NavLink>
-            </div>
           </CDBSidebarMenu>
         </CDBSidebarContent>
       </CDBSidebar>
