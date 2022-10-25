@@ -1,7 +1,8 @@
 const config = {
   resources: {
     catalogs: "http://localhost:",
-    teams: "https://swapi.dev/api/people/1",
+    teams: "https://localhost:7140/api/Teams",
+    tournaments: "https://localhost:7140/api/Tournament",
   },
 };
 

@@ -1,5 +1,6 @@
 import { catalogsActions } from "./catalogs";
-import { getTeams } from "../../../services/api";
+import { getTeams } from "../../../services/api.teams";
+import { getTournaments } from "../../../services/api.tournaments";
 
 export const fetchCatalogs = () => {
   return async (dispatch) => {
@@ -9,7 +10,13 @@ export const fetchCatalogs = () => {
       if (!response.ok) throw new Error("Couldn't fetch teams data");
       const teams = await response.json();
 
-      dispatch(catalogsActions.setTeams(teams)); //dispatch reducer to update state
+      response = await getTournaments(); //get Tournaments from API
+      if (!response.ok) throw new Error("Couldn't fetch tournaments data");
+      const tournaments = await response.json();
+
+      //dispatch reducers to update state
+      dispatch(catalogsActions.setTeams(teams));
+      dispatch(catalogsActions.setTournaments(tournaments));
     } catch (error) {
       console.log("TODO: add toast notif for error");
     }

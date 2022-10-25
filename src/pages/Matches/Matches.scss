@@ -1,0 +1,27 @@
+.table-header {
+  color: white;
+  background-color: #2b77d9;
+}
+
+.table-position {
+  position: fixed;
+  top: 15%;
+  left: 50%;
+  transform: translate(-50%);
+  width: 60%;
+}
+
+.table-height {
+  max-height: 60vh;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.rowClass {
+  text-align: center;
+}
+
+.spinner {
+  position: fixed;
+  left: 50%;
+}
