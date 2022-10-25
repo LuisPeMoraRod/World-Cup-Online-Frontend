@@ -13,6 +13,7 @@ import useTextInput from "../../hooks/useTextInput";
 import useTypeahead from "../../hooks/useTypeahead";
 import useSelect from "../../hooks/useSelect";
 import "./Tournament.scss";
+import { useSelector } from "react-redux";
 
 // Raw data just for testing visualization.
 // MUST be changed to Redux Store approach
@@ -72,6 +73,8 @@ const MIN_TEAMS = 2;
  * @returns
  */
 const Tournament1 = ({ tournament, updateTournament, nextStep }) => {
+  const teamsOptions = useSelector((state) => state.catalogs.teams);
+  console.log(teamsOptions);
   const typeaheadRef = useRef(null);
 
   /**
