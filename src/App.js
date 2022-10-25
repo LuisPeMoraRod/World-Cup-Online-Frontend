@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Tournaments from './pages/Tournaments/Tournaments';
 import Matches from './pages/Matches/Matches';
 import IndexTournament from './pages/Tournament/IndexTournament';
-import IndexMatch from './pages/Match/IndexMatch';
+import Match from './pages/Match/Match'
 
 const Pages = () => {
   return (
@@ -15,7 +15,7 @@ const Pages = () => {
         <Route path="tournaments" element={<Tournaments />} />
         <Route path="new-tournament" element={<IndexTournament tournament={null} />} />
         <Route path="matches" element={<Matches />} />
-        <Route path="new-match" element={<IndexMatch match={null} />} />
+        <Route path="new-match" element={<Match/>} />
       </Route>
     </Routes>
   )

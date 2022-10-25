@@ -1,0 +1,22 @@
+input{
+    padding: 10px;
+    margin: 10px 0px;
+    border-radius: 2%;
+    min-width: 500px;
+}
+Select{
+    padding: 10px;
+    margin: 10px 0px;
+    border-radius: 2%;
+    min-width: 700px;
+}   
+span.error{
+    font-size: 15px;
+    padding: 3px;
+    color: red;
+    display: none;
+}
+input:invalid[focused = "true"] ~ span.error{
+    display: block;
+}
+
