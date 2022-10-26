@@ -203,7 +203,7 @@ const Tournament1 = ({ tournament, updateTournament, nextStep }) => {
                 <Form.Label>Tipo de torneo</Form.Label>
                 <Select
                   id="tournamentType"
-                  options={TOURNAMENT_TYPES}
+                  options={typesOptions}
                   placeholder="Escoja un tipo..."
                   onChange={typeSelectedHandler}
                   defaultValue={tournament.type}
@@ -232,7 +232,7 @@ const Tournament1 = ({ tournament, updateTournament, nextStep }) => {
                 // Keep the menu open when making multiple selections.
                 typeaheadRef.current.toggleMenu();
               }}
-              options={TEAMS}
+              options={teamsOptions}
               placeholder="Escoja los equipos..."
               ref={typeaheadRef}
               selected={tournament.teams}

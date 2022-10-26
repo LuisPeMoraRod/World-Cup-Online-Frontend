@@ -41,7 +41,7 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (!isMount) dispatch(fetchCatalogs()); //fetch all catalogs data from API
+    dispatch(fetchCatalogs()); //fetch all catalogs data from API
   }, []);
 
   return (

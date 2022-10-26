@@ -64,51 +64,51 @@ const MATCHES = [
 const Matches = () => {
   const { tournamentId } = useParams();
 
-  const [tournament, setTournament] = useState(TOURNAMENT); //state to handle tournament's data
+  const [tournament, setTournament] = useState([]); //state to handle tournament's data
 
-  const [matches, setMatches] = useState(MATCHES); //state to handle matches data
-  //   const [matches, setMatches] = useState([]); //state to handle matches data
+  const [matches, setMatches] = useState([]); //state to handle matches data
+
   const [rowsData, setRowsData] = useState([]);
 
-  // useEffect(() => {
-  //   const options = {
-  //     method: "GET",
-  //   };
+   useEffect(() => {
+     const options = {
+       method: "GET",
+     };
 
-  //   //get tournament's data
-  //   fetch(config.resources.tournaments.concat(`/${tournamentId}`), options)
-  //     .then((res) => res.json())
-  //     .then((data) => {
-  //       setTournament(data);
-  //       console.log(data);
-  //     })
-  //     .catch((error) => console.log(error));
+    //get tournament's data
+    fetch(config.resources.tournaments.concat(`/${tournamentId}`), options)
+      .then((res) => res.json())
+      .then((data) => {
+        setTournament(data);
+        console.log(data);
+      })
+      .catch((error) => console.log(error));
 
-  //   //get tournament's matches
-  //   fetch(
-  //     config.resources.tournaments.concat(`/${tournamentId}/Matches`),
-  //     options
-  //   )
-  //     .then((res) => res.json())
-  //     .then((data) => {
-  //       setMatches(data);
-  //       console.log(data);
-  //     })
-  //     .catch((error) => console.log(error));
+     //get tournament's matches
+     fetch(
+       config.resources.tournaments.concat(`/${tournamentId}/Matches`),
+       options
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        setMatches(data);
+        console.log(data);
+      })
+      .catch((error) => console.log(error));
 
-  //   //get tournament's phases
-  //   fetch(
-  //     config.resources.tournaments.concat(`/Phases/${tournamentId}`),
-  //     options
-  //   )
-  //     .then((res) => res.json())
-  //     .then((data) => {
-  //       const updatedTournament = { ...tournament, phases: data };
-  //       setTournament(updatedTournament);
-  //       console.log(data);
-  //     })
-  //     .catch((error) => console.log(error));
-  // }, [tournamentId]);
+     //get tournament's phases
+     fetch(
+       config.resources.tournaments.concat(`/Phases/${tournamentId}`),
+       options
+     )
+       .then((res) => res.json())
+       .then((data) => {
+         const updatedTournament = { ...tournament, phases: data };
+         setTournament(updatedTournament);
+         console.log(data);
+       })
+       .catch((error) => console.log(error));
+   }, [tournamentId]);
 
   /**
    * Parse data from API to be useful
