@@ -1,5 +1,8 @@
 import { tournamentsActions } from "./tournaments";
-import { postTournament } from "../../../services/api.tournaments";
+import {
+  postTournament,
+  getTournaments,
+} from "../../../services/api.tournaments";
 
 export const sendNewTournament = (tournament) => {
   return async (dispatch) => {
