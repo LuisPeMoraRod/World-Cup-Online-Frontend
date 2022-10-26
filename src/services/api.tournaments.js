@@ -1,5 +1,22 @@
 import config from "../config";
 
+export const postTournament = async (tournament) => {
+  const headers = new Headers();
+  headers.append("Content-Type", "application/json");
+
+  const options = {
+    method: "POST",
+    headers: headers,
+    body: JSON.stringify(tournament),
+  };
+
+  return fetch(config.resources.tournaments, options)
+    .then((response) => response)
+    .catch((error) => {
+      throw new Error(error);
+    });
+};
+
 export const getTournaments = async () => {
   const options = {
     method: "GET",

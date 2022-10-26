@@ -1,9 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
 import catalogsReducer from "./slices/catalogs/catalogs";
+import tournamentsReducer from "./slices/tournaments/tournaments";
 
 const reducer = {
   catalogs: catalogsReducer,
-  //   user: userReducer,
+  tournaments: tournamentsReducer,
 };
 
 const store = configureStore({

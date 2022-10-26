@@ -1,4 +1,5 @@
 import { catalogsActions } from "./catalogs";
+import { tournamentsActions } from "../tournaments/tournaments";
 import { getTeams } from "../../../services/api.teams";
 import { getTournaments, getTypes } from "../../../services/api.tournaments";
 
@@ -21,7 +22,7 @@ export const fetchCatalogs = () => {
       //dispatch reducers to update state
       dispatch(catalogsActions.setTeams(teams));
       dispatch(catalogsActions.setTypes(types));
-      dispatch(catalogsActions.setTournaments(tournaments));
+      dispatch(tournamentsActions.setTournaments(tournaments));
     } catch (error) {
       console.log("TODO: add toast notif for error");
     }

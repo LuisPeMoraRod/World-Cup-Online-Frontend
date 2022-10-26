@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import Form from "react-bootstrap/Form";
 import Container from "react-bootstrap/Container";
@@ -70,7 +70,7 @@ const NewMatch = () => {
   const { tournamentId } = useParams();
 
   const [tournament, setTournament] = useState([]); //state to handle tournament's data
-  
+
   // new match object
   const [match, setMatch] = useState({
     tournamentId: tournament.id,
@@ -90,33 +90,31 @@ const NewMatch = () => {
     setMatch({ ...match, ...updatedFields });
   };
 
-   useEffect(() => {
-     const options = {
-       method: "GET",
-     };
+  useEffect(() => {
+    const options = {
+      method: "GET",
+    };
 
-  //   //get tournament's data
-     fetch(config.resources.tournaments.concat(`/${tournamentId}`), options)
-       .then((res) => res.json())
-       .then((data) => {
-         setTournament(data);
-         console.log(data);
-       })
-       .catch((error) => console.log(error));
-  
-  //   //get tournament's phases
-     fetch(
-       config.resources.tournaments.concat(`/Phases/${tournamentId}`),
-       options
-     )
-       .then((res) => res.json())
-       .then((data) => {
-         const updatedTournament = { ...tournament, phases: data };
-         setTournament(updatedTournament);
-         console.log(updatedTournament);
-       })
-       .catch((error) => console.log(error));
-   }, []);
+    //   //get tournament's data
+    fetch(config.resources.tournaments.concat(`/${tournamentId}`), options)
+      .then((res) => res.json())
+      .then((data) => {
+        setTournament(data);
+      })
+      .catch((error) => console.log(error));
+
+    //   //get tournament's phases
+    fetch(
+      config.resources.tournaments.concat(`/Phases/${tournamentId}`),
+      options
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        const updatedTournament = { ...tournament, phases: data };
+        setTournament(updatedTournament);
+      })
+      .catch((error) => console.log(error));
+  }, []);
 
   /**
    * Check if user already chose a phase

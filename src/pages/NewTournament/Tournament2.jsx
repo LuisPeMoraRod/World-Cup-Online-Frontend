@@ -5,12 +5,17 @@ import Button from "react-bootstrap/Button";
 import MultipleValueTextInput from "react-multivalue-text-input";
 import "./Tournament.scss";
 import useMultiValue from "../../hooks/useMultiValue";
+import { useDispatch } from "react-redux";
+import { sendNewTournament } from "../../store/slices/tournaments/actions";
+import { Link } from "react-router-dom";
 
 const ENTER = 13; //ASCII code for enter key
 
 const MAX_DESCRIPTION = 1000; // max amount of characters in description text input
 
 const Tournament2 = ({ tournament, updateTournament, lastStep, nextStep }) => {
+  const dispatch = useDispatch();
+
   const [descriptionChars, setDescriptionChars] = useState(
     tournament.rules.length
   ); // amount of chars typed in description
@@ -22,7 +27,6 @@ const Tournament2 = ({ tournament, updateTournament, lastStep, nextStep }) => {
    * @param {Array} phases
    */
   const checkPhases = (phases) => {
-    console.log(phases);
     return phases.length > 0;
   };
 
@@ -38,6 +42,9 @@ const Tournament2 = ({ tournament, updateTournament, lastStep, nextStep }) => {
     style: multiValueStyle,
   } = useMultiValue(updateTournament, checkPhases, "phases", tournament.phases);
 
+  const sendTournament = () => {
+    dispatch(sendNewTournament(tournament));
+  };
   return (
     <div className="centered">
       <h3 className="mb-5 fw-light">Creación de nuevo torneo</h3>
@@ -88,13 +95,16 @@ const Tournament2 = ({ tournament, updateTournament, lastStep, nextStep }) => {
             Atrás
           </Button>
 
-          <Button
-            variant="outline-primary"
-            onClick={nextStep}
-            className="mt-3 mr-3"
-          >
-            Enviar
-          </Button>
+          <Link to="/new-tournament">
+            <Button
+              variant="outline-primary"
+              onClick={sendTournament}
+              className="mt-3 mr-3"
+              disabled={!phasesHasError}
+            >
+              Enviar
+            </Button>
+          </Link>
         </div>
         <h6 className="fw-light">
           {descriptionChars}/{MAX_DESCRIPTION}
