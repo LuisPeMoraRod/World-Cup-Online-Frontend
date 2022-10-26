@@ -10,7 +10,7 @@ import Select from "react-select";
 import { Typeahead } from "react-bootstrap-typeahead";
 import "react-bootstrap-typeahead/css/Typeahead.css";
 import useTextInput from "../../hooks/useTextInput";
-import useTypeahead from "../../hooks/useTypeahead";
+import useTypeaheadMulti from "../../hooks/useTypeaheadMulti";
 import useSelect from "../../hooks/useSelect";
 import "./Tournament.scss";
 import { useSelector } from "react-redux";
@@ -116,7 +116,12 @@ const Tournament1 = ({ tournament, updateTournament, nextStep }) => {
     hasError: teamsHasError,
     valueSelectedHandler: teamsSelectedHandler,
     inputBlurHandler: teamsBlurHandler,
-  } = useTypeahead(updateTournament, checkTeams, "teams", tournament.teams);
+  } = useTypeaheadMulti(
+    updateTournament,
+    checkTeams,
+    "teams",
+    tournament.teams
+  );
 
   /**
    * Check if user already chose a type
@@ -133,7 +138,7 @@ const Tournament1 = ({ tournament, updateTournament, nextStep }) => {
     value: type,
     isValid: typeIsValid,
     hasError: typeHasError,
-    valueSelectedHandler: typSelectedHandler,
+    valueSelectedHandler: typeSelectedHandler,
     inputBlurHandler: typeBlurHandler,
   } = useSelect(updateTournament, checkType, "type", tournament.type);
 
@@ -200,7 +205,7 @@ const Tournament1 = ({ tournament, updateTournament, nextStep }) => {
                   id="tournamentType"
                   options={TOURNAMENT_TYPES}
                   placeholder="Escoja un tipo..."
-                  onChange={typSelectedHandler}
+                  onChange={typeSelectedHandler}
                   defaultValue={tournament.type}
                   isInvalid={typeHasError}
                   onBlur={typeBlurHandler}

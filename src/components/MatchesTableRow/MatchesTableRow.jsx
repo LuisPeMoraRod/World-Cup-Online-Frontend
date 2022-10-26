@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
 
-const MatchesTableRow = ({ tournament: match }) => {
+const MatchesTableRow = ({ match }) => {
   const startDate = new Date(match.startdate);
   return (
     <tr className="rowClass">

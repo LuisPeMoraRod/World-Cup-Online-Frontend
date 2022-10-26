@@ -5,10 +5,11 @@ import Layout from "./components/Layout/Layout";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Tournaments from "./pages/Tournaments/Tournaments";
 import Matches from "./pages/Matches/Matches";
-import IndexTournament from "./pages/Tournament/IndexTournament";
+import IndexTournament from "./pages/NewTournament/IndexTournament";
 import { useDispatch } from "react-redux";
 import { fetchCatalogs } from "./store/slices/catalogs/actions";
 import { useIsMount } from "./hooks/useIsMount";
+import NewMatch from "./pages/NewMatch/NewMatch";
 
 const Pages = () => {
   return (
@@ -22,8 +23,12 @@ const Pages = () => {
         />
         {/* <Route path="matches" element={<Matches />} /> */}
         <Route
-          path="/tournaments/:tournamentId/matches"
+          path="tournaments/:tournamentId/matches"
           element={<Matches />}
+        ></Route>
+        <Route
+          path="tournaments/:tournamentId/new-match"
+          element={<NewMatch />}
         ></Route>
       </Route>
     </Routes>

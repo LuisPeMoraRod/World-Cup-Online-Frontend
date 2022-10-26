@@ -11,6 +11,18 @@ import { Link } from "react-router-dom";
 import MatchesTableRow from "../../components/MatchesTableRow/MatchesTableRow";
 import "./Matches.scss";
 
+const TOURNAMENT = {
+  id: "0",
+  name: "FIFA World Cup - Catar 2022",
+  startDate: "11-26-2022",
+  endDate: "12-26-2022",
+  type: "Copa",
+  phases: [
+    { value: "0", label: "Fase de grupos" },
+    { value: "1", label: "Octavos de final" },
+  ],
+};
+
 const MATCHES = [
   {
     id: 1,
@@ -52,38 +64,51 @@ const MATCHES = [
 const Matches = () => {
   const { tournamentId } = useParams();
 
-  const [tournament, setTournament] = useState(null);
+  const [tournament, setTournament] = useState(TOURNAMENT); //state to handle tournament's data
+
   const [matches, setMatches] = useState(MATCHES); //state to handle matches data
   //   const [matches, setMatches] = useState([]); //state to handle matches data
   const [rowsData, setRowsData] = useState([]);
 
-  //   useEffect(() => {
-  //     const options = {
-  //       method: "GET",
-  //     };
+  // useEffect(() => {
+  //   const options = {
+  //     method: "GET",
+  //   };
 
-  //     //get tournament's matches
-  //     fetch(
-  //       config.resources.tournaments.concat(`/${tournamentId}/Matches`),
-  //       options
-  //     )
-  //       // fetch(`https://swapi.dev/api/people/${tournamentId}`, options)
-  //       .then((res) => res.json())
-  //       .then((data) => {
-  //         setMatches(data);
-  //         console.log(data);
-  //       })
-  //       .catch((error) => console.log(error));
+  //   //get tournament's data
+  //   fetch(config.resources.tournaments.concat(`/${tournamentId}`), options)
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       setTournament(data);
+  //       console.log(data);
+  //     })
+  //     .catch((error) => console.log(error));
 
-  //     //get tournament's data
-  //     fetch(config.resources.tournaments.concat(`/${tournamentId}`), options)
-  //       .then((res) => res.json())
-  //       .then((data) => {
-  //         setTournament(data);
-  //         console.log(data);
-  //       })
-  //       .catch((error) => console.log(error));
-  //   }, [tournamentId]);
+  //   //get tournament's matches
+  //   fetch(
+  //     config.resources.tournaments.concat(`/${tournamentId}/Matches`),
+  //     options
+  //   )
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       setMatches(data);
+  //       console.log(data);
+  //     })
+  //     .catch((error) => console.log(error));
+
+  //   //get tournament's phases
+  //   fetch(
+  //     config.resources.tournaments.concat(`/Phases/${tournamentId}`),
+  //     options
+  //   )
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       const updatedTournament = { ...tournament, phases: data };
+  //       setTournament(updatedTournament);
+  //       console.log(data);
+  //     })
+  //     .catch((error) => console.log(error));
+  // }, [tournamentId]);
 
   /**
    * Parse data from API to be useful
@@ -112,10 +137,10 @@ const Matches = () => {
 
   return (
     <div className="table-position">
-      <h3 className="mb-5 fw-light">Torneo: {tournament}</h3>
+      <h3 className="mb-5 fw-light">{tournament.name}</h3>
       <Row>
         <Col>
-          <Link to="/new-match">
+          <Link to={`/tournaments/${tournament.id}/new-match`}>
             <Button
               as={Col}
               md="auto"
@@ -140,8 +165,8 @@ const Matches = () => {
           </tr>
         </thead>
         <tbody className="table-height">
-          {rowsData.map((tournament, i) => {
-            return <MatchesTableRow key={i} tournament={tournament} />;
+          {rowsData.map((match, i) => {
+            return <MatchesTableRow key={i} match={match} />;
           })}
         </tbody>
       </Table>

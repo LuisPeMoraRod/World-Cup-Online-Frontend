@@ -1,21 +1,14 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
 /**
- * Hook to handle validations for Typeahead components
+ * Hook to handle validations for Multi-Typeahead components
  * @param {*} updateObject updates request values
  * @param {*} checkInput check if entered text is valid
  * @param {String} field input type
- * @param {String} defaultValue
- * @param {Object} dataset array of possible options
+ * @param {String} defaultValues
  */
-const useTypeahead = (
-  updateObject,
-  checkInput,
-  field,
-  defaultValue,
-  dataset
-) => {
-  const [enteredValue, setEnteredValue] = useState("");
+const useTypeaheadMulti = (updateObject, checkInput, field, defaultValues) => {
+  const [enteredValues, setEnteredValues] = useState("");
   const [isTouched, setIsTouched] = useState(false); //state that indicates if input is touched
 
   /**
@@ -23,10 +16,11 @@ const useTypeahead = (
    * @param {event} event
    */
   const valueSelectedHandler = (event) => {
-    if (event.length > 0) {
-      updateObject({ [field]: event[0] });
-      setEnteredValue(event[0]);
-    }
+    const items = event.map((item) => {
+      return { id: item.id, label: item.label };
+    });
+    updateObject({ [field]: items });
+    setEnteredValues(items);
   };
 
   /**
@@ -37,12 +31,11 @@ const useTypeahead = (
     setIsTouched(true);
   };
 
-  const isValid =
-    checkInput(enteredValue, dataset) || checkInput(defaultValue, dataset);
+  const isValid = checkInput(enteredValues) || checkInput(defaultValues);
   const hasError = !isValid && isTouched;
 
   return {
-    value: enteredValue,
+    values: enteredValues,
     isValid,
     hasError,
     valueSelectedHandler,
@@ -50,4 +43,4 @@ const useTypeahead = (
   };
 };
 
-export default useTypeahead;
+export default useTypeaheadMulti;
