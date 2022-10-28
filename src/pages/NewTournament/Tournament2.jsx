@@ -100,7 +100,7 @@ const Tournament2 = ({ tournament, updateTournament, lastStep, nextStep }) => {
               variant="outline-primary"
               onClick={sendTournament}
               className="mt-3 mr-3"
-              disabled={!phasesHasError}
+              disabled={phasesHasError}
             >
               Enviar
             </Button>
