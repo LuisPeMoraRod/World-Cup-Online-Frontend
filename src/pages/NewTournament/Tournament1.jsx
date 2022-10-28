@@ -254,14 +254,13 @@ const Tournament1 = ({ tournament, updateTournament, nextStep }) => {
           variant="outline-primary"
           onClick={nextStep}
           disabled={
-            // !(
-            //   nameIsValid &&
-            //   typeIsValid &&
-            //   teamsIsValid &&
-            //   !!tournament.startDate &&
-            //   !!tournament.endDate
-            // )
-            false
+            !(
+              nameIsValid &&
+              typeIsValid &&
+              teamsIsValid &&
+              !!tournament.startDate &&
+              !!tournament.endDate
+            )
           }
         >
           Siguiente
