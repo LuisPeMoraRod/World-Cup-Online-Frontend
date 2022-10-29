@@ -17,7 +17,7 @@ const Tournament2 = ({ tournament, updateTournament, lastStep, nextStep }) => {
   const dispatch = useDispatch();
 
   const [descriptionChars, setDescriptionChars] = useState(
-    tournament.rules.length
+    tournament.description.length
   ); // amount of chars typed in description
 
   const phases = tournament.phases;
@@ -76,10 +76,10 @@ const Tournament2 = ({ tournament, updateTournament, lastStep, nextStep }) => {
             as="textarea"
             rows={5}
             placeholder="Escriba aquí una descripción de las reglas de puntuación del torneo..."
-            defaultValue={tournament.rules}
+            defaultValue={tournament.description}
             maxLength={MAX_DESCRIPTION}
             onChange={(e) => {
-              updateTournament({ rules: e.target.value }); //updates rules field in tournament object
+              updateTournament({ description: e.target.value }); //updates rules field in tournament object
               setDescriptionChars(e.target.value.length); //update value of text length indicator
             }}
           />

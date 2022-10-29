@@ -13,6 +13,7 @@ export const sendNewTournament = (tournament) => {
       });
 
       const tournamentBody = {
+        id: tournament.id,
         name: tournament.name,
         startdate: tournament.startDate,
         enddate: tournament.endDate,
@@ -21,7 +22,7 @@ export const sendNewTournament = (tournament) => {
         teamsIds: teams,
         phases: tournament.phases,
       };
-
+      console.log(tournamentBody);
       let response;
       response = await postTournament(tournamentBody);
       if (!response.ok) {
