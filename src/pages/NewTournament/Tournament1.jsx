@@ -159,8 +159,8 @@ const Tournament1 = ({ tournament, updateTournament, nextStep }) => {
   // set teams options depending on type
   useEffect(() => {
     console.log(type.value);
-    if (type.value === "0") setTeamsOptions(nationalTeamsOptions);
-    if (type.value === "1") setTeamsOptions(localTeamsOptions);
+    if (type.value === 1) setTeamsOptions(nationalTeamsOptions);
+    if (type.value === 2) setTeamsOptions(localTeamsOptions);
   }, [type]);
 
   return (

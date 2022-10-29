@@ -80,7 +80,6 @@ const Matches = () => {
       .then((res) => res.json())
       .then((data) => {
         setTournament(data);
-        console.log(data);
       })
       .catch((error) => console.log(error));
 
@@ -92,7 +91,6 @@ const Matches = () => {
       .then((res) => res.json())
       .then((data) => {
         setMatches(data);
-        console.log(data);
       })
       .catch((error) => console.log(error));
 
@@ -105,7 +103,6 @@ const Matches = () => {
        .then((data) => {
          const updatedTournament = { ...tournament, phases: data };
          setTournament(updatedTournament);
-         console.log(data);
        })
        .catch((error) => console.log(error));
    }, [tournamentId]);
@@ -140,7 +137,7 @@ const Matches = () => {
       <h3 className="mb-5 fw-light">{tournament.name}</h3>
       <Row>
         <Col>
-          <Link to={`/tournaments/${tournament.id}/new-match`}>
+          <Link to={`/tournaments/${tournamentId}/new-match`}>
             <Button
               as={Col}
               md="auto"
