@@ -116,6 +116,10 @@ const NewMatch = () => {
       .catch((error) => console.log(error));
   }, []);
 
+  const sendNewMatch = (newMatch) => {
+    
+  };
+
   /**
    * Check if user already chose a phase
    * @param {Object} phase

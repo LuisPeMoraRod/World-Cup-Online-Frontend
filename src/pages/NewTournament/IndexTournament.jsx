@@ -11,7 +11,6 @@ const THIRD = 2;
  * Handles rendering logic of form steps
  */
 const IndexTournament = ({ oldTournament }) => {
-  const tournaments = useSelector((state) => state.tournaments.tournaments);
   /**
    * Sets @tournament object initial values.
    * If tournament already existed, it returns the same object
@@ -20,9 +19,7 @@ const IndexTournament = ({ oldTournament }) => {
    * @returns {Object} tournament object to be edited in form
    */
   const initTournament = (tournament) => {
-    let id = tournaments.length + 1;
     const newTournament = {
-      id: id,
       name: "",
       startDate: null,
       endDate: null,
