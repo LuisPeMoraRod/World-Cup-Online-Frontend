@@ -95,7 +95,7 @@ const Tournament2 = ({ tournament, updateTournament, lastStep, nextStep }) => {
             Atrás
           </Button>
 
-          <Link to="/new-tournament">
+          <Link to="/tournaments">
             <Button
               variant="outline-primary"
               onClick={sendTournament}
