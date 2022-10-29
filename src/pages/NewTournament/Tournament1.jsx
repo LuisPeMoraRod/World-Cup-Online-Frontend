@@ -57,6 +57,11 @@ const TEAMS = [
   { id: 31, label: "República de Corea" },
 ];
 
+const LOCAL = [
+  { id: 0, label: "BVB" },
+  { id: 1, label: "Real Madrid" },
+];
+
 // characters range for the tournament name
 const MIN_NAME = 5;
 const MAX_NAME = 30;
@@ -73,8 +78,16 @@ const MIN_TEAMS = 2;
  * @returns
  */
 const Tournament1 = ({ tournament, updateTournament, nextStep }) => {
-  const teamsOptions = useSelector((state) => state.catalogs.teams);
+  const nationalTeamsOptions = useSelector(
+    (state) => state.catalogs.nationalTeams
+  );
+  const localTeamsOptions = useSelector((state) => state.catalogs.teams);
   const typesOptions = useSelector((state) => state.catalogs.types);
+  // const typesOptions = TOURNAMENT_TYPES;
+  // const nationalTeamsOptions = TEAMS;
+  // const localTeamsOptions = LOCAL;
+
+  const [teamsOptions, setTeamsOptions] = useState([]);
 
   const typeaheadRef = useRef(null);
 
@@ -141,6 +154,14 @@ const Tournament1 = ({ tournament, updateTournament, nextStep }) => {
     valueSelectedHandler: typeSelectedHandler,
     inputBlurHandler: typeBlurHandler,
   } = useSelect(updateTournament, checkType, "type", tournament.type);
+
+
+  // set teams options depending on type
+  useEffect(() => {
+    console.log(type.value);
+    if (type.value === "0") setTeamsOptions(nationalTeamsOptions);
+    if (type.value === "1") setTeamsOptions(localTeamsOptions);
+  }, [type]);
 
   return (
     <div className="centered">

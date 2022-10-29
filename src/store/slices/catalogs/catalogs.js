@@ -6,10 +6,14 @@ import { createSlice } from "@reduxjs/toolkit";
 const catalogsSlice = createSlice({
   name: "catalogs",
   initialState: {
+    nationalTeams: [],
     teams: [],
     types: [],
   },
   reducers: {
+    setNationalTeams(state, action) {
+      state.nationalTeams = action.payload;
+    },
     setTeams(state, action) {
       state.teams = action.payload;
     },

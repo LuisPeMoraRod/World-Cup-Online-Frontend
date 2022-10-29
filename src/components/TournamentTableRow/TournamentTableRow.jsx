@@ -3,8 +3,8 @@ import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
 
 const TournamentTableRow = ({ tournament }) => {
-  const startDate = new Date(tournament.startDate);
-  const endDate = new Date(tournament.endDate);
+  const startDate = new Date(tournament.startdate);
+  const endDate = new Date(tournament.enddate);
   return (
     <tr className="rowClass">
       <td>
