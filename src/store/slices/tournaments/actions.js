@@ -21,7 +21,7 @@ export const sendNewTournament = (tournament) => {
         teamsIds: teams,
         phases: tournament.phases,
       };
-      console.log(tournamentBody);
+      
       let response;
       response = await postTournament(tournamentBody);
       if (!response.ok) {

@@ -17,6 +17,7 @@ import useSelect from "../../hooks/useSelect";
 import { useParams } from "react-router-dom";
 import "./NewMatch.scss";
 import config from "../../config";
+import { Link } from "react-router-dom";
 
 const TOURNAMENT = {
   id: "0",
@@ -30,50 +31,50 @@ const TOURNAMENT = {
   ],
 };
 
-const teams = [
-  { id: 0, label: "Qatar" },
-  { id: 1, label: "Ecuador" },
-  { id: 2, label: "Senegal" },
-  { id: 3, label: "Países Bajos" },
-  { id: 4, label: "Inglaterra" },
-  { id: 5, label: "RI de Irán" },
-  { id: 6, label: "EEUU" },
-  { id: 7, label: "Gales" },
-  { id: 8, label: "Argentina" },
-  { id: 9, label: "Arabia Saudí" },
-  { id: 10, label: "México" },
-  { id: 11, label: "Polonia" },
-  { id: 12, label: "Francia" },
-  { id: 13, label: "Dinamarca" },
-  { id: 14, label: "Túnez" },
-  { id: 15, label: "Australia" },
-  { id: 16, label: "España" },
-  { id: 17, label: "Alemania" },
-  { id: 18, label: "Japón" },
-  { id: 19, label: "Costa Rica" },
-  { id: 20, label: "Bélgica" },
-  { id: 21, label: "Canadá" },
-  { id: 22, label: "Marruecos" },
-  { id: 23, label: "Croacia" },
-  { id: 24, label: "Brasil" },
-  { id: 25, label: "Serbia" },
-  { id: 26, label: "Suiza" },
-  { id: 27, label: "Camerún" },
-  { id: 28, label: "Portugal" },
-  { id: 29, label: "Ghana" },
-  { id: 30, label: "Uruguay" },
-  { id: 31, label: "República de Corea" },
-];
+// const teams = [
+//   { id: 0, label: "Qatar" },
+//   { id: 1, label: "Ecuador" },
+//   { id: 2, label: "Senegal" },
+//   { id: 3, label: "Países Bajos" },
+//   { id: 4, label: "Inglaterra" },
+//   { id: 5, label: "RI de Irán" },
+//   { id: 6, label: "EEUU" },
+//   { id: 7, label: "Gales" },
+//   { id: 8, label: "Argentina" },
+//   { id: 9, label: "Arabia Saudí" },
+//   { id: 10, label: "México" },
+//   { id: 11, label: "Polonia" },
+//   { id: 12, label: "Francia" },
+//   { id: 13, label: "Dinamarca" },
+//   { id: 14, label: "Túnez" },
+//   { id: 15, label: "Australia" },
+//   { id: 16, label: "España" },
+//   { id: 17, label: "Alemania" },
+//   { id: 18, label: "Japón" },
+//   { id: 19, label: "Costa Rica" },
+//   { id: 20, label: "Bélgica" },
+//   { id: 21, label: "Canadá" },
+//   { id: 22, label: "Marruecos" },
+//   { id: 23, label: "Croacia" },
+//   { id: 24, label: "Brasil" },
+//   { id: 25, label: "Serbia" },
+//   { id: 26, label: "Suiza" },
+//   { id: 27, label: "Camerún" },
+//   { id: 28, label: "Portugal" },
+//   { id: 29, label: "Ghana" },
+//   { id: 30, label: "Uruguay" },
+//   { id: 31, label: "República de Corea" },
+// ];
 
 const NewMatch = () => {
-  // const teams = useSelector((state) => state.catalogs.teams);
+  const teams = useSelector((state) => state.catalogs.teams);
   const { tournamentId } = useParams();
 
   const [tournament, setTournament] = useState([]); //state to handle tournament's data
 
   // new match object
   const [match, setMatch] = useState({
-    tournamentId: tournament.id,
+    tournamentId: tournamentId,
     phase: null,
     startDatetime: null,
     location: "",
@@ -120,22 +121,34 @@ const NewMatch = () => {
    * POST to create new match
    * @param {Object} newMatch
    */
-  const sendNewMatch = (newMatch) => {
-    const options = {
-      method: "GET",
+  const sendNewMatch = () => {
+    const headers = new Headers();
+    headers.append("Content-Type", "application/json");
+
+    //new match object
+    const newMatch = {
+      tournamentid: match.tournamentId,
+      startdate: match.startDatetime,
+      starttime: match.startDatetime,
+      location: match.location,
+      phaseid: match.phase,
+      team1: match.team1,
+      team2: match.team2,
     };
 
-    // get tournament's phases
-    fetch(
-      config.resources.matches,
-      options
-    )
-      .then((res) => res.json())
-      .then((data) => {
-        const updatedTournament = { ...tournament, phases: data };
-        setTournament(updatedTournament);
-      })
-      .catch((error) => console.log(error));
+    console.log(newMatch);
+
+    // const options = {
+    //   method: "POST",
+    //   headers: headers,
+    //   body: JSON.stringify(newMatch),
+    // };
+
+    // return fetch(config.resources.tournaments, options)
+    //   .then((response) => response)
+    //   .catch((error) => {
+    //     throw new Error(error);
+    //   });
   };
 
   /**
@@ -332,19 +345,21 @@ const NewMatch = () => {
         </Container>
       </Form>
       <Container>
-        <Button
-          variant="outline-primary"
-          onClick={sendNewMatch}
-          disabled={
-            phaseHasError ||
-            locationHasError ||
-            !match.startDatetime ||
-            team1HasError ||
-            !team2HasError
-          }
-        >
-          Enviar
-        </Button>
+        <Link to={`/tournaments/${tournamentId}/matches`}>
+          <Button
+            variant="outline-primary"
+            onClick={sendNewMatch}
+            disabled={
+              phaseHasError ||
+              locationHasError ||
+              !match.startDatetime ||
+              team1HasError ||
+              team2HasError
+            }
+          >
+            Enviar
+          </Button>
+        </Link>
       </Container>
     </div>
   );
