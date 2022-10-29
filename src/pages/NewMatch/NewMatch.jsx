@@ -95,7 +95,7 @@ const NewMatch = () => {
       method: "GET",
     };
 
-    //   //get tournament's data
+    // get tournament's data
     fetch(config.resources.tournaments.concat(`/${tournamentId}`), options)
       .then((res) => res.json())
       .then((data) => {
@@ -103,7 +103,7 @@ const NewMatch = () => {
       })
       .catch((error) => console.log(error));
 
-    //   //get tournament's phases
+    // get tournament's phases
     fetch(
       config.resources.tournaments.concat(`/Phases/${tournamentId}`),
       options
@@ -116,8 +116,26 @@ const NewMatch = () => {
       .catch((error) => console.log(error));
   }, []);
 
+  /**
+   * POST to create new match
+   * @param {Object} newMatch
+   */
   const sendNewMatch = (newMatch) => {
-    
+    const options = {
+      method: "GET",
+    };
+
+    // get tournament's phases
+    fetch(
+      config.resources.matches,
+      options
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        const updatedTournament = { ...tournament, phases: data };
+        setTournament(updatedTournament);
+      })
+      .catch((error) => console.log(error));
   };
 
   /**
@@ -316,8 +334,14 @@ const NewMatch = () => {
       <Container>
         <Button
           variant="outline-primary"
-          onClick={console.log("enviando")}
-          disabled={false}
+          onClick={sendNewMatch}
+          disabled={
+            phaseHasError ||
+            locationHasError ||
+            !match.startDatetime ||
+            team1HasError ||
+            !team2HasError
+          }
         >
           Enviar
         </Button>
