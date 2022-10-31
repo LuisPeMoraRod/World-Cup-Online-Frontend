@@ -16,3 +16,16 @@
     padding-left: 0;
   }
 }
+
+.centered {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 60%;
+}
+
+.error-text {
+  color: rgb(163, 17, 17);
+  font-size: small;
+}
