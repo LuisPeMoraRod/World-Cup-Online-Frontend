@@ -106,8 +106,8 @@ const NewMatch = () => {
       starttime: match.startDatetime,
       location: match.location,
       phaseid: match.phase.value,
-      team1: match.team1.id,
-      team2: match.team2.id,
+      team1: match.team1.teamid,
+      team2: match.team2.teamid,
     };
 
     console.log(newMatch);
@@ -265,7 +265,7 @@ const NewMatch = () => {
           <Row>
             <Col>
               <Form.Group className="mb-3" controlId="startDatetime">
-                <Form.Label>Fecha y hora de inicio</Form.Label>
+                <Form.Label>Fecha y hora de inicio (UTC)</Form.Label>
                 <DatePicker
                   selected={match.startDatetime}
                   minDate={new Date(tournament.startDate)}
