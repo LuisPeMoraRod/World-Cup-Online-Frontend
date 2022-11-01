@@ -20,7 +20,8 @@ import config from "../../config";
 import { Link } from "react-router-dom";
 
 const NewMatch = () => {
-  const teams = useSelector((state) => state.catalogs.teams);
+  // const teams = useSelector((state) => state.catalogs.teams);
+  const [teams, setTeams] = useState([]);
   const { tournamentId } = useParams();
 
   const [tournament, setTournament] = useState([]); //state to handle tournament's data
@@ -37,6 +38,15 @@ const NewMatch = () => {
     team2: "",
   });
 
+  const parseTeams = (teams, tournamentId) => {
+    const tournamentTeams = teams.filter((team) => {
+      return team.tournamentid !== tournamentId;
+    });
+    const teamsOptions = tournamentTeams.map((team) => {
+      return { ...team, label: team.teamid };
+    });
+    return teamsOptions
+  };
   /**
    * Updates match object. Updates fields and values passed as object
    * Example: updatedRequest({phaseid: "1", location:"Doha"})
@@ -56,7 +66,15 @@ const NewMatch = () => {
       .then((res) => res.json())
       .then((data) => {
         setTournament(data);
-        console.log(data);
+      })
+      .catch((error) => console.log(error));
+
+    // get tournament's matches
+    fetch(config.resources.teamsInTournament, options)
+      .then((res) => res.json())
+      .then((data) => {
+        const teamsOptions = parseTeams(data, tournamentId);
+        setTeams(teamsOptions);
       })
       .catch((error) => console.log(error));
 
@@ -69,7 +87,6 @@ const NewMatch = () => {
       .then((data) => {
         const updatedTournament = { ...tournament, phases: data };
         setTournament(updatedTournament);
-        console.log(updatedTournament);
       })
       .catch((error) => console.log(error));
   }, []);
@@ -108,9 +125,11 @@ const NewMatch = () => {
       });
   };
 
-  useEffect(() => { setMinDate(new Date(tournament.startDate));
-     setMaxDate(new Date(tournament.endDate))}, [tournament])
-  
+  useEffect(() => {
+    setMinDate(new Date(tournament.startDate));
+    setMaxDate(new Date(tournament.endDate));
+  }, [tournament]);
+
   /**
    * Check if user already chose a phase
    * @param {Object} phase
