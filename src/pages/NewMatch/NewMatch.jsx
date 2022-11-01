@@ -25,8 +25,8 @@ const NewMatch = () => {
   const { tournamentId } = useParams();
 
   const [tournament, setTournament] = useState([]); //state to handle tournament's data
-  const [minDate, setMinDate] = useState(null);
-  const [maxDate, setMaxDate] = useState(null);
+  const [minDate, setMinDate] = useState(new Date());
+  const [maxDate, setMaxDate] = useState(new Date());
 
   // new match object
   const [match, setMatch] = useState({
@@ -126,8 +126,10 @@ const NewMatch = () => {
   };
 
   useEffect(() => {
-    setMinDate(new Date(tournament.startDate));
-    setMaxDate(new Date(tournament.endDate));
+    const minDate = new Date(tournament.startDate);
+    const maxDate = new Date(tournament.endDate);
+    setMinDate(minDate);
+    setMaxDate(maxDate);
   }, [tournament]);
 
   /**
@@ -268,8 +270,8 @@ const NewMatch = () => {
                 <Form.Label>Fecha y hora de inicio (UTC)</Form.Label>
                 <DatePicker
                   selected={match.startDatetime}
-                  minDate={new Date(tournament.startDate)}
-                  maxDate={new Date(tournament.endDate)}
+                  minDate={minDate}
+                  maxDate={maxDate}
                   onChange={(date) => {
                     updateMatch({ startDatetime: date });
                   }}
