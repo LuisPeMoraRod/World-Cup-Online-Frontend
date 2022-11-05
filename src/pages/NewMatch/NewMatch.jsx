@@ -25,6 +25,7 @@ const NewMatch = () => {
   const { tournamentId } = useParams();
 
   const [tournament, setTournament] = useState([]); //state to handle tournament's data
+  const [phases, setPhases] = useState([]); // state to handle tournament's phases
   const [minDate, setMinDate] = useState(new Date());
   const [maxDate, setMaxDate] = useState(new Date());
 
@@ -45,7 +46,7 @@ const NewMatch = () => {
     const teamsOptions = tournamentTeams.map((team) => {
       return { ...team, label: team.teamid };
     });
-    return teamsOptions
+    return teamsOptions;
   };
   /**
    * Updates match object. Updates fields and values passed as object
@@ -65,6 +66,9 @@ const NewMatch = () => {
     fetch(config.resources.tournaments.concat(`/${tournamentId}`), options)
       .then((res) => res.json())
       .then((data) => {
+        console.log(data);
+        setMinDate(new Date(data.startDate));
+        setMaxDate(new Date(data.endDate));
         setTournament(data);
       })
       .catch((error) => console.log(error));
@@ -85,8 +89,7 @@ const NewMatch = () => {
     )
       .then((res) => res.json())
       .then((data) => {
-        const updatedTournament = { ...tournament, phases: data };
-        setTournament(updatedTournament);
+        setPhases(data);
       })
       .catch((error) => console.log(error));
   }, []);
@@ -124,13 +127,6 @@ const NewMatch = () => {
         throw new Error(error);
       });
   };
-
-  useEffect(() => {
-    const minDate = new Date(tournament.startDate);
-    const maxDate = new Date(tournament.endDate);
-    setMinDate(minDate);
-    setMaxDate(maxDate);
-  }, [tournament]);
 
   /**
    * Check if user already chose a phase
@@ -212,6 +208,19 @@ const NewMatch = () => {
     teams.filter((team) => team.label !== team1.label)
   );
 
+  // tells if every input is valid
+  const isValid =
+    !phaseHasError &&
+    !locationHasError &&
+    !!match.startDatetime &&
+    !team1HasError &&
+    !team2HasError;
+
+  //redirection url
+  const btnUrl = !!isValid
+    ? `/tournaments/${tournamentId}/matches`
+    : `/tournaments/${tournamentId}/new-match`;
+
   return (
     <div className="centered">
       <h3 className="mb-1 fw-light">
@@ -226,7 +235,7 @@ const NewMatch = () => {
                 <Form.Label>Fase del torneo</Form.Label>
                 <Select
                   id="matchPhase"
-                  options={tournament.phases}
+                  options={phases}
                   placeholder="Escoja una fase..."
                   onChange={phaseSelectedHandler}
                   defaultValue={match.phase}
@@ -326,7 +335,7 @@ const NewMatch = () => {
         </Container>
       </Form>
       <Container>
-        <Link to={`/tournaments/${tournamentId}/matches`}>
+        <Link to={btnUrl}>
           <Button
             variant="outline-primary"
             onClick={sendNewMatch}
