@@ -20,7 +20,6 @@ const Layout = (props) => {
             </div>
         </div>
 
-
     );
 }
 
