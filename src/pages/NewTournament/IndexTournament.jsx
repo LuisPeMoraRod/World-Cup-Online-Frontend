@@ -2,10 +2,9 @@ import React, { useState } from "react";
 import Tournament1 from "./Tournament1";
 import Tournament2 from "./Tournament2";
 import { useSelector } from "react-redux";
+import {FIRST, SECOND} from "../../constants"
 
-const FIRST = 0;
-const SECOND = 1;
-const THIRD = 2;
+
 /**
  * Creates new or edited tournament object that will be sent to database
  * Handles rendering logic of form steps
@@ -49,6 +48,7 @@ const IndexTournament = ({ oldTournament }) => {
 
   const resetStep = () => setStep(FIRST);
   const nextStep = () => {
+    console.log(step);
     setStep((last) => last + 1);
   };
 
