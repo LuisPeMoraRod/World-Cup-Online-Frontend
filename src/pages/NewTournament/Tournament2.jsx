@@ -10,7 +10,6 @@ import { sendNewTournament } from "../../store/slices/tournaments/actions";
 import { Link } from "react-router-dom";
 
 const ENTER = 13; //ASCII code for enter key
-
 const MAX_DESCRIPTION = 1000; // max amount of characters in description text input
 
 const Tournament2 = ({ tournament, updateTournament, lastStep, nextStep }) => {
@@ -45,6 +44,9 @@ const Tournament2 = ({ tournament, updateTournament, lastStep, nextStep }) => {
   const sendTournament = () => {
     dispatch(sendNewTournament(tournament));
   };
+
+  const btnUrl = phasesIsValid ? "/tournaments" : "/new-tournament";
+
   return (
     <div className="centered">
       <h3 className="mb-5 fw-light">Creación de nuevo torneo</h3>
@@ -95,7 +97,7 @@ const Tournament2 = ({ tournament, updateTournament, lastStep, nextStep }) => {
             Atrás
           </Button>
 
-          <Link to="/tournaments">
+          <Link to={btnUrl}>
             <Button
               variant="outline-primary"
               onClick={sendTournament}
