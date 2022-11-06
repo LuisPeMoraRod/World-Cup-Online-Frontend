@@ -41,7 +41,7 @@ const NewMatch = () => {
 
   const parseTeams = (teams, tournamentId) => {
     const tournamentTeams = teams.filter((team) => {
-      return team.tournamentid !== tournamentId;
+      return team.tournamentid == tournamentId;
     });
     const teamsOptions = tournamentTeams.map((team) => {
       return { ...team, label: team.teamid };
