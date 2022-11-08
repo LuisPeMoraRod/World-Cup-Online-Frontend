@@ -50,7 +50,7 @@ function App() {
 
   return (
     <main className="App">
-      {user ? <Home/> : <LogIn/>} 
+      <LogIn/>
     </main>
   );
 }
