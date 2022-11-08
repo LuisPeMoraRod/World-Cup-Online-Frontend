@@ -12,7 +12,6 @@ import { useIsMount } from "./hooks/useIsMount";
 import NewMatch from "./pages/NewMatch/NewMatch";
 import LogIn from "./pages/LogIn/LogIn";
 import { selectUser } from "./store/slices/user/userSlice";
-import Home from "./pages/Home/Home";
 
 const Pages = () => {
   return (
@@ -49,9 +48,9 @@ function App() {
   }, []);
 
   return (
-    <main className="App">
-      <LogIn/>
-    </main>
+      <Layout>
+        <Pages/>
+      </Layout>
   );
 }
 

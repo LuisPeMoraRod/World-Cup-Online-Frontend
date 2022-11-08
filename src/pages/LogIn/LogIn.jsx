@@ -1,12 +1,12 @@
-import { useRef, useState, useEffect, useContext } from "react";
-import AuthContext from "../../context/AuthProvider";
+import { useRef, useState, useEffect } from "react";
+import useAuth from "../../hooks/useAuth";
 import "./LogIn.scss"
 
 import axios from "../../api/axios";
 const LOGIN_URL = '/auth';
 
 const LogIn = () => {
-    const { setAuth } = useContext(AuthContext);
+    const { setAuth } = useAuth();
     const emailRef = useRef();
     const errRef = useRef();
 
