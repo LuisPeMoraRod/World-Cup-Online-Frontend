@@ -6,10 +6,13 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Tournaments from "./pages/Tournaments/Tournaments";
 import Matches from "./pages/Matches/Matches";
 import IndexTournament from "./pages/NewTournament/IndexTournament";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { fetchCatalogs } from "./store/slices/catalogs/actions";
 import { useIsMount } from "./hooks/useIsMount";
 import NewMatch from "./pages/NewMatch/NewMatch";
+import LogIn from "./pages/LogIn/LogIn";
+import { selectUser } from "./store/slices/user/userSlice";
+import Home from "./pages/Home/Home";
 
 const Pages = () => {
   return (
@@ -35,9 +38,10 @@ const Pages = () => {
   );
 };
 
+
 function App() {
   const isMount = useIsMount(); // hook to check if component has been mounted (rendered once)
-
+  const user = useSelector(selectUser);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -45,11 +49,9 @@ function App() {
   }, []);
 
   return (
-    <Router>
-      <Layout>
-        <Pages />
-      </Layout>
-    </Router>
+    <main className="App">
+      {user ? <Home/> : <LogIn/>} 
+    </main>
   );
 }
 
