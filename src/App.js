@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import logo from "./logo.svg";
 import "./App.scss";
+import RequireAuth from "./components/RequireAuth/RequireAuth";
 import Layout from "./components/Layout/Layout";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Tournaments from "./pages/Tournaments/Tournaments";
@@ -12,6 +13,7 @@ import { useIsMount } from "./hooks/useIsMount";
 import NewMatch from "./pages/NewMatch/NewMatch";
 import LogIn from "./pages/LogIn/LogIn";
 import { selectUser } from "./store/slices/user/userSlice";
+import LayoutNew from "./components/LayoutNew/LayoutNew";
 
 const Pages = () => {
   return (
@@ -32,7 +34,7 @@ const Pages = () => {
           path="tournaments/:tournamentId/new-match"
           element={<NewMatch />}
         ></Route>
-      </Route>
+        </Route>
     </Routes>
   );
 };
@@ -48,9 +50,27 @@ function App() {
   }, []);
 
   return (
-      <Layout>
-        <Pages/>
-      </Layout>
+    <Routes>
+      <Route path="/" element={ <LayoutNew/> }>
+        {/* public routes */}
+        <Route path="logIn" element={<LogIn/>} /> 
+
+        {/* protected admin routes */}
+        <Route element={ <RequireAuth/> }>
+          <Route index element={<Tournaments />} />
+          <Route path="tournaments" element={<Tournaments />} />
+          <Route
+            path="new-tournament"
+            element={<IndexTournament tournament={null} />}/>
+          <Route
+            path="tournaments/:tournamentId/matches"
+            element={<Matches />}/>
+          <Route
+            path="tournaments/:tournamentId/new-match"
+            element={<NewMatch />}/>
+        </Route>
+      </Route>
+    </Routes>
   );
 }
 

@@ -5,7 +5,7 @@
     padding: 0;
     box-sizing: border-box;
 }
-h1{
+h1.welcome{
     text-align: center;
     font-size: 50px;
     background: linear-gradient(to left,
@@ -42,7 +42,7 @@ body {
   color: rgb(18, 119, 217)
 }
 
-section {
+section.logInForm {
     width: 100%;
     max-width: 420px;
     min-height: 400px;
@@ -64,8 +64,9 @@ form {
     padding-bottom: 1rem;
 }
 
-a, a:visited {
+.register, a:visited {
     color: #fff;
+    align-items: center;
 }
 
 input[type="text"],
