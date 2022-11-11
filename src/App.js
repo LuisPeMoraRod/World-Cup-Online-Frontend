@@ -10,6 +10,7 @@ import { useDispatch } from "react-redux";
 import { fetchCatalogs } from "./store/slices/catalogs/actions";
 import { useIsMount } from "./hooks/useIsMount";
 import NewMatch from "./pages/NewMatch/NewMatch";
+import Register from "./components/Register/Register";
 
 const Pages = () => {
   return (
@@ -46,9 +47,7 @@ function App() {
 
   return (
     <Router>
-      <Layout>
-        <Pages />
-      </Layout>
+      <Register/>
     </Router>
   );
 }
