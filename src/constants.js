@@ -6,6 +6,18 @@ export const TOURNAMENT_TYPES = [
   { value: "1", label: "Clubes" },
 ];
 
+export const TOURNAMENT = {
+  id: "0",
+  name: "FIFA World Cup - Catar 2022",
+  startDate: "11-26-2022",
+  endDate: "12-26-2022",
+  type: "Copa",
+  phases: [
+    { value: "0", label: "Fase de grupos" },
+    { value: "1", label: "Octavos de final" },
+  ],
+};
+
 export const TEAMS = [
   { id: 0, label: "Qatar" },
   { id: 1, label: "Ecuador" },
@@ -44,4 +56,50 @@ export const TEAMS = [
 export const LOCAL = [
   { id: 0, label: "BVB" },
   { id: 1, label: "Real Madrid" },
+];
+
+export const RANKINGS = [
+  { name: "Daniela Brenes", score: "129" },
+  { name: "Oscar Méndez", score: "122" },
+  { name: "Luis Pedro Morales", score: "98" },
+  { name: "Gabriel González", score: "77" },
+];
+
+export const MATCHES = [
+  {
+    id: 1,
+    name: "Argentina",
+    startdate: "11-26-2022",
+    starttime: "14:25:10",
+    location: "Milan",
+    state: "Pendiente",
+    score: "0-0",
+  },
+  {
+    id: 1,
+    name: "Inglaterra",
+    startdate: "11-26-2022",
+    starttime: "14:25:10",
+    location: "Milan",
+    state: "Pendiente",
+    score: "0-0",
+  },
+  {
+    id: 2,
+    name: "Costa Rica",
+    startdate: "11-26-2022",
+    starttime: "14:25:10",
+    location: "Milan",
+    state: "Pendiente",
+    score: "0-0",
+  },
+  {
+    id: 2,
+    name: "España",
+    startdate: "11-26-2022",
+    starttime: "14:25:10",
+    location: "Milan",
+    state: "Pendiente",
+    score: "0-0",
+  },
 ];

@@ -10,6 +10,7 @@ import { useDispatch } from "react-redux";
 import { fetchCatalogs } from "./store/slices/catalogs/actions";
 import { useIsMount } from "./hooks/useIsMount";
 import NewMatch from "./pages/NewMatch/NewMatch";
+import Rankings from "./pages/Rankings/Rankings";
 
 const Pages = () => {
   return (
@@ -21,7 +22,6 @@ const Pages = () => {
           path="new-tournament"
           element={<IndexTournament tournament={null} />}
         />
-        {/* <Route path="matches" element={<Matches />} /> */}
         <Route
           path="tournaments/:tournamentId/matches"
           element={<Matches />}
@@ -29,6 +29,10 @@ const Pages = () => {
         <Route
           path="tournaments/:tournamentId/new-match"
           element={<NewMatch />}
+        ></Route>
+        <Route
+          path="rankings"
+          element={<Rankings />}
         ></Route>
       </Route>
     </Routes>
