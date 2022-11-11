@@ -10,6 +10,7 @@ import { useDispatch } from "react-redux";
 import { fetchCatalogs } from "./store/slices/catalogs/actions";
 import { useIsMount } from "./hooks/useIsMount";
 import NewMatch from "./pages/NewMatch/NewMatch";
+import Match from "./pages/Match/Match";
 import Rankings from "./pages/Rankings/Rankings";
 
 const Pages = () => {
@@ -29,6 +30,10 @@ const Pages = () => {
         <Route
           path="tournaments/:tournamentId/new-match"
           element={<NewMatch />}
+        ></Route>
+        <Route
+          path="tournaments/:tournamentId/:matchId"
+          element={<Match />}
         ></Route>
         <Route
           path="rankings"
