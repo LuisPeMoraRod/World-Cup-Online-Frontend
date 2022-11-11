@@ -10,12 +10,15 @@ import { useDispatch } from "react-redux";
 import { fetchCatalogs } from "./store/slices/catalogs/actions";
 import { useIsMount } from "./hooks/useIsMount";
 import NewMatch from "./pages/NewMatch/NewMatch";
-import Register from "./components/Register/Register";
+import Register from "./pages/Register/Register";
+import TermsAndConds from "./pages/Term&Conds/TermsAndConds";
 
 const Pages = () => {
   return (
     <Routes>
       <Route path="/">
+        <Route path="register" element={<Register/>} />
+        <Route path="terms&conditions" element={<TermsAndConds/>} />
         <Route index element={<Tournaments />} />
         <Route path="tournaments" element={<Tournaments />} />
         <Route
@@ -47,7 +50,7 @@ function App() {
 
   return (
     <Router>
-      <Register/>
+      <Pages/>
     </Router>
   );
 }

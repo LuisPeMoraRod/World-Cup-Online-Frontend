@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Select from "react-select";
 import "./Register.scss"
 import axios from "../../api/axios";
-import Tournaments from "../../pages/Tournaments/Tournaments";
+import Tournaments from "../Tournaments/Tournaments";
 
 const USER_REGEX = /^[A-z][A-z0-9-_]{1,23}$/;
 const NAME_REGEX = /^[A-z]{1,23}$/;
@@ -47,9 +47,14 @@ const Register = () => {
     const [validCountry, setValidCountry] = useState(false);
     const [countryFocus, setCountryFocus] = useState(false);
 
+    const [conditions, setConditions] = useState(false);
+    const [validConditions, setValidConditions] = useState(false);
+    const [conditionsFocus, setConditionsFocus] = useState(false);
+
     const [errMsg, setErrMsg] = useState('');
     const [success, setSuccess] = useState(false);
     const [countries, setCountries] = useState([]);
+    
 
     useEffect(() => {
         userRef.current.focus();
@@ -76,6 +81,10 @@ const Register = () => {
     }, [email])
 
     useEffect(() => {
+        setValidConditions(conditions == true);
+    }, [conditions])
+
+    useEffect(() => {
         var today = new Date();
         var birthday = new Date(birthDate);
         var age = today.getFullYear() - birthday.getFullYear();
@@ -87,8 +96,7 @@ const Register = () => {
     }, [birthDate])
 
     useEffect(() => {
-        setValidCountry(country!='' );
-        console.log(country)
+        setValidCountry(country!='');
     }, [country])
 
     useEffect(() => {
@@ -142,9 +150,10 @@ const Register = () => {
 
 
     return (
-        <section>
+        <div className="RegisterDiv">
+            <section>
             <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
-            <h1>Registro X-FIFA</h1>
+            <h1 className="welcome">Registro X-FIFA</h1>
             <form onSubmit={handleSubmit}>
                 {/* Username */}
                 <label htmlFor="username">
@@ -298,13 +307,14 @@ const Register = () => {
                     Para registrarse debe tener al menos 18 años.<br />
                 </p>
 
-                {/* Country ARREGLARRRR*/}
+                {/* Country*/}
                 <label htmlFor="country">
                     País de procedencia:
                     <FontAwesomeIcon icon={faCheck} className={validCountry ? "valid" : "hide"} />
                     <FontAwesomeIcon icon={faTimes} className={validCountry || !country ? "hide" : "invalid"} />
                 </label>
                 <Select
+                    className="countrySelect"
                     id="country"
                     options={countries}
                     ref={userRef}
@@ -315,12 +325,32 @@ const Register = () => {
                     onFocus={() => setCountryFocus(true)}
                     onBlur={() => setCountryFocus(false)}
                 />
+               
                 <p id="uidnote" className={countryFocus && country && !validCountry ? "instructions" : "offscreen"}>
                     <FontAwesomeIcon icon={faInfoCircle} />
                     Debe seleccionar un país.<br />
                 </p>
+                 {/* CONDITIONS */}
+                <input
+                    type="checkbox"
+                    id="conditions"
+                    ref={userRef}
+                    onChange={(e) => setConditions(e.target.checked)}
+                    value={conditions}
+                    required
+                    aria-invalid={validConditions ? "false" : "true"}
+                    aria-describedby="uidnote"
+                    onFocus={() => setConditionsFocus(true)}
+                    onBlur={() => setConditionsFocus(false)}
+                />
+                <label>Acepto los <a href="terms&conditions">términos y condiciones</a> de la X-FIFA para completar mi registro</label>
+                
+                <p id="uidnote" className={conditionsFocus && !validConditions ? "instructions" : "offscreen"}>
+                    <FontAwesomeIcon icon={faInfoCircle} />
+                    Para poder registrarse debe aceptar los términos y condiciones .<br />
+                </p>
 
-                <button disabled={ !validEmail || !validBirthDate || !validLastName || !validUser || !validName || !validPwd || !validCountry ? true : false}>Registrarme</button>
+                <button disabled={ !validConditions || !validEmail || !validBirthDate || !validLastName || !validUser || !validName || !validPwd || !validCountry ? true : false}>Registrarme</button>
             </form>
             <p>
                 Ya tienes cuenta?<br />
@@ -328,7 +358,8 @@ const Register = () => {
                     <a href="logIn">Iniciar Sesión</a>
                 </span>
             </p>
-        </section>
+            </section>
+        </div>
     )
     }
 
