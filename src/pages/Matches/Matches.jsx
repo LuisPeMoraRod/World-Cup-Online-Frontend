@@ -114,7 +114,7 @@ const Matches = () => {
         </thead>
         <tbody className="table-height">
           {rowsData.map((match, i) => {
-            return <MatchesTableRow key={i} match={match} />;
+            return <MatchesTableRow key={i} match={match} tournamentId={tournamentId}/>;
           })}
         </tbody>
       </Table>
