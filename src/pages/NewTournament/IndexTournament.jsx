@@ -3,6 +3,7 @@ import Tournament1 from "./Tournament1";
 import Tournament2 from "./Tournament2";
 import { useSelector } from "react-redux";
 import {FIRST, SECOND} from "../../constants"
+import Layout from "../../components/Layout/Layout";
 
 
 /**
@@ -55,30 +56,36 @@ const IndexTournament = ({ oldTournament }) => {
   switch (step) {
     case FIRST:
       return (
+        <Layout>
         <Tournament1
           tournament={tournament}
           updateTournament={updateTournament}
           nextStep={nextStep}
         ></Tournament1>
+        </Layout>
       );
 
     case SECOND:
       return (
+        <Layout>
         <Tournament2
           tournament={tournament}
           updateTournament={updateTournament}
           nextStep={resetStep}
           lastStep={resetStep}
         ></Tournament2>
+        </Layout>
       );
 
     default:
       return (
+        <Layout>
         <Tournament1
           tournament={tournament}
           updateTournament={updateTournament}
           nextStep={nextStep}
         ></Tournament1>
+        </Layout>
       );
   }
 };

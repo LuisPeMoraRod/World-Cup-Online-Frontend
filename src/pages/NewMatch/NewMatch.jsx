@@ -18,6 +18,7 @@ import { useParams } from "react-router-dom";
 import "./NewMatch.scss";
 import config from "../../config";
 import { Link } from "react-router-dom";
+import Layout from "../../components/Layout/Layout";
 
 const NewMatch = () => {
   // const teams = useSelector((state) => state.catalogs.teams);
@@ -222,6 +223,7 @@ const NewMatch = () => {
     : `/tournaments/${tournamentId}/new-match`;
 
   return (
+    <Layout>
     <div className="centered">
       <h3 className="mb-1 fw-light">
         <b>{tournament.name}</b>
@@ -352,6 +354,7 @@ const NewMatch = () => {
         </Link>
       </Container>
     </div>
+    </Layout>
   );
 };
 

@@ -69,7 +69,8 @@ function App() {
             path="tournaments/:tournamentId/new-match"
             element={<NewMatch />}/>
         </Route>
-      </Route>
+        </Route>
+      
     </Routes>
   );
 }

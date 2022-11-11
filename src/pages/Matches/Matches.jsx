@@ -10,6 +10,7 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import MatchesTableRow from "../../components/MatchesTableRow/MatchesTableRow";
 import "./Matches.scss";
+import Layout from "../../components/Layout/Layout";
 
 const TOURNAMENT = {
   id: "0",
@@ -133,6 +134,7 @@ const Matches = () => {
   }, [matches]);
 
   return (
+    <Layout>
     <div className="table-position">
       <h3 className="mb-5 fw-light">{tournament.name}</h3>
       <Row>
@@ -168,6 +170,7 @@ const Matches = () => {
         </tbody>
       </Table>
     </div>
+    </Layout>
   );
 };
 

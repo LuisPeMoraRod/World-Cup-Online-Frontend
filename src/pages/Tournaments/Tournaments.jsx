@@ -9,6 +9,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
+import Layout from "../../components/Layout/Layout";
 
 /**
  * Component: Table with registered tournaments and a button to add new tournament
@@ -16,6 +17,7 @@ import { useSelector } from "react-redux";
 const Tournaments = () => {
   const data = useSelector((state) => state.tournaments.tournaments);
   return (
+    <Layout>
     <div className="table-position">
       <Row>
         <Col>
@@ -48,6 +50,7 @@ const Tournaments = () => {
         </tbody>
       </Table>
     </div>
+    </Layout>
   );
 };
 
