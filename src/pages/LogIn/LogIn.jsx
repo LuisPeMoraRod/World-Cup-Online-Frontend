@@ -64,7 +64,7 @@ const LogIn = () => {
             if (!err?.response) {
                 setErrMsg('Sin respuesta del servidor');
             } else if (err.response?.status === 400) {
-                setErrMsg('Correo electrónico o contraseña faltantes');
+                setErrMsg('Correo electrónico o contraseña incorrectos');
             } else if (err.response?.status === 401) {
                 setErrMsg('No Autorizado');
             } else {
