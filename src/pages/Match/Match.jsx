@@ -1,13 +1,16 @@
 import React, { useEffect, useState, useRef } from "react";
-import { Typeahead } from "react-bootstrap-typeahead";
 import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
+import Button from "react-bootstrap/Button";
 import { useParams } from "react-router-dom";
 import config from "../../config";
 import useTypeaheadMulti from "../../hooks/useTypeaheadMulti";
 import "./Match.scss";
+import useTypeahead from "../../hooks/useTypeahead";
+import { Typeahead } from "react-bootstrap-typeahead";
+import "react-bootstrap-typeahead/css/Typeahead.css";
 import { PLAYERS } from "../../constants";
 
 const MAX_GOALS = 99;
@@ -20,6 +23,7 @@ const Match = () => {
   const [team2, setTeam2] = useState("");
   const [players2, setPlayers2] = useState(PLAYERS);
   const [oficialScore, setOficialScore] = useState("Pendiente");
+  const [allPlayers, setAllPlayers] = useState([]);
 
   const [prediction, setPrediction] = useState({
     goalsTeam1: 0,
@@ -28,7 +32,7 @@ const Match = () => {
     goalsTeam2: 0,
     scorersTeam2: [],
     assistsTeam2: [],
-    mvp: null,
+    mvp: "",
   });
 
   /**
@@ -112,7 +116,7 @@ const Match = () => {
     "assistsTeam1",
     prediction.assistsTeam1
   );
-  
+
   /**
    * Hook used to handle team 2 assists
    */
@@ -127,6 +131,36 @@ const Match = () => {
     checkAssists2,
     "assistsTeam2",
     prediction.assistsTeam2
+  );
+
+  /**
+   * Checks if entered MVP is one of the options
+   * @param {Object} value
+   * @param {Array} dataset
+   */
+  const checkMvp = (value, dataset) => {
+    let isValid = false;
+    dataset.forEach((item) => {
+      if (item.id === value.id) isValid = true;
+    });
+    return isValid;
+  };
+
+  /**
+   * Hook used to handle MVP input validation
+   */
+  const {
+    value: mvp,
+    isValid: mvpIsValid,
+    hasError: mvpHasError,
+    valueSelectedHandler: mvpSelectedHandler,
+    inputBlurHandler: mvpBlurHandler,
+  } = useTypeahead(
+    updatePrediction,
+    checkMvp,
+    "mvp",
+    prediction.mvp,
+    allPlayers
   );
 
   useEffect(() => {
@@ -155,6 +189,11 @@ const Match = () => {
   useEffect(() => {
     updatePrediction({ goalsTeam2: scorers2.length });
   }, [scorers2]);
+
+  //set all players array for MVP selection
+  useEffect(() => {
+    setAllPlayers([...players1, ...players2]);
+  }, []);
 
   return (
     <Container className="centered">
@@ -246,7 +285,8 @@ const Match = () => {
             {assists1HasError && (
               <p className="error-text">
                 {" "}
-                El máximo número de asistencias debe ser igual o menor que los goles anotados por equipo
+                El máximo número de asistencias debe ser igual o menor que los
+                goles anotados por equipo
               </p>
             )}
           </Form.Group>
@@ -273,12 +313,38 @@ const Match = () => {
             {assists2HasError && (
               <p className="error-text">
                 {" "}
-                El máximo número de asistencias debe ser igual o menor que los goles anotados por equipo
+                El máximo número de asistencias debe ser igual o menor que los
+                goles anotados por equipo
               </p>
             )}
           </Form.Group>
         </Col>
       </Row>
+      <Row>
+        <Col>
+          <Form.Group className="mb-3" controlId="mvp">
+            <Form.Label>Jugador más valioso</Form.Label>
+            <Typeahead
+              className="is-invalid"
+              isInvalid={mvpHasError}
+              id="mvp"
+              options={allPlayers}
+              placeholder="Ingrese un jugador..."
+              defaultInputValue={prediction.mvp}
+              onChange={mvpSelectedHandler}
+              onBlur={mvpBlurHandler}
+            />
+            {mvpHasError && <p className="error-text">Jugador no válido</p>}
+          </Form.Group>
+        </Col>
+      </Row>
+      <Button
+        variant="outline-primary"
+        onClick={() => console.log(prediction)}
+        className="mt-3 mx-1"
+      >
+        Enviar
+      </Button>
     </Container>
   );
 };
