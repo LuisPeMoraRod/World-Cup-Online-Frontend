@@ -36,9 +36,6 @@ const Tournament1 = ({ tournament, updateTournament, nextStep }) => {
   );
   const localTeamsOptions = useSelector((state) => state.catalogs.teams);
   const typesOptions = useSelector((state) => state.catalogs.types);
-  // const typesOptions = TOURNAMENT_TYPES;
-  // const nationalTeamsOptions = TEAMS;
-  // const localTeamsOptions = LOCAL;
 
   const [teamsOptions, setTeamsOptions] = useState([]);
 
