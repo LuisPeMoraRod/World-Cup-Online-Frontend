@@ -31,10 +31,7 @@ const useTypeaheadMulti = (updateObject, checkInput, field, defaultValues) => {
     setIsTouched(true);
   };
 
-  let isValid;
-  if (!!checkInput)
-    isValid = checkInput(enteredValues) || checkInput(defaultValues);
-  else isValid = true;
+  const isValid = checkInput(enteredValues) || checkInput(defaultValues);
   const hasError = !isValid && isTouched;
 
   return {

@@ -10,6 +10,8 @@ import useTypeaheadMulti from "../../hooks/useTypeaheadMulti";
 import "./Match.scss";
 import { PLAYERS } from "../../constants";
 
+const MAX_GOALS = 99;
+
 const Match = () => {
   const { tournamentId, matchId } = useParams();
 
@@ -48,8 +50,20 @@ const Match = () => {
 
   const scorers1Ref = useRef(null);
   const scorers2Ref = useRef(null);
-  const assits1Ref = useRef(null);
-  const assits2Ref = useRef(null);
+  const assists1Ref = useRef(null);
+  const assists2Ref = useRef(null);
+
+  const checkScorers = (scorers) => {
+    return scorers.length <= MAX_GOALS;
+  };
+
+  const checkAssists1 = (assists) => {
+    return assists.length <= prediction.scorersTeam1.length;
+  };
+
+  const checkAssists2 = (assists) => {
+    return assists.length <= prediction.scorersTeam2.length;
+  };
 
   /**
    * Hook used to handle team 1 scorers
@@ -62,7 +76,7 @@ const Match = () => {
     inputBlurHandler: scorers1BlurHandler,
   } = useTypeaheadMulti(
     updatePrediction,
-    null,
+    checkScorers,
     "scorersTeam1",
     prediction.scorersTeam1
   );
@@ -78,9 +92,41 @@ const Match = () => {
     inputBlurHandler: scorers2BlurHandler,
   } = useTypeaheadMulti(
     updatePrediction,
-    null,
+    checkScorers,
     "scorersTeam2",
     prediction.scorersTeam2
+  );
+
+  /**
+   * Hook used to handle team 1 assists
+   */
+  const {
+    values: assists1,
+    isValid: assists1IsValid,
+    hasError: assists1HasError,
+    valueSelectedHandler: assists1SelectedHandler,
+    inputBlurHandler: assists1BlurHandler,
+  } = useTypeaheadMulti(
+    updatePrediction,
+    checkAssists1,
+    "assistsTeam1",
+    prediction.assistsTeam1
+  );
+  
+  /**
+   * Hook used to handle team 2 assists
+   */
+  const {
+    values: assists2,
+    isValid: assists2IsValid,
+    hasError: assists2HasError,
+    valueSelectedHandler: assists2SelectedHandler,
+    inputBlurHandler: assists2BlurHandler,
+  } = useTypeaheadMulti(
+    updatePrediction,
+    checkAssists2,
+    "assistsTeam2",
+    prediction.assistsTeam2
   );
 
   useEffect(() => {
@@ -102,9 +148,9 @@ const Match = () => {
   //update team 1 goals
   useEffect(() => {
     updatePrediction({ goalsTeam1: scorers1.length });
-    console.log(prediction)
+    console.log(prediction);
   }, [scorers1]);
-  
+
   //update team 2 goals
   useEffect(() => {
     updatePrediction({ goalsTeam2: scorers2.length });
@@ -135,7 +181,6 @@ const Match = () => {
               multiple
               id="scorers1"
               onChange={(selected) => {
-                // updateTournament({ teams: selected });
                 scorers1SelectedHandler(selected);
                 // Keep the menu open when making multiple selections.
                 scorers1Ref.current.toggleMenu();
@@ -148,6 +193,12 @@ const Match = () => {
               className="is-invalid"
               isInvalid={scorers1HasError}
             />
+            {scorers1HasError && (
+              <p className="error-text">
+                {" "}
+                El máximo número de goles anotados posible es {MAX_GOALS}
+              </p>
+            )}
           </Form.Group>
         </Col>
         <Col>
@@ -157,7 +208,6 @@ const Match = () => {
               multiple
               id="scorers2"
               onChange={(selected) => {
-                // updateTournament({ teams: selected });
                 scorers2SelectedHandler(selected);
                 // Keep the menu open when making multiple selections.
                 scorers2Ref.current.toggleMenu();
@@ -170,6 +220,62 @@ const Match = () => {
               className="is-invalid"
               isInvalid={scorers2HasError}
             />
+          </Form.Group>
+        </Col>
+      </Row>
+      <Row>
+        <Col>
+          <Form.Group className="mb-5" controlId="assists1">
+            <Form.Label>Asistencias</Form.Label>
+            <Typeahead
+              multiple
+              id="assists1"
+              onChange={(selected) => {
+                assists1SelectedHandler(selected);
+                // Keep the menu open when making multiple selections.
+                assists1Ref.current.toggleMenu();
+              }}
+              options={players1}
+              placeholder={`Escoja los jugadores que predice harán asistencias a los goles de ${team1}...`}
+              ref={assists1Ref}
+              selected={prediction.assistsTeam1}
+              onBlur={assists1BlurHandler}
+              className="is-invalid"
+              isInvalid={assists1HasError}
+            />
+            {assists1HasError && (
+              <p className="error-text">
+                {" "}
+                El máximo número de asistencias debe ser igual o menor que los goles anotados por equipo
+              </p>
+            )}
+          </Form.Group>
+        </Col>
+        <Col>
+          <Form.Group className="mb-5" controlId="assists2">
+            <Form.Label>Asistencias</Form.Label>
+            <Typeahead
+              multiple
+              id="assists2"
+              onChange={(selected) => {
+                assists2SelectedHandler(selected);
+                // Keep the menu open when making multiple selections.
+                assists2Ref.current.toggleMenu();
+              }}
+              options={players2}
+              placeholder={`Escoja los jugadores que predice harán asistencias a los goles de ${team2}...`}
+              ref={assists2Ref}
+              selected={prediction.assistsTeam2}
+              onBlur={assists2BlurHandler}
+              className="is-invalid"
+              isInvalid={assists2HasError}
+            />
+            {assists2HasError && (
+              <p className="error-text">
+                {" "}
+                El máximo número de asistencias debe ser igual o menor que los goles anotados por equipo
+              </p>
+            )}
           </Form.Group>
         </Col>
       </Row>
