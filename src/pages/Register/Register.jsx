@@ -8,7 +8,7 @@ import Tournaments from "../Tournaments/Tournaments";
 
 const USER_REGEX = /^[A-z][A-z0-9-_]{1,23}$/;
 const NAME_REGEX = /^[A-z]{1,23}$/;
-const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
+const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{6,8}$/;
 const EMAIL_REGEX = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
 
 const REGISTER_URL = '/Users';
@@ -152,10 +152,10 @@ const Register = () => {
         <div className="RegisterDiv">
             <section>
             <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
-            <h1 className="welcome">Registro X-FIFA</h1>
+            <h1 className="welcome">Registro World Cup Online</h1>
             <form onSubmit={handleSubmit}>
                 {/* Username */}
-                <label htmlFor="username">
+                <label htmlFor="username" className="registerLabel">
                     Nombre de usuario:
                     <FontAwesomeIcon icon={faCheck} className={validUser ? "valid" : "hide"} />
                     <FontAwesomeIcon icon={faTimes} className={validUser || !user ? "hide" : "invalid"} />
@@ -181,7 +181,7 @@ const Register = () => {
 
 
                 {/* Name */}
-                <label htmlFor="name">
+                <label htmlFor="name" className="registerLabel">
                     Nombre:
                     <FontAwesomeIcon icon={faCheck} className={validName ? "valid" : "hide"} />
                     <FontAwesomeIcon icon={faTimes} className={validName || !name ? "hide" : "invalid"} />
@@ -206,7 +206,7 @@ const Register = () => {
 
 
                 {/* LastName */}
-                <label htmlFor="lastname">
+                <label htmlFor="lastname" className="registerLabel">
                     Apellido:
                     <FontAwesomeIcon icon={faCheck} className={validLastName ? "valid" : "hide"} />
                     <FontAwesomeIcon icon={faTimes} className={validLastName || !lastName ? "hide" : "invalid"} />
@@ -231,7 +231,7 @@ const Register = () => {
 
 
                 {/* LastName */}
-                <label htmlFor="email">
+                <label htmlFor="email" className="registerLabel">
                     Correo Electrónico:
                     <FontAwesomeIcon icon={faCheck} className={validEmail ? "valid" : "hide"} />
                     <FontAwesomeIcon icon={faTimes} className={validEmail || !email ? "hide" : "invalid"} />
@@ -256,7 +256,7 @@ const Register = () => {
 
 
                 {/* Password */}
-                <label htmlFor="pwd">
+                <label htmlFor="pwd" className="registerLabel">
                     Contraseña:
                     <FontAwesomeIcon icon={faCheck} className={validPwd ? "valid" : "hide"} />
                     <FontAwesomeIcon icon={faTimes} className={validPwd || !pwd ? "hide" : "invalid"} />
@@ -276,14 +276,13 @@ const Register = () => {
                 />
                 <p id="uidnote" className={pwdFocus && pwd && !validPwd ? "instructions" : "offscreen"}>
                     <FontAwesomeIcon icon={faInfoCircle} />
-                    La contraseña debe ser dentro de 18 y 24 caracteres.<br />
+                    La contraseña debe ser dentro de 6 y 8 caracteres.<br />
                     Debe contener un número.<br />
                     Debe contener una como mínimo una letra mayúscula y una minúscula.<br />
-                    Debe contener al menos un caracter especial.<br />
                 </p>
 
                 {/* Birth Date */}
-                <label htmlFor="birthdate">
+                <label htmlFor="birthdate" className="registerLabel">
                     Fecha de nacimiento:
                     <FontAwesomeIcon icon={faCheck} className={validBirthDate ? "valid" : "hide"} />
                     <FontAwesomeIcon icon={faTimes} className={validBirthDate || !birthDate ? "hide" : "invalid"} />
@@ -307,7 +306,7 @@ const Register = () => {
                 </p>
 
                 {/* Country*/}
-                <label htmlFor="country">
+                <label htmlFor="country" className="registerLabel">
                     País de procedencia:
                     <FontAwesomeIcon icon={faCheck} className={validCountry ? "valid" : "hide"} />
                     <FontAwesomeIcon icon={faTimes} className={validCountry || !country ? "hide" : "invalid"} />
@@ -342,19 +341,19 @@ const Register = () => {
                     onFocus={() => setConditionsFocus(true)}
                     onBlur={() => setConditionsFocus(false)}
                 />
-                <label>Acepto los <a href="terms&conditions">términos y condiciones</a> de la X-FIFA para completar mi registro</label>
+                <label className="registerLabel">Acepto los <a href="terms&conditions" className="registerA">términos y condiciones</a> de la X-FIFA para completar mi registro</label>
                 
                 <p id="uidnote" className={conditionsFocus && !validConditions ? "instructions" : "offscreen"}>
                     <FontAwesomeIcon icon={faInfoCircle} />
                     Para poder registrarse debe aceptar los términos y condiciones .<br />
                 </p>
 
-                <button disabled={ !validConditions || !validEmail || !validBirthDate || !validLastName || !validUser || !validName || !validPwd || !validCountry ? true : false}>Registrarme</button>
+                <button className="registerButton" disabled={ !validConditions || !validEmail || !validBirthDate || !validLastName || !validUser || !validName || !validPwd || !validCountry ? true : false}>Registrarme</button>
             </form>
-            <p>
-                Ya tienes cuenta?<br />
+            <p className="registerP">
+                ¿Ya tienes cuenta?<br />
                 <span className="line">
-                    <a href="logIn">Iniciar Sesión</a>
+                    <a href="logIn" className="registerA">Iniciar Sesión</a>
                 </span>
             </p>
             </section>
