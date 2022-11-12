@@ -8,7 +8,7 @@ import axios from "../../api/axios";
 
 
 const LOGIN_URL = '/auth';
-const PWD_REGEX = /^[A-z][A-z0-9-_].{8,24}$/;
+const PWD_REGEX = /^[A-z][A-z0-9-_].{6,8}$/;
 const EMAIL_REGEX = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
 
 const LogIn = () => {
@@ -124,12 +124,11 @@ const LogIn = () => {
                     <FontAwesomeIcon icon={faInfoCircle} />
                     La contraseña debe ser dentro de 8 y 24 caracteres.<br />
                 </p>
-                <button className="logInButton">Iniciar Sesión</button>
+                <button className="logInButton" disabled={ !validEmail || !validPwd  ? true : false}>Iniciar Sesión</button>
             </form>
-            <p>
+            <p className="registerText">
                 ¿Aún no tienes una cuenta? Regístrate ahora <br/>
                 <span className="line">
-                    {/**put router link here*/}
                     <a className="register" href="#">Registrarme</a>
                 </span>
             </p>
