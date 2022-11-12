@@ -103,3 +103,50 @@ export const MATCHES = [
     score: "0-0",
   },
 ];
+
+export const PLAYERS = [
+  {
+    id: 0,
+    label: "Alison"
+  },
+  {
+    id: 1,
+    label: "Dani Alves"
+  },
+  {
+    id: 2,
+    label: "Alex Sandro"
+  },
+  {
+    id: 3,
+    label: "Thiago Silva"
+  },
+  {
+    id: 4,
+    label: "Militao"
+  },
+  {
+    id: 5,
+    label: "Casemiro"
+  },
+  {
+    id: 6,
+    label: "Fred"
+  },
+  {
+    id: 7,
+    label: "Neymar"
+  },
+  {
+    id: 8,
+    label: "Rodrygo"
+  },
+  {
+    id: 9,
+    label: "Vinicius"
+  },
+  {
+    id: 10,
+    label: "Gabriel Jesus"
+  },
+]
