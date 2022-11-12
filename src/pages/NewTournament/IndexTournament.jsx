@@ -37,7 +37,7 @@ const IndexTournament = ({ oldTournament }) => {
 
   /**
    * Updates tournament object. Updates fields and values passed as object
-   * Example: updatedRequest({name: "WC", type:"selecciones"})
+   * Example: updateTournament({name: "WC", type:"selecciones"})
    * @param {Object} updatedFields
    */
   const updateTournament = (updatedFields) => {
