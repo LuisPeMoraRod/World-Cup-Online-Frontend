@@ -11,8 +11,8 @@ const NAME_REGEX = /^[A-z]{1,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 const EMAIL_REGEX = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
 
-const REGISTER_URL = '/register';
-const COUNTRIES_URL = '/countries';
+const REGISTER_URL = '/Users';
+const COUNTRIES_URL = '/Country';
 
 
 const Register = () => {
@@ -110,8 +110,7 @@ const Register = () => {
             const result = Array.from(countriesData).map(element => element);
             setCountries(result);
           })
-    }
-
+        }
     )
     
 
@@ -119,7 +118,7 @@ const Register = () => {
         e.preventDefault();
         try {
             const response = await axios.post(REGISTER_URL,
-                JSON.stringify({ user, name, lastName, email, pwd, country, birthDate }),
+                JSON.stringify({username: user, name, lastName, email, countryid: country, birthDate, password: pwd}),
                 {
                     headers: { 'Content-Type': 'application/json' },
                     //withCredentials: true
@@ -140,7 +139,7 @@ const Register = () => {
             if (!err?.response) {
                 setErrMsg('No ha habido respuesta del servidor');
             } else if (err.response?.status === 409) {
-                setErrMsg('Nombre de uuario o correo ya registrado');
+                setErrMsg('Nombre de usuario o correo ya registrado');
             } else {
                 setErrMsg('Registro fallido')
             }
