@@ -4,6 +4,13 @@ import {
   getTournaments,
 } from "../../../services/api.tournaments";
 
+export const parseTournaments = (tournaments) => {
+  const parsedTournaments = tournaments.map((tournament) => {
+    return { ...tournament, value: tournament.id, label: tournament.name };
+  });
+  return parsedTournaments;
+};
+
 export const sendNewTournament = (tournament) => {
   return async (dispatch) => {
     try {
@@ -21,7 +28,7 @@ export const sendNewTournament = (tournament) => {
         teamsIds: teams,
         phases: tournament.phases,
       };
-      
+
       let response;
       response = await postTournament(tournamentBody);
       if (!response.ok) {
@@ -31,7 +38,8 @@ export const sendNewTournament = (tournament) => {
 
       response = await getTournaments(); //get Tournaments from API
       if (!response.ok) throw new Error("Couldn't fetch tournaments data");
-      const tournaments = await response.json();
+      let tournaments = await response.json();
+      tournaments = parseTournaments(tournaments);
 
       //update tournaments state
       dispatch(tournamentsActions.setTournaments(tournaments));

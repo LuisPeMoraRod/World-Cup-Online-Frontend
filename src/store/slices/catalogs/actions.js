@@ -2,6 +2,7 @@ import { catalogsActions } from "./catalogs";
 import { tournamentsActions } from "../tournaments/tournaments";
 import { getTeams } from "../../../services/api.teams";
 import { getTournaments, getTypes } from "../../../services/api.tournaments";
+import { parseTournaments } from "../tournaments/actions";
 
 const NATIONAL_TEAMS = 1;
 const TEAMS = 2;
@@ -24,7 +25,8 @@ export const fetchCatalogs = () => {
 
       response = await getTournaments(); //get Tournaments from API
       if (!response.ok) throw new Error("Couldn't fetch tournaments data");
-      const tournaments = await response.json();
+      let tournaments = await response.json();
+      tournaments = parseTournaments(tournaments);
 
       //dispatch reducers to update state
       dispatch(catalogsActions.setNationalTeams(nationalTeams));

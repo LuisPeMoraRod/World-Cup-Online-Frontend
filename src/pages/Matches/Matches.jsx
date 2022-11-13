@@ -12,56 +12,7 @@ import MatchesTableRow from "../../components/MatchesTableRow/MatchesTableRow";
 import "./Matches.scss";
 import Layout from "../../components/Layout/Layout";
 
-const TOURNAMENT = {
-  id: "0",
-  name: "FIFA World Cup - Catar 2022",
-  startDate: "11-26-2022",
-  endDate: "12-26-2022",
-  type: "Copa",
-  phases: [
-    { value: "0", label: "Fase de grupos" },
-    { value: "1", label: "Octavos de final" },
-  ],
-};
 
-const MATCHES = [
-  {
-    id: 1,
-    name: "Argentina",
-    startdate: "11-26-2022",
-    starttime: "14:25:10",
-    location: "Milan",
-    state: "Pendiente",
-    score: "0-0",
-  },
-  {
-    id: 1,
-    name: "Inglaterra",
-    startdate: "11-26-2022",
-    starttime: "14:25:10",
-    location: "Milan",
-    state: "Pendiente",
-    score: "0-0",
-  },
-  {
-    id: 2,
-    name: "Costa Rica",
-    startdate: "11-26-2022",
-    starttime: "14:25:10",
-    location: "Milan",
-    state: "Pendiente",
-    score: "0-0",
-  },
-  {
-    id: 2,
-    name: "España",
-    startdate: "11-26-2022",
-    starttime: "14:25:10",
-    location: "Milan",
-    state: "Pendiente",
-    score: "0-0",
-  },
-];
 const Matches = () => {
   const { tournamentId } = useParams();
 
@@ -106,7 +57,7 @@ const Matches = () => {
          setTournament(updatedTournament);
        })
        .catch((error) => console.log(error));
-   }, [tournamentId]);
+   }, []);
 
   /**
    * Parse data from API to be useful
@@ -165,7 +116,7 @@ const Matches = () => {
         </thead>
         <tbody className="table-height">
           {rowsData.map((match, i) => {
-            return <MatchesTableRow key={i} match={match} />;
+            return <MatchesTableRow key={i} match={match} tournamentId={tournamentId}/>;
           })}
         </tbody>
       </Table>

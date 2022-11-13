@@ -1,0 +1,161 @@
+//@import url('https://fonts.googleapis.com/css2?family=Nunito&display=swap');
+@import url('https://fonts.cdnfonts.com/css/ea-font');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+div.RegisterDiv {
+    display: flex;
+    justify-content: center;
+    vertical-align: middle;
+    background-color: Rgb(9, 54, 151);
+    //position: absolute;
+  }
+h1.welcome{
+    text-align: center;
+    font-size: 40px;
+    font-family: 'EA Font v1.5 by Ghettoshark', sans-serif;
+    background: linear-gradient(to left,
+                    Rgb(255, 190, 26),
+                    Rgb(255, 189, 27),
+                    Rgb(238, 144, 36),
+                    Rgb(233, 89, 53),
+                    Rgb(234, 70, 60),
+                    Rgb(229, 40, 67),
+                    Rgb(223, 6, 77));
+            -webkit-background-clip: text;
+            color: transparent;
+}
+
+html {
+    font-family: 'Nunito', sans-serif;
+    font-size: 18px;
+    color: #fff;
+}
+
+body.register {
+    min-height: 100vh;
+    background-color: rgb(2, 15, 42);
+    align-items: center;
+}
+
+.Register{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh; 
+  padding: 1rem 0.5rem;
+}
+
+section {
+    width: 100%;
+    max-width: 420px;
+    min-height: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 1rem;
+    background-color: Rgb(2, 15, 42);
+    align-items: center;
+    border-radius: 25px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    flex-grow: 1;
+    padding-bottom: 1rem;
+}
+
+a, a:visited {
+    color: #fff;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="date"],
+button,
+textarea {
+  font-family: 'Nunito', sans-serif;
+  font-size: 18px;
+  min-width: 350px;
+  padding: 0.25rem;
+  border-radius: 0.5rem;
+}
+
+Select.countrySelect {
+    font-family: 'Nunito', sans-serif;
+    font-size: 18px;
+    min-width: 500px;
+    padding: 0.25rem;
+    border-radius: 0.5rem;
+  }
+
+label.registerLabel{
+    color:white;
+    margin-top: 1rem;
+}
+
+button.registerButton {
+    padding: 0.5rem;
+    color:white;
+    margin-top: 1rem;
+    padding: 0.5rem;   
+}
+p.registerP{
+    color: white;
+}
+
+a.registerA{
+    color: white;
+}
+.instructions {
+    font-size: 0.75rem;
+    border-radius: 0.5rem;
+    background: #000;
+    color: #fff;
+    padding: 0.25rem;
+    position: relative;
+    bottom: -10px;
+}
+
+.instructions > svg {
+    margin-right: 0.25rem;
+}
+
+.offscreen {
+    position: absolute;
+    left: -9999px;
+}
+
+.hide {
+    display: none;
+}
+
+.valid {
+    color: limegreen;
+    margin-left: 0.25rem;
+}
+
+.invalid {
+    color: red;
+    margin-left: 0.25rem;
+}
+
+.errmsg {
+    background-color: lightpink;
+    color: firebrick;
+    font-weight: bold;
+    padding: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.line {
+    display: inline-block;
+}

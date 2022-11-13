@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import Tournament1 from "./Tournament1";
 import Tournament2 from "./Tournament2";
 import { useSelector } from "react-redux";
-import {FIRST, SECOND} from "../../constants"
-import Layout from "../../components/Layout/Layout";
 
+const FIRST = 0;
+const SECOND = 1;
 
 /**
  * Creates new or edited tournament object that will be sent to database
@@ -37,7 +37,7 @@ const IndexTournament = ({ oldTournament }) => {
 
   /**
    * Updates tournament object. Updates fields and values passed as object
-   * Example: updatedRequest({name: "WC", type:"selecciones"})
+   * Example: updateTournament({name: "WC", type:"selecciones"})
    * @param {Object} updatedFields
    */
   const updateTournament = (updatedFields) => {
