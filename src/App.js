@@ -10,29 +10,68 @@ import { useDispatch } from "react-redux";
 import { fetchCatalogs } from "./store/slices/catalogs/actions";
 import { useIsMount } from "./hooks/useIsMount";
 import NewMatch from "./pages/NewMatch/NewMatch";
+import Match from "./pages/Match/Match";
 import Rankings from "./pages/Rankings/Rankings";
 
 const Pages = () => {
   return (
     <Routes>
       <Route path="/">
-        <Route index element={<Tournaments />} />
-        <Route path="tournaments" element={<Tournaments />} />
+        <Route
+          index
+          element={
+            <Layout>
+              <Tournaments />
+            </Layout>
+          }
+        />
+        <Route
+          path="tournaments"
+          element={
+            <Layout>
+              <Tournaments />
+            </Layout>
+          }
+        />
         <Route
           path="new-tournament"
-          element={<IndexTournament tournament={null} />}
+          element={
+            <Layout>
+              <IndexTournament tournament={null} />
+            </Layout>
+          }
         />
         <Route
           path="tournaments/:tournamentId/matches"
-          element={<Matches />}
+          element={
+            <Layout>
+              <Matches />
+            </Layout>
+          }
         ></Route>
         <Route
           path="tournaments/:tournamentId/new-match"
-          element={<NewMatch />}
+          element={
+            <Layout>
+              <NewMatch />
+            </Layout>
+          }
+        ></Route>
+        <Route
+          path="tournaments/:tournamentId/:matchId"
+          element={
+            <Layout>
+              <Match />
+            </Layout>
+          }
         ></Route>
         <Route
           path="rankings"
-          element={<Rankings />}
+          element={
+            <Layout>
+              <Rankings />
+            </Layout>
+          }
         ></Route>
       </Route>
     </Routes>
@@ -50,9 +89,7 @@ function App() {
 
   return (
     <Router>
-      <Layout>
-        <Pages />
-      </Layout>
+      <Pages />
     </Router>
   );
 }
