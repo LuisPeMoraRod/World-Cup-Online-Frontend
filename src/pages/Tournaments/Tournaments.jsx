@@ -9,6 +9,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
+import Layout from "../../components/Layout/Layout";
 
 /**
  * Component: Table with registered tournaments and a button to add new tournament
