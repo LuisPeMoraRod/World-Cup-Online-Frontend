@@ -6,6 +6,7 @@ const config = {
     tournaments: "https://localhost:7140/api/Tournament",
     types: "https://localhost:7140/api/Type",
     matches: "https://localhost:7140/api/Match",
+    bet: "https://localhost:7140/api/Match"
   },
 };
 

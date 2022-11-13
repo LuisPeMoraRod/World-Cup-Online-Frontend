@@ -113,8 +113,6 @@ const NewMatch = () => {
       team2: match.team2.teamid,
     };
 
-    console.log(newMatch);
-
     const options = {
       method: "POST",
       headers: headers,

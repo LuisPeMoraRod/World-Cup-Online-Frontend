@@ -18,9 +18,9 @@ const MAX_GOALS = 99;
 const Match = () => {
   const { tournamentId, matchId } = useParams();
 
-  const [team1, setTeam1] = useState("");
+  const [team1, setTeam1] = useState({});
   const [players1, setPlayers1] = useState(PLAYERS);
-  const [team2, setTeam2] = useState("");
+  const [team2, setTeam2] = useState({});
   const [players2, setPlayers2] = useState(PLAYERS);
   const [oficialScore, setOficialScore] = useState("Pendiente");
   const [allPlayers, setAllPlayers] = useState([]);
@@ -36,6 +36,57 @@ const Match = () => {
   });
 
   /**
+   * Receives an array of objects with an ID key
+   * Returns an array of ids (ints)
+   * @param {Array} ids
+   */
+  const parsePlayersIds = (players) => {
+    return players.map((player) => {
+      return parseInt(player.id);
+    });
+  };
+
+  /**
+   * POST to create new bet
+   * @param {Object} newBet
+   */
+  const sendPrediction = () => {
+    const headers = new Headers();
+    headers.append("Content-Type", "application/json");
+
+    const team1Scorers = parsePlayersIds(prediction.scorersTeam1);
+    const team2Scorers = parsePlayersIds(prediction.scorersTeam2);
+    const team1Assists = parsePlayersIds(prediction.assistsTeam1);
+    const team2Assists = parsePlayersIds(prediction.assistsTeam2);
+
+    //new prediction object
+    const newPrediction = {
+      team1Id: team1.id,
+      team1Goals: prediction.goalsTeam1,
+      team1Scorers: team1Scorers,
+      team1Assists: team1Assists,
+      team2Id: team2.id,
+      team2Goals: prediction.goalsTeam2,
+      team2Scorers: team2Scorers,
+      team2Assists: team2Assists,
+    };
+
+    console.log(newPrediction);
+
+    const options = {
+      method: "POST",
+      headers: headers,
+      body: JSON.stringify(newPrediction),
+    };
+
+    // return fetch(config.resources.bet.concat(`/${matchId}`), options)
+    //   .then((response) => response)
+    //   .catch((error) => {
+    //     throw new Error(error);
+    //   });
+  };
+
+  /**
    * Updates prediction object. Updates fields and values passed as object
    * Example: updatePrediction({name: "WC", type:"selecciones"})
    * @param {Object} updatedFields
@@ -48,8 +99,8 @@ const Match = () => {
     const match = matches.filter((match) => {
       return match.id == matchId;
     });
-    setTeam1(match[0].name);
-    setTeam2(match[1].name);
+    setTeam1({ name: match[0].name, id: match[0].id });
+    setTeam2({ name: match[1].name, id: match[1].id });
   };
 
   const scorers1Ref = useRef(null);
@@ -182,7 +233,6 @@ const Match = () => {
   //update team 1 goals
   useEffect(() => {
     updatePrediction({ goalsTeam1: scorers1.length });
-    console.log(prediction);
   }, [scorers1]);
 
   //update team 2 goals
@@ -201,12 +251,12 @@ const Match = () => {
         className="mb-5
        fw-light"
       >
-        {team1} vs {team2}
+        {team1.name} vs {team2.name}
       </h3>
       <div className="scores-container mb-3">
         <h4 className="mb-3 fw-light text-label">
-          <strong>Mi predicción:</strong> {team1} {prediction.goalsTeam1} -{" "}
-          {prediction.goalsTeam2} {team2}
+          <strong>Mi predicción:</strong> {team1.name} {prediction.goalsTeam1} -{" "}
+          {prediction.goalsTeam2} {team2.name}
         </h4>
         <h4 className="mb-3 fw-light text-label">
           <strong>Resultado oficial:</strong> {oficialScore}
@@ -215,7 +265,7 @@ const Match = () => {
       <Row>
         <Col>
           <Form.Group className="mb-3" controlId="goalscorers1">
-            <Form.Label>Anotadores de {team1}</Form.Label>
+            <Form.Label>Anotadores de {team1.name}</Form.Label>
             <Typeahead
               multiple
               id="scorers1"
@@ -242,7 +292,7 @@ const Match = () => {
         </Col>
         <Col>
           <Form.Group className="mb-3" controlId="goalscorers2">
-            <Form.Label>Anotadores de {team2}</Form.Label>
+            <Form.Label>Anotadores de {team2.name}</Form.Label>
             <Typeahead
               multiple
               id="scorers2"
@@ -275,7 +325,7 @@ const Match = () => {
                 assists1Ref.current.toggleMenu();
               }}
               options={players1}
-              placeholder={`Escoja los jugadores que predice harán asistencias a los goles de ${team1}...`}
+              placeholder={`Escoja los jugadores que predice harán asistencias a los goles de ${team1.name}...`}
               ref={assists1Ref}
               selected={prediction.assistsTeam1}
               onBlur={assists1BlurHandler}
@@ -303,7 +353,7 @@ const Match = () => {
                 assists2Ref.current.toggleMenu();
               }}
               options={players2}
-              placeholder={`Escoja los jugadores que predice harán asistencias a los goles de ${team2}...`}
+              placeholder={`Escoja los jugadores que predice harán asistencias a los goles de ${team2.name}...`}
               ref={assists2Ref}
               selected={prediction.assistsTeam2}
               onBlur={assists2BlurHandler}
@@ -340,7 +390,7 @@ const Match = () => {
       </Row>
       <Button
         variant="outline-primary"
-        onClick={() => console.log(prediction)}
+        onClick={sendPrediction}
         className="mt-3 mx-1"
       >
         Enviar

@@ -17,27 +17,61 @@ const Pages = () => {
   return (
     <Routes>
       <Route path="/">
-        <Route index element={<Tournaments />} />
-        <Route path="tournaments" element={<Tournaments />} />
+        <Route
+          index
+          element={
+            <Layout>
+              <Tournaments />
+            </Layout>
+          }
+        />
+        <Route
+          path="tournaments"
+          element={
+            <Layout>
+              <Tournaments />
+            </Layout>
+          }
+        />
         <Route
           path="new-tournament"
-          element={<IndexTournament tournament={null} />}
+          element={
+            <Layout>
+              <IndexTournament tournament={null} />
+            </Layout>
+          }
         />
         <Route
           path="tournaments/:tournamentId/matches"
-          element={<Matches />}
+          element={
+            <Layout>
+              <Matches />
+            </Layout>
+          }
         ></Route>
         <Route
           path="tournaments/:tournamentId/new-match"
-          element={<NewMatch />}
+          element={
+            <Layout>
+              <NewMatch />
+            </Layout>
+          }
         ></Route>
         <Route
           path="tournaments/:tournamentId/:matchId"
-          element={<Match />}
+          element={
+            <Layout>
+              <Match />
+            </Layout>
+          }
         ></Route>
         <Route
           path="rankings"
-          element={<Rankings />}
+          element={
+            <Layout>
+              <Rankings />
+            </Layout>
+          }
         ></Route>
       </Route>
     </Routes>
@@ -55,9 +89,7 @@ function App() {
 
   return (
     <Router>
-      <Layout>
-        <Pages />
-      </Layout>
+      <Pages />
     </Router>
   );
 }
