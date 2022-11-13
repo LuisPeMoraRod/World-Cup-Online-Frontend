@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
 
-const MatchesTableRow = ({ match }) => {
+const MatchesTableRow = ({ tournamentId, match }) => {
   const startDate = new Date(match.startdate);
   return (
     <tr className="rowClass">
       <td>
-        <Link to={`/matches/${match.id}`}>
+        <Link to={`/tournaments/${tournamentId}/${match.id}`}>
           <Button variant="link">
             {match.firstTeam} vs {match.secondTeam}
           </Button>

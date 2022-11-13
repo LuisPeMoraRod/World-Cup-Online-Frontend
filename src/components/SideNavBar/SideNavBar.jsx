@@ -32,6 +32,16 @@ const SideNavBar = () => {
                 </CDBSidebarMenuItem>
               </NavLink>
             </div>
+            <div title="Estadísticas">
+              <NavLink exact="true" to="/rankings">
+                <CDBSidebarMenuItem
+                  icon="fa-solid fa-chart-bar"
+                  className="navbar-item"
+                >
+                  Estadísticas
+                </CDBSidebarMenuItem>
+              </NavLink>
+            </div>
           </CDBSidebarMenu>
         </CDBSidebarContent>
       </CDBSidebar>

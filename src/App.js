@@ -23,16 +23,43 @@ const Pages = () => {
         <Route path="tournaments" element={<Tournaments />} />
         <Route
           path="new-tournament"
-          element={<IndexTournament tournament={null} />}
+          element={
+            <Layout>
+              <IndexTournament tournament={null} />
+            </Layout>
+          }
         />
-        {/* <Route path="matches" element={<Matches />} /> */}
         <Route
           path="tournaments/:tournamentId/matches"
-          element={<Matches />}
+          element={
+            <Layout>
+              <Matches />
+            </Layout>
+          }
         ></Route>
         <Route
           path="tournaments/:tournamentId/new-match"
-          element={<NewMatch />}
+          element={
+            <Layout>
+              <NewMatch />
+            </Layout>
+          }
+        ></Route>
+        <Route
+          path="tournaments/:tournamentId/:matchId"
+          element={
+            <Layout>
+              <Match />
+            </Layout>
+          }
+        ></Route>
+        <Route
+          path="rankings"
+          element={
+            <Layout>
+              <Rankings />
+            </Layout>
+          }
         ></Route>
       </Route>
     </Routes>
