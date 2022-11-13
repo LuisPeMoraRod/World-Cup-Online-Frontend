@@ -5,34 +5,26 @@ import Layout from "./components/Layout/Layout";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Tournaments from "./pages/Tournaments/Tournaments";
 import Matches from "./pages/Matches/Matches";
+import Match from "./pages/Match/Match";
 import IndexTournament from "./pages/NewTournament/IndexTournament";
 import { useDispatch } from "react-redux";
 import { fetchCatalogs } from "./store/slices/catalogs/actions";
 import { useIsMount } from "./hooks/useIsMount";
 import NewMatch from "./pages/NewMatch/NewMatch";
-import Match from "./pages/Match/Match";
-import Rankings from "./pages/Rankings/Rankings";
+import Register from "./pages/Register/Register";
+import TermsAndConds from "./pages/Term&Conds/TermsAndConds";
+import Rankings from "./pages/Rankings/Rankings"
 
 const Pages = () => {
   return (
     <Routes>
       <Route path="/">
-        <Route
-          index
-          element={
-            <Layout>
-              <Tournaments />
-            </Layout>
-          }
-        />
-        <Route
-          path="tournaments"
-          element={
-            <Layout>
-              <Tournaments />
-            </Layout>
-          }
-        />
+        <Route path="register" element={<Register/>} />
+        <Route path="terms&conditions" element={<TermsAndConds/>} />
+        <Route index element={<Layout><Tournaments/> </Layout>} />
+        <Route path="tournaments" element={<Layout>
+                                              <Tournaments />
+                                            </Layout>} />
         <Route
           path="new-tournament"
           element={
@@ -89,7 +81,7 @@ function App() {
 
   return (
     <Router>
-      <Pages />
+      <Pages/>
     </Router>
   );
 }
