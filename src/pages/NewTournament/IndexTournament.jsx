@@ -56,36 +56,30 @@ const IndexTournament = ({ oldTournament }) => {
   switch (step) {
     case FIRST:
       return (
-        <Layout>
         <Tournament1
           tournament={tournament}
           updateTournament={updateTournament}
           nextStep={nextStep}
         ></Tournament1>
-        </Layout>
       );
 
     case SECOND:
       return (
-        <Layout>
         <Tournament2
           tournament={tournament}
           updateTournament={updateTournament}
           nextStep={resetStep}
           lastStep={resetStep}
         ></Tournament2>
-        </Layout>
       );
 
     default:
       return (
-        <Layout>
         <Tournament1
           tournament={tournament}
           updateTournament={updateTournament}
           nextStep={nextStep}
         ></Tournament1>
-        </Layout>
       );
   }
 };

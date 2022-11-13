@@ -17,7 +17,6 @@ import Layout from "../../components/Layout/Layout";
 const Tournaments = () => {
   const data = useSelector((state) => state.tournaments.tournaments);
   return (
-    <Layout>
     <div className="table-position">
       <Row>
         <Col>
@@ -50,7 +49,6 @@ const Tournaments = () => {
         </tbody>
       </Table>
     </div>
-    </Layout>
   );
 };
 
