@@ -129,7 +129,7 @@ const LogIn = () => {
             <p className="registerText">
                 ¿Aún no tienes una cuenta? Regístrate ahora <br/>
                 <span className="line">
-                    <a className="register" href="#">Registrarme</a>
+                    <a className="register" href="register">Registrarme</a>
                 </span>
             </p>
             </section>
