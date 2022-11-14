@@ -7,7 +7,7 @@ import "./LogIn.scss"
 import axios from "../../api/axios";
 
 
-const LOGIN_URL = '/auth';
+const LOGIN_URL = 'Users/Auth';
 const PWD_REGEX = /^[A-z][A-z0-9-_].{6,8}$/;
 const EMAIL_REGEX = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
 
