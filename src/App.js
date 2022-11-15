@@ -17,16 +17,27 @@ import { selectUser } from "./store/slices/user/userSlice";
 import LayoutNew from "./components/LayoutNew/LayoutNew";
 import Register from "./pages/Register/Register";
 import TermsAndConds from "./pages/Term&Conds/TermsAndConds";
-import Rankings from "./pages/Rankings/Rankings"
+import Rankings from "./pages/Rankings/Rankings";
 
 const Pages = () => {
   return (
-
     <>
-      <Route index element={<Layout><Tournaments /></Layout>} />
-      <Route path="tournaments" element={<Layout>
-        <Tournaments />
-      </Layout>} />
+      <Route
+        index
+        element={
+          <Layout>
+            <Tournaments />
+          </Layout>
+        }
+      />
+      <Route
+        path="tournaments"
+        element={
+          <Layout>
+            <Tournaments />
+          </Layout>
+        }
+      />
       <Route
         path="new-tournament"
         element={
@@ -71,7 +82,6 @@ const Pages = () => {
   );
 };
 
-
 function App() {
   const isMount = useIsMount(); // hook to check if component has been mounted (rendered once)
   const user = useSelector(selectUser);
@@ -89,55 +99,66 @@ function App() {
         <Route path="register" element={<Register />} />
         <Route path="terms&conditions" element={<TermsAndConds />} />
         {/* protected admin routes */}
-      <Route element={ <RequireAuth/> }>
-        <Route index element={<Layout><Tournaments /></Layout>} />
-        <Route path="tournaments" element={<Layout>
-          <Tournaments />
-        </Layout>} />
-        <Route
-          path="new-tournament"
-          element={
-            <Layout>
-              <IndexTournament tournament={null} />
-            </Layout>
-          }
-        />
-        <Route
-          path="tournaments/:tournamentId/matches"
-          element={
-            <Layout>
-              <Matches />
-            </Layout>
-          }
-        ></Route>
-        <Route
-          path="tournaments/:tournamentId/new-match"
-          element={
-            <Layout>
-              <NewMatch />
-            </Layout>
-          }
-        ></Route>
-        <Route
-          path="tournaments/:tournamentId/:matchId"
-          element={
-            <Layout>
-              <Match />
-            </Layout>
-          }
-        ></Route>
-        <Route
-          path="rankings"
-          element={
-            <Layout>
-              <Rankings />
-            </Layout>
-          }
-        ></Route>
-      </Route>
+        <Route element={<RequireAuth />}>
+          <Route
+            index
+            element={
+              <Layout>
+                <Tournaments />
+              </Layout>
+            }
+          />
+          <Route
+            path="tournaments"
+            element={
+              <Layout>
+                <Tournaments />
+              </Layout>
+            }
+          />
+          <Route
+            path="new-tournament"
+            element={
+              <Layout>
+                <IndexTournament tournament={null} />
+              </Layout>
+            }
+          />
+          <Route
+            path="tournaments/:tournamentId/matches"
+            element={
+              <Layout>
+                <Matches />
+              </Layout>
+            }
+          ></Route>
+          <Route
+            path="tournaments/:tournamentId/new-match"
+            element={
+              <Layout>
+                <NewMatch />
+              </Layout>
+            }
+          ></Route>
+          <Route
+            path="tournaments/:tournamentId/:matchId"
+            element={
+              <Layout>
+                <Match />
+              </Layout>
+            }
+          ></Route>
+          <Route
+            path="rankings"
+            element={
+              <Layout>
+                <Rankings />
+              </Layout>
+            }
+          ></Route>
+        </Route>
       </Route>
     </Routes>
-
   );
 }
 

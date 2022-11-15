@@ -12,10 +12,13 @@ import useTypeahead from "../../hooks/useTypeahead";
 import { Typeahead } from "react-bootstrap-typeahead";
 import "react-bootstrap-typeahead/css/Typeahead.css";
 import { PLAYERS } from "../../constants";
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 const MAX_GOALS = 99;
 
 const Match = () => {
+  const username = useSelector((state) => state.user.username);
   const { tournamentId, matchId } = useParams();
 
   const [team1, setTeam1] = useState({});
@@ -42,7 +45,7 @@ const Match = () => {
    */
   const parsePlayersIds = (players) => {
     return players.map((player) => {
-      return parseInt(player.id);
+      return player.id;
     });
   };
 
@@ -61,14 +64,15 @@ const Match = () => {
 
     //new prediction object
     const newPrediction = {
-      team1Id: team1.id,
-      team1Goals: prediction.goalsTeam1,
-      team1Scorers: team1Scorers,
-      team1Assists: team1Assists,
-      team2Id: team2.id,
-      team2Goals: prediction.goalsTeam2,
-      team2Scorers: team2Scorers,
-      team2Assists: team2Assists,
+      team1id: team1.id,
+      team1goals: prediction.goalsTeam1,
+      team1scorers: team1Scorers,
+      team1assists: team1Assists,
+      team2id: team2.id,
+      team2goals: prediction.goalsTeam2,
+      team2scorers: team2Scorers,
+      team2assists: team2Assists,
+      mvpid: prediction.mvp.id,
     };
 
     console.log(newPrediction);
@@ -79,11 +83,14 @@ const Match = () => {
       body: JSON.stringify(newPrediction),
     };
 
-    // return fetch(config.resources.bet.concat(`/${matchId}`), options)
-    //   .then((response) => response)
-    //   .catch((error) => {
-    //     throw new Error(error);
-    //   });
+    return fetch(
+      config.resources.bet.concat(`/${username}/${matchId}`),
+      options
+    )
+      .then((response) => response)
+      .catch((error) => {
+        throw new Error(error);
+      });
   };
 
   /**
@@ -99,8 +106,26 @@ const Match = () => {
     const match = matches.filter((match) => {
       return match.id == matchId;
     });
-    setTeam1({ name: match[0].name, id: match[0].id });
-    setTeam2({ name: match[1].name, id: match[1].id });
+
+    const nameTeam1 = match[0].name;
+    const nameTeam2 = match[1].name;
+
+    const options = {
+      method: "GET",
+    };
+    //get all teams
+    fetch(config.resources.teams, options)
+      .then((res) => res.json())
+      .then((data) => {
+        data.forEach((team) => {
+          //set teams ID
+          if (team.label === nameTeam1)
+            setTeam1({ name: nameTeam1, id: team.id });
+          if (team.label === nameTeam2)
+            setTeam2({ name: nameTeam2, id: team.id });
+        });
+      })
+      .catch((error) => console.log(error));
   };
 
   const scorers1Ref = useRef(null);
@@ -220,7 +245,7 @@ const Match = () => {
     };
     //get match info
     fetch(
-      config.resources.tournaments.concat(`/${tournamentId}/Matches`),
+      config.resources.tournaments.concat(`/Matches/${tournamentId}`),
       options
     )
       .then((res) => res.json())
@@ -229,6 +254,34 @@ const Match = () => {
       })
       .catch((error) => console.log(error));
   }, []);
+
+  //set team 1 players
+  useEffect(() => {
+    const options = {
+      method: "GET",
+    };
+    //get players
+    fetch(config.resources.teams.concat(`/${team1.id}/Players`), options)
+      .then((res) => res.json())
+      .then((data) => {
+        setPlayers1(data);
+      })
+      .catch((error) => console.log(error));
+  }, [team1]);
+
+  //set team 2 players
+  useEffect(() => {
+    const options = {
+      method: "GET",
+    };
+    //get players
+    fetch(config.resources.teams.concat(`/${team2.id}/Players`), options)
+      .then((res) => res.json())
+      .then((data) => {
+        setPlayers2(data);
+      })
+      .catch((error) => console.log(error));
+  }, [team2]);
 
   //update team 1 goals
   useEffect(() => {
@@ -244,6 +297,19 @@ const Match = () => {
   useEffect(() => {
     setAllPlayers([...players1, ...players2]);
   }, []);
+
+  // tells if every input is valid
+  const isValid =
+    !scorers1HasError &&
+    !scorers2HasError &&
+    !assists1HasError &&
+    !assists2HasError &&
+    !mvpHasError;
+
+  //redirection url
+  const btnUrl = !!isValid
+    ? `/tournaments/${tournamentId}/matches`
+    : `/tournaments/${tournamentId}/${matchId}`;
 
   return (
     <Container className="centered">
@@ -388,13 +454,22 @@ const Match = () => {
           </Form.Group>
         </Col>
       </Row>
-      <Button
-        variant="outline-primary"
-        onClick={sendPrediction}
-        className="mt-3 mx-1"
-      >
-        Enviar
-      </Button>
+      <Link to={btnUrl}>
+        <Button
+          variant="outline-primary"
+          onClick={sendPrediction}
+          className="mt-3 mx-1"
+          disabled={
+            scorers1HasError ||
+            scorers2HasError ||
+            assists1HasError ||
+            assists2HasError ||
+            mvpHasError
+          }
+        >
+          Enviar
+        </Button>
+      </Link>
     </Container>
   );
 };

@@ -5,13 +5,16 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import "./LogIn.scss"
 import axios from "../../api/axios";
-
+import { userActions } from "../../store/slices/user/user";
+import { useDispatch } from "react-redux";
 
 const LOGIN_URL = 'Users/Auth';
-const PWD_REGEX = /^[A-z][A-z0-9-_].{6,8}$/;
+const PWD_REGEX = /^[A-z][A-z0-9-_].{4,6}$/;
 const EMAIL_REGEX = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
 
 const LogIn = () => {
+    const dispatch = useDispatch();
+
     const { setAuth } = useAuth();
 
     const navigate = useNavigate();
@@ -51,8 +54,10 @@ const LogIn = () => {
                     headers: { 'Content-Type': 'application/json' },
                 }
             );
-            console.log(JSON.stringify(response?.data));
-            //console.log(JSON.stringify(response));
+            const res = response?.data;
+            dispatch(userActions.setUsername(res.username)) //ser user name in redux-store
+            if (res.username === "luismorarod9") dispatch(userActions.setIsAdmin(true));
+
             const accessToken = response?.data?.accessToken;
             const roles = response?.data?.roles;
             setAuth({ email, pwd, roles, accessToken });
@@ -122,7 +127,7 @@ const LogIn = () => {
                 />
                 <p id="uidnote" className={pwdFocus && pwd && !validPwd ? "instructions" : "offscreen"}>
                     <FontAwesomeIcon icon={faInfoCircle} />
-                    La contraseña debe ser dentro de 8 y 24 caracteres.<br />
+                    La contraseña debe ser dentro de 6 y 8 caracteres.<br />
                 </p>
                 <button className="logInButton" disabled={ !validEmail || !validPwd  ? true : false}>Iniciar Sesión</button>
             </form>

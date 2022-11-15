@@ -15,7 +15,6 @@ const Rankings = () => {
   const selectionHandler = (e) => {
     setHasSelected(true);
     //TODO fetch rankings data for specific tournament
-    setData(RANKINGS)
   };
   return (
     <div className="table-position">

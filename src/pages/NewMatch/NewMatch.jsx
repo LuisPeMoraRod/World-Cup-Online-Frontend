@@ -18,7 +18,6 @@ import { useParams } from "react-router-dom";
 import "./NewMatch.scss";
 import config from "../../config";
 import { Link } from "react-router-dom";
-import Layout from "../../components/Layout/Layout";
 
 const NewMatch = () => {
   // const teams = useSelector((state) => state.catalogs.teams);
@@ -41,6 +40,7 @@ const NewMatch = () => {
   });
 
   const parseTeams = (teams, tournamentId) => {
+    console.log(teams);
     const tournamentTeams = teams.filter((team) => {
       return team.tournamentid == tournamentId;
     });
@@ -68,13 +68,13 @@ const NewMatch = () => {
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
-        setMinDate(new Date(data.startDate));
-        setMaxDate(new Date(data.endDate));
+        setMinDate(new Date(data.startdate));
+        setMaxDate(new Date(data.enddate));
         setTournament(data);
       })
       .catch((error) => console.log(error));
 
-    // get tournament's matches
+    // get tournament's teams
     fetch(config.resources.teamsInTournament, options)
       .then((res) => res.json())
       .then((data) => {
@@ -221,7 +221,6 @@ const NewMatch = () => {
     : `/tournaments/${tournamentId}/new-match`;
 
   return (
-    <Layout>
     <div className="centered">
       <h3 className="mb-1 fw-light">
         <b>{tournament.name}</b>
@@ -339,20 +338,13 @@ const NewMatch = () => {
           <Button
             variant="outline-primary"
             onClick={sendNewMatch}
-            disabled={
-              phaseHasError ||
-              locationHasError ||
-              !match.startDatetime ||
-              team1HasError ||
-              team2HasError
-            }
+            disabled={!isValid}
           >
             Enviar
           </Button>
         </Link>
       </Container>
     </div>
-    </Layout>
   );
 };
 
