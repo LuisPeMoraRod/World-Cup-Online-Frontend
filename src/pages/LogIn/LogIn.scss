@@ -105,9 +105,14 @@ label.logInLabel{
 }
 
 button.logInButton {
-    color:white;
+    color:rgb(255, 255, 255);
+    background-color: Rgb(9, 54, 151);
     margin-top: 1rem;
     padding: 0.5rem;   
+}
+button.logInButton:disabled{
+    background-color: Rgb(2, 15, 42);
+    color: white;
 }
 
 p.registerText{

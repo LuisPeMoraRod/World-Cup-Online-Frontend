@@ -9,7 +9,6 @@ import { userActions } from "../../store/slices/user/user";
 import { useDispatch } from "react-redux";
 
 const LOGIN_URL = 'Users/Auth';
-const PWD_REGEX = /^[A-z][A-z0-9-_].{4,6}$/;
 const EMAIL_REGEX = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
 
 const LogIn = () => {
@@ -37,10 +36,6 @@ const LogIn = () => {
         setValidEmail(EMAIL_REGEX.test(email));
     }, [email])
     
-    useEffect(() => {
-        setValidPwd(PWD_REGEX.test(pwd));
-    }, [pwd])
-
     useEffect(() => {
         setErrMsg('');
     }, [email, pwd])
@@ -109,8 +104,6 @@ const LogIn = () => {
                 </p>    
                 <label className="logInLabel" htmlFor="pwd">
                     Contraseña:
-                    <FontAwesomeIcon icon={faCheck} className={validPwd ? "valid" : "hide"} />
-                    <FontAwesomeIcon icon={faTimes} className={validPwd || !pwd ? "hide" : "invalid"} />
                 </label>
                 <input
                     type="password"
@@ -125,11 +118,7 @@ const LogIn = () => {
                     onFocus={() => setPwdFocus(true)}
                     onBlur={() => setPwdFocus(false)}
                 />
-                <p id="uidnote" className={pwdFocus && pwd && !validPwd ? "instructions" : "offscreen"}>
-                    <FontAwesomeIcon icon={faInfoCircle} />
-                    La contraseña debe ser dentro de 6 y 8 caracteres.<br />
-                </p>
-                <button className="logInButton" disabled={ !validEmail || !validPwd  ? true : false}>Iniciar Sesión</button>
+                <button className="logInButton" disabled={ !validEmail  ? true : false}>Iniciar Sesión</button>
             </form>
             <p className="registerText">
                 ¿Aún no tienes una cuenta? Regístrate ahora <br/>
