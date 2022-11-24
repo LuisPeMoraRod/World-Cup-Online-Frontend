@@ -18,6 +18,7 @@ import LayoutNew from "./components/LayoutNew/LayoutNew";
 import Register from "./pages/Register/Register";
 import TermsAndConds from "./pages/Term&Conds/TermsAndConds";
 import Rankings from "./pages/Rankings/Rankings";
+import PrivateLeague from "./pages/PrivateLeague/PrivateLeague";
 
 const Pages = () => {
   return (
@@ -98,6 +99,7 @@ function App() {
         <Route path="logIn" element={<LogIn />} />
         <Route path="register" element={<Register />} />
         <Route path="terms&conditions" element={<TermsAndConds />} />
+        <Route path="privateLeagues" element={<Layout><PrivateLeague/></Layout>}/>
         {/* protected admin routes */}
         <Route element={<RequireAuth />}>
           <Route
