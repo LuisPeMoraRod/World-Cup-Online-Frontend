@@ -22,6 +22,7 @@ const PrivateLeague = () => {
     const navigate = useNavigate();
 
     const [name, setName] = useState('');
+    const [code, setCode] = useState('');
     const [tournament, setTournament] = useState('');
     const [errMsg, setErrMsg] = useState('');
     const [success, setSuccess] = useState(false);
@@ -56,7 +57,11 @@ const PrivateLeague = () => {
             setSuccess(true);
             setName('');
             setTournament('');
-            navigate('/privateLeagues');            
+            //navigate('/privateLeagues');    
+            //console.log(response.data.code);
+            setCode(response.data.code);
+            setWindow(4);   
+            console.log(code);   
             
         } catch (err) {
             if (!err?.response) {
@@ -175,9 +180,13 @@ const PrivateLeague = () => {
                 <div>
                     <label>UNIRME LIGA PRIVADA</label>
                 </div>
-            ) : (
+            ) : window === 3? (
                 <div>
                     <label>MIS LIGAS PRIVADAS</label>
+                </div>
+            ):(
+                <div className="divCreatedLeague">
+                    <p className="createdLeague">Liga privada {name} creada satisfactoriamente <br/> Código de acceso: {code}</p>
                 </div>
             )}
         </>

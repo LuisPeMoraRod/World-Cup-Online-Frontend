@@ -11,14 +11,26 @@ div.formDiv{
     align-items: center;
     justify-content: center;
 }
-
+p.createdLeague{
+    margin-top: 30%;
+    margin-left: 40%;
+    min-height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: gray;
+    max-width: 300px;
+    text-align: center;
+    color: white;
+    border-radius: 50px;
+}
 div.newLeague{
     min-height: 400px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    border-radius: 25px;;
+    border-radius: 25px;
 }
 
 Select.tournamentSelect {
