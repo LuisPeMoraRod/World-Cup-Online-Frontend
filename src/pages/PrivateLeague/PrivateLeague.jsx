@@ -9,8 +9,10 @@ import "./PrivateLeague.scss"
 
 
 const NAME_REGEX =  /^[A-z0-9-_]{5,30}$/;
+const ACCESSCODE_REGEX =  /^[A-z0-9-_]{1,30}$/;
 const TOURNAMENTS_URL = '/Tournaments';
 const LEAGUE_URL = '/Leagues';
+const JOIN_LEAGUE_URL = '/Leagues';
 
 const PrivateLeague = () => {
     const username = useSelector((state) => state.user.username);
@@ -18,17 +20,22 @@ const PrivateLeague = () => {
 
     const nameRef = useRef();
     const tournamentRef = useRef();
+    const accessCodeRef = useRef();
     const errRef = useRef();
     const navigate = useNavigate();
 
     const [name, setName] = useState('');
     const [code, setCode] = useState('');
+    const [accessCode, setAccessCode] = useState('');
     const [tournament, setTournament] = useState('');
     const [errMsg, setErrMsg] = useState('');
     const [success, setSuccess] = useState(false);
 
     const [validName, setValidName] = useState(false);
     const [nameFocus, setNameFocus] = useState(false);
+
+    const [validAccessCode, setValidAccessCode] = useState(false);
+    const [accessCodeFocus, setAccessCodeFocus] = useState(false);
 
     const [validTournament, setValidTournament] = useState(false);
     const [tournamentFocus, setTournamentFocus] = useState(false);
@@ -42,6 +49,10 @@ const PrivateLeague = () => {
     useEffect(() => {
         setValidTournament(tournament!='');
     }, [tournament])
+
+    useEffect(() => {
+        setValidAccessCode(ACCESSCODE_REGEX.test(accessCode));
+    }, [accessCode])
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -67,9 +78,38 @@ const PrivateLeague = () => {
             if (!err?.response) {
                 setErrMsg('No ha habido respuesta del servidor');
             } else if (err.response?.status === 409) {
-                setErrMsg('Nombre de usuario o correo ya registrado');
+                setErrMsg('Usted ya pertenece a una liga privada en este torneo');
             } else {
-                setErrMsg('Registro fallido')
+                setErrMsg('Registro de liga privada fallido')
+            }
+            errRef.current.focus();
+        }
+    }
+
+    const joinHandleSubmit = async (e) => {
+        e.preventDefault();
+        
+        try {
+            const response = await axios.post(JOIN_LEAGUE_URL,
+                JSON.stringify({username,accesscode:accessCode}),
+                {
+                    headers: { 'Content-Type': 'application/json' },
+                    //withCredentials: true
+                }
+            );
+            setSuccess(true);
+            setAccessCode('');
+            setCode(response.data.code);
+            setWindow(5);   
+            console.log(code);   
+            
+        } catch (err) {
+            if (!err?.response) {
+                setErrMsg('El código de acceso ingresado es incorrecto');
+            } else if (err.response?.status === 409) {
+                setErrMsg('Usted ya pertenece a una liga privada en este torneo');
+            } else {
+                setErrMsg('No se pudo unir a la liga privada')
             }
             errRef.current.focus();
         }
@@ -178,15 +218,70 @@ const PrivateLeague = () => {
                 </div>
             ) : window === 2 ?(
                 <div>
-                    <label>UNIRME LIGA PRIVADA</label>
+                    <form className="newLeagueForm">
+                        <div className="newLeague">
+                            {/* JOIN PRIVATE LEAGUE */}
+                            <label className="leagueLabel" htmlFor="accessCode">
+                                Codigo de acceso a la liga privada: 
+                                <FontAwesomeIcon icon={faCheck} className={validAccessCode ? "valid" : "hide"} />
+                                <FontAwesomeIcon icon={faTimes} className={validAccessCode || !accessCode ? "hide" : "invalid"} />
+                            </label>
+                            <input
+                                type="text"
+                                id="name"
+                                ref={accessCodeRef}
+                                autoComplete="off"
+                                onChange={(e) => setAccessCode(e.target.value)}
+                                value={accessCode}
+                                required
+                                aria-invalid={validAccessCode ? "false" : "true"}
+                                aria-describedby="uidnote"
+                                onFocus={() => setAccessCodeFocus(true)}
+                                onBlur={() => setAccessCodeFocus(false)}/>
+                            <p id="uidnote" className={accessCodeFocus && accessCode && !validAccessCode ? "instructions" : "offscreen"}>
+                                <FontAwesomeIcon icon={faInfoCircle} />
+                                El codigo de acceso es requerido.<br />
+                            </p> 
+
+                            <div className="formDiv">
+                                <button
+                                    className="formButton"
+                                    onClick={(e) => setWindow(0)}>
+                                        Volver
+                                </button>
+                                <button
+                                    className="formButton"
+                                    onClick={joinHandleSubmit}
+                                    disabled={ !validAccessCode  ? true : false}>
+                                        Unirme
+                                </button>
+                            </div>
+
+                        </div>
+                    </form>
                 </div>
             ) : window === 3? (
                 <div>
                     <label>MIS LIGAS PRIVADAS</label>
                 </div>
-            ):(
+            ): window === 4?(
                 <div className="divCreatedLeague">
                     <p className="createdLeague">Liga privada {name} creada satisfactoriamente <br/> Código de acceso: {code}</p>
+                    <button
+                        className="backButton"
+                        onClick={(e) => setWindow(0)}>
+                            Volver
+                    </button>
+                </div>
+
+            ) : (
+                <div className="divCreatedLeague">
+                    <p className="createdLeague">Te has unido a la liga privada satisfactoriamente <br/> Código de acceso: {code}</p>
+                    <button
+                        className="backButton"
+                        onClick={(e) => setWindow(0)}>
+                            Volver
+                    </button>
                 </div>
             )}
         </>

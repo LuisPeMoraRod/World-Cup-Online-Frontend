@@ -99,7 +99,7 @@ function App() {
         <Route path="logIn" element={<LogIn />} />
         <Route path="register" element={<Register />} />
         <Route path="terms&conditions" element={<TermsAndConds />} />
-        <Route path="privateLeagues" element={<Layout><PrivateLeague/></Layout>}/>
+        
         {/* protected admin routes */}
         <Route element={<RequireAuth />}>
           <Route
@@ -158,6 +158,7 @@ function App() {
               </Layout>
             }
           ></Route>
+          <Route path="privateLeagues" element={<Layout><PrivateLeague/></Layout>}/>
         </Route>
       </Route>
     </Routes>

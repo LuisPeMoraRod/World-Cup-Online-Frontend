@@ -12,7 +12,7 @@ div.formDiv{
     justify-content: center;
 }
 p.createdLeague{
-    margin-top: 30%;
+    margin-top: 20%;
     margin-left: 40%;
     min-height: 100px;
     display: flex;
@@ -68,6 +68,22 @@ button.formButton{
     min-width: 40px;
     max-height: 40px;
     margin-right: 10px;
+}
+
+button.backButton{
+    cursor: pointer;
+    border: none;
+    padding: 16px 32px;
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+    position: relative;
+    border-radius: 12px;
+    background-color: #2b77d9;
+    min-width: 40px;
+    max-height: 40px;
+    margin-top: 10%;
+    margin-left: 70%;
 }
 
 .valid {
