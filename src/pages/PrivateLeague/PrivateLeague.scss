@@ -1,0 +1,142 @@
+div.options{
+    min-height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+div.formDiv{
+    min-height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+p.createdLeague{
+    margin-top: 20%;
+    margin-left: 40%;
+    min-height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: gray;
+    max-width: 300px;
+    text-align: center;
+    color: white;
+    border-radius: 50px;
+}
+div.newLeague{
+    min-height: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 25px;
+}
+
+Select.tournamentSelect {
+    font-family: 'Nunito', sans-serif;
+    font-size: 18px;
+    min-width: 700px;
+    padding: 0.25rem;
+    border-radius: 0.5rem;
+    border-color: black;
+}
+
+button.optionsButton{
+    cursor: pointer;
+    border: none;
+    padding: 16px 32px;
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+    position: relative;
+    border-radius: 12px;
+    background-color: #2b77d9;
+    min-width: 40px;
+    margin-right: 10px;
+}
+button.formButton{
+    cursor: pointer;
+    border: none;
+    padding: 16px 32px;
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+    position: relative;
+    border-radius: 12px;
+    background-color: #2b77d9;
+    min-width: 40px;
+    max-height: 40px;
+    margin-right: 10px;
+}
+
+button.backButton{
+    cursor: pointer;
+    border: none;
+    padding: 16px 32px;
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+    position: relative;
+    border-radius: 12px;
+    background-color: #2b77d9;
+    min-width: 40px;
+    max-height: 40px;
+    margin-top: 10%;
+    margin-left: 70%;
+}
+
+.valid {
+    color: limegreen;
+    margin-left: 0.25rem;
+}
+
+.invalid {
+    color: red;
+    margin-left: 0.25rem;
+}
+
+.errmsg {
+    background-color: lightpink;
+    color: firebrick;
+    font-weight: bold;
+    padding: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.line {
+    display: inline-block;
+}
+
+.instructions {
+    font-size: 0.75rem;
+    border-radius: 0.5rem;
+    background: #000;
+    color: #fff;
+    padding: 0.25rem;
+    position: relative;
+    bottom: -10px;
+}
+.instructions > svg {
+    margin-right: 0.25rem;
+}
+
+.offscreen {
+    position: absolute;
+    left: -9999px;
+}
+
+.hide {
+    display: none;
+}
+
+form.newLeagueForm {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    flex-grow: 1;
+    padding-bottom: 1rem;
+}
+
+
+
