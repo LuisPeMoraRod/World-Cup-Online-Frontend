@@ -1,15 +1,15 @@
 import { useRef, useState, useEffect } from "react";
 import { faCheck, faTimes, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Select from "react-select";
 import "./Register.scss"
 import axios from "../../api/axios";
-import Tournaments from "../Tournaments/Tournaments";
+
 
 const USER_REGEX = /^[A-z][A-z0-9-_]{1,23}$/;
-const NAME_REGEX = /^[A-z]{1,23}$/;
-const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{6,8}$/;
+const NAME_REGEX = /^([A-z0-9]){1,23}$/;
+const PWD_REGEX = /^([A-z])(?=.*[0-9]).{6,8}$/;
 const EMAIL_REGEX = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
 
 const REGISTER_URL = '/Users';
@@ -48,7 +48,7 @@ const Register = () => {
     const [validCountry, setValidCountry] = useState(false);
     const [countryFocus, setCountryFocus] = useState(false);
 
-    const [conditions, setConditions] = useState(false);
+    const [conditions, setConditions] = useState(true);
     const [validConditions, setValidConditions] = useState(false);
     const [conditionsFocus, setConditionsFocus] = useState(false);
 
@@ -346,7 +346,7 @@ const Register = () => {
                 />
                 <label className="registerLabel">Acepto los <a href="terms&conditions" className="registerA">términos y condiciones</a> de la X-FIFA para completar mi registro</label>
                 
-                <p id="uidnote" className={conditionsFocus && !validConditions ? "instructions" : "offscreen"}>
+                <p id="uidnote" className={conditionsFocus && !validConditions && !conditions ? "instructions" : "offscreen"}>
                     <FontAwesomeIcon icon={faInfoCircle} />
                     Para poder registrarse debe aceptar los términos y condiciones .<br />
                 </p>
