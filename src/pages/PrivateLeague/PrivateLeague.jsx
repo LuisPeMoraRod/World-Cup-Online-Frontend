@@ -10,8 +10,8 @@ import "./PrivateLeague.scss"
 const NAME_REGEX =  /^[A-z0-9-_]{5,30}$/;
 const ACCESSCODE_REGEX =  /^[A-z0-9-_]{1,30}$/;
 const TOURNAMENTS_URL = '/Tournaments';
-const LEAGUE_URL = '/Leagues';
-const JOIN_LEAGUE_URL = '/Leagues';
+const LEAGUE_URL = '/League';
+const JOIN_LEAGUE_URL = '/League';
 
 /**
  * Contains all the operations related to the process of private leagues
