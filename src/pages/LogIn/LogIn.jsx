@@ -8,10 +8,16 @@ import axios from "../../api/axios";
 import { userActions } from "../../store/slices/user/user";
 import { useDispatch } from "react-redux";
 
+//constants used for validations and http requests
 const LOGIN_URL = 'Users/Auth';
 const EMAIL_REGEX = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
 
+/**
+ * Contains all the operations related to the process of log in
+ * @returns login graphic interface
+ */
 const LogIn = () => {
+    
     const dispatch = useDispatch();
 
     const { setAuth } = useAuth();

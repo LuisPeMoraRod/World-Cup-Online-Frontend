@@ -1,29 +1,35 @@
 import {useRef, useState, useEffect} from "react";
 import { faCheck, faTimes, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Select from "react-select";
 import axios from "../../api/axios";
 import "./PrivateLeague.scss"
 
-
+//constants used for validations and http requests
 const NAME_REGEX =  /^[A-z0-9-_]{5,30}$/;
 const ACCESSCODE_REGEX =  /^[A-z0-9-_]{1,30}$/;
 const TOURNAMENTS_URL = '/Tournaments';
-const LEAGUE_URL = '/Leagues';
-const JOIN_LEAGUE_URL = '/Leagues';
+const LEAGUE_URL = '/League';
+const JOIN_LEAGUE_URL = '/League';
 
+/**
+ * Contains all the operations related to the process of private leagues
+ * @returns private league graphic interface
+ */
 const PrivateLeague = () => {
+    //get the username from redux
     const username = useSelector((state) => state.user.username);
+    //constant used to decide which window to render
     const [window, setWindow] = useState(0);
 
+    
     const nameRef = useRef();
     const tournamentRef = useRef();
     const accessCodeRef = useRef();
     const errRef = useRef();
-    const navigate = useNavigate();
 
+    //properties for the private league
     const [name, setName] = useState('');
     const [code, setCode] = useState('');
     const [accessCode, setAccessCode] = useState('');
@@ -42,18 +48,32 @@ const PrivateLeague = () => {
 
     const [tournaments, setTournaments] = useState([]);
 
+    /**
+     * validate the name of the private league
+     */
     useEffect(() => {
         setValidName(NAME_REGEX.test(name));
     }, [name])
 
+    /**
+     * Validate if a tournament is selected
+     */
     useEffect(() => {
         setValidTournament(tournament!='');
     }, [tournament])
 
+    /**
+     * validate the access code for a private league
+     */
     useEffect(() => {
         setValidAccessCode(ACCESSCODE_REGEX.test(accessCode));
     }, [accessCode])
 
+
+    /**
+     * Http post used to create a private league
+     * @param {*} e 
+     */
     const handleSubmit = async (e) => {
         e.preventDefault();
         
@@ -86,6 +106,10 @@ const PrivateLeague = () => {
         }
     }
 
+    /**
+     * Http Post used to join into a private league
+     * @param {*} e 
+     */
     const joinHandleSubmit = async (e) => {
         e.preventDefault();
         
@@ -115,6 +139,9 @@ const PrivateLeague = () => {
         }
     }
 
+    /**
+     * Http get used to get all the active tournaments from the db
+     */
     useState(() => {
         axios.get(TOURNAMENTS_URL)
           .then(res => {
