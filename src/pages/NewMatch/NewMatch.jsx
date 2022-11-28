@@ -105,7 +105,7 @@ const NewMatch = () => {
 
     //new match object
     const newMatch = {
-      tournamentid: parseInt(match.tournamentId),
+      tournamentid: match.tournamentId,
       startdate: match.startDatetime,
       starttime: match.startDatetime,
       location: match.location,

@@ -6,8 +6,15 @@ import { useState } from "react";
  * @param {*} checkInput check if entered text is valid
  * @param {String} field input type
  * @param {String} defaultValues
+ * @param {any} comparisonValue optional value used to compare input value if necessary
  */
-const useTypeaheadMulti = (updateObject, checkInput, field, defaultValues) => {
+const useTypeaheadMulti = (
+  updateObject,
+  checkInput,
+  field,
+  defaultValues,
+  comparisonValue = null
+) => {
   const [enteredValues, setEnteredValues] = useState("");
   const [isTouched, setIsTouched] = useState(false); //state that indicates if input is touched
 
@@ -31,7 +38,15 @@ const useTypeaheadMulti = (updateObject, checkInput, field, defaultValues) => {
     setIsTouched(true);
   };
 
-  const isValid = checkInput(enteredValues) || checkInput(defaultValues);
+  // let isValid;
+  // if (!comparisonValue) isValid = checkInput(enteredValues) || checkInput(defaultValues);
+  // else isValid = checkInput(enteredValues, comparisonValue) || checkInput(defaultValues, comparisonValue);
+
+  const isValid = !comparisonValue
+    ? checkInput(enteredValues) || checkInput(defaultValues)
+    : checkInput(enteredValues, comparisonValue) ||
+      checkInput(defaultValues, comparisonValue);
+
   const hasError = !isValid && isTouched;
 
   return {

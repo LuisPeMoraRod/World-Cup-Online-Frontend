@@ -30,16 +30,16 @@ const LogIn = () => {
     const [validEmail, setValidEmail] = useState(false);
     const [emailFocus, setEmailFocus] = useState(false);
 
-    const [validPwd, setValidPwd] = useState(false);
+    const [validPwd, setValidPwd] = useState(true);
     const [pwdFocus, setPwdFocus] = useState(false);
 
     useEffect(() => {
         setValidEmail(EMAIL_REGEX.test(email));
     }, [email])
     
-    useEffect(() => {
-        setValidPwd(PWD_REGEX.test(pwd));
-    }, [pwd])
+    // useEffect(() => {
+    //     setValidPwd(PWD_REGEX.test(pwd));
+    // }, [pwd])
 
     useEffect(() => {
         setErrMsg('');
