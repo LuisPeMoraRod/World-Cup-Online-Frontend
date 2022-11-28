@@ -96,7 +96,7 @@ Select.countrySelect {
     min-width: 500px;
     padding: 0.25rem;
     border-radius: 0.5rem;
-  }
+}
 
 label.registerLabel{
     color:white;
@@ -106,8 +106,13 @@ label.registerLabel{
 button.registerButton {
     padding: 0.5rem;
     color:white;
+    background-color: Rgb(9, 54, 151);
     margin-top: 1rem;
     padding: 0.5rem;   
+}
+button.registerButton:disabled{
+    background-color: Rgb(2, 15, 42);
+    color: white;
 }
 p.registerP{
     color: white;

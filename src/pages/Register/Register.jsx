@@ -1,6 +1,7 @@
 import { useRef, useState, useEffect } from "react";
 import { faCheck, faTimes, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import Select from "react-select";
 import "./Register.scss"
 import axios from "../../api/axios";
@@ -18,7 +19,7 @@ const COUNTRIES_URL = '/Country';
 const Register = () => {
     const userRef = useRef();
     const errRef = useRef();
-
+    const navigate = useNavigate();
     const [user, setUser] = useState('');
     const [validUser, setValidUser] = useState(false);
     const [userFocus, setUserFocus] = useState(false);
@@ -133,6 +134,8 @@ const Register = () => {
             setName('');
             setlastName('');
             setCountry('');
+            navigate('/logIn')
+            
             
             
         } catch (err) {
