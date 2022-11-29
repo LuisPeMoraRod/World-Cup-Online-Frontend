@@ -11,7 +11,7 @@ const NAME_REGEX =  /^[A-z0-9-_]{5,30}$/;
 const ACCESSCODE_REGEX =  /^[A-z0-9-_]{1,30}$/;
 const TOURNAMENTS_URL = '/League/Tournaments';
 const LEAGUE_URL = '/League';
-const JOIN_LEAGUE_URL = '/League';
+const JOIN_LEAGUE_URL = '/League/Join';
 
 /**
  * Contains all the operations related to the process of private leagues
@@ -79,7 +79,7 @@ const PrivateLeague = () => {
         
         try {
             const response = await axios.post(LEAGUE_URL,
-                JSON.stringify({username, name, tournament}),
+                JSON.stringify({userid: username, name, tournamentid:tournament}),
                 {
                     headers: { 'Content-Type': 'application/json' },
                     //withCredentials: true
@@ -97,13 +97,18 @@ const PrivateLeague = () => {
         } catch (err) {
             if (!err?.response) {
                 setErrMsg('No ha habido respuesta del servidor');
-            } else if (err.response?.status === 409) {
+            } else if (err.response?.status === 400) {
                 setErrMsg('Usted ya pertenece a una liga privada en este torneo');
             } else {
                 setErrMsg('Registro de liga privada fallido')
             }
             errRef.current.focus();
         }
+    }
+
+    const setDefaultValues = () =>{
+        setWindow(0);
+        setErrMsg('');
     }
 
     /**
@@ -130,7 +135,9 @@ const PrivateLeague = () => {
         } catch (err) {
             if (!err?.response) {
                 setErrMsg('El código de acceso ingresado es incorrecto');
-            } else if (err.response?.status === 409) {
+            } else if (err.response?.status === 400) {
+                setErrMsg('El código de acceso ingresado es incorrecto');
+            }else if (err.response?.status === 409) {
                 setErrMsg('Usted ya pertenece a una liga privada en este torneo');
             } else {
                 setErrMsg('No se pudo unir a la liga privada')
@@ -178,6 +185,8 @@ const PrivateLeague = () => {
                 <div>
                     <form className="newLeagueForm">
                         <div className="newLeague">
+                        <p ref={errRef} className={errMsg ? "errmsg" :
+                        "offscreen"} aria-live="assertive">{errMsg}</p>
                             {/* CREATE PRIVATE LEAGUE */}
                             <label className="leagueLabel" htmlFor="name">
                                 Nombre de la liga: 
@@ -229,7 +238,7 @@ const PrivateLeague = () => {
                             <div className="formDiv">
                                 <button
                                     className="formButton"
-                                    onClick={(e) => setWindow(0)}>
+                                    onClick={setDefaultValues}>
                                         Volver
                                 </button>
                                 <button
@@ -247,6 +256,8 @@ const PrivateLeague = () => {
                 <div>
                     <form className="newLeagueForm">
                         <div className="newLeague">
+                            <p ref={errRef} className={errMsg ? "errmsg" :
+                            "offscreen"} aria-live="assertive">{errMsg}</p>
                             {/* JOIN PRIVATE LEAGUE */}
                             <label className="leagueLabel" htmlFor="accessCode">
                                 Codigo de acceso a la liga privada: 
@@ -273,7 +284,7 @@ const PrivateLeague = () => {
                             <div className="formDiv">
                                 <button
                                     className="formButton"
-                                    onClick={(e) => setWindow(0)}>
+                                    onClick={setDefaultValues}>
                                         Volver
                                 </button>
                                 <button
@@ -296,7 +307,7 @@ const PrivateLeague = () => {
                     <p className="createdLeague">Liga privada {name} creada satisfactoriamente <br/> Código de acceso: {code}</p>
                     <button
                         className="backButton"
-                        onClick={(e) => setWindow(0)}>
+                        onClick={setDefaultValues}>
                             Volver
                     </button>
                 </div>
@@ -306,7 +317,7 @@ const PrivateLeague = () => {
                     <p className="createdLeague">Te has unido a la liga privada satisfactoriamente <br/> Código de acceso: {code}</p>
                     <button
                         className="backButton"
-                        onClick={(e) => setWindow(0)}>
+                        onClick={setDefaultValues}>
                             Volver
                     </button>
                 </div>
