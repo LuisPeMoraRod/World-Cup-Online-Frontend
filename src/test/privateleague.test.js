@@ -1,23 +1,72 @@
 import React from "react";
 import '@testing-library/jest-dom';
 import '@testing-library/jest-dom/extend-expect';
-import {render} from '@testing-library/react';
+import {fireEvent, render} from '@testing-library/react';
 import PrivateLeague from '../pages/PrivateLeague/PrivateLeague'
 import { Provider } from "react-redux";
 import store from "../store/store";
 
-test('Contains the "Crear una liga" option',  () => {
-    const component = render(<Provider store={store}><PrivateLeague/></Provider>)
-    component.getByText('Crear Liga Privada')
-})
 
-test('Contains the "Unirme a una Liga Privada" option',  () => {
-    const component = render(<Provider store={store}><PrivateLeague/></Provider>)
-    component.getByText('Unirme a una Liga Privada')
-})
+describe('Testing <PrivateLeagues/> page', () => {
 
-test('Contains the "Mis Ligas Privadas" option',  () => {
-    const component = render(<Provider store={store}><PrivateLeague/></Provider>)
-    component.getByText('Mis Ligas Privadas')
-})
+    let component 
 
+    beforeEach(() => {
+        component = render(<Provider store={store}><PrivateLeague/></Provider>)
+    })
+
+    test('Contains the "Crear una liga" option',  () => {
+        expect(component.getByText('Crear Liga Privada'))
+    })
+    
+    test('Contains the "Unirme a una Liga Privada" option',  () => {
+        expect(component.getByText('Unirme a una Liga Privada'))
+    })
+    
+    test('Contains the "Mis Ligas Privadas" option',  () => {
+        expect(component.getByText('Mis Ligas Privadas'))
+    })
+    
+    test('Click on the "Create Private League" button and check if it contains a specific label', () => {
+        const button = component.getByText('Crear Liga Privada')
+        fireEvent.click(button);
+        expect(component.getByText('Nombre de la liga:'))
+    })
+
+    test('Click on the "Create Private League" button and check if it contains a specific label', () => {
+        const button = component.getByText('Crear Liga Privada')
+        fireEvent.click(button);
+        expect(component.getByText('Torneo asociado:'))
+    })
+
+    test('Click on the "Create Private League" button and check if it contains a specific label', () => {
+        const button = component.getByText('Crear Liga Privada')
+        fireEvent.click(button);
+        expect(component.getByText('Enviar'))
+    })
+
+    test('Click on the "Create Private League" button and check if it contains a specific label', () => {
+        const button = component.getByText('Crear Liga Privada')
+        fireEvent.click(button);
+        expect(component.getByText('Volver'))
+    })
+
+    test('Click on the "Create Private League" button and check if it contains a specific label', () => {
+        const button = component.getByText('Unirme a una Liga Privada')
+        fireEvent.click(button);
+        expect(component.getByText('Codigo de acceso a la liga privada:'))
+    })
+
+    test('Click on the "Create Private League" button and check if it contains a specific button', () => {
+        const button = component.getByText('Unirme a una Liga Privada')
+        fireEvent.click(button);
+        expect(component.getByText('Volver'))
+    })
+
+    test('Click on the "Create Private League" button and check if it contains a specific button', () => {
+        const button = component.getByText('Unirme a una Liga Privada')
+        fireEvent.click(button);
+        expect(component.getByText('Unirme'))
+    })
+    
+})

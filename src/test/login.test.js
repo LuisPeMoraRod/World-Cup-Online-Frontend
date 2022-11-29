@@ -1,60 +1,44 @@
 import React from "react";
 import '@testing-library/jest-dom';
 import '@testing-library/jest-dom/extend-expect';
-import {render} from '@testing-library/react';
+import {fireEvent, render} from '@testing-library/react';
 import { Provider } from "react-redux";
 import store from "../store/store";
 import LogIn from "../pages/LogIn/LogIn";
 import {BrowserRouter as Router} from 'react-router-dom';
 
-test('Contains the "¡Bienvenido a World Cup Online!" title',  () => {
-    const component = render(
-                            <Provider store={store}>
-                                <Router>
-                                    <LogIn/>
-                                </Router>
-                            </Provider>)
-    component.getByText('¡Bienvenido a World Cup Online!')
+
+describe('Testing <Login/> page', () => {
+    let component
+
+    beforeEach(() => {
+        component = render(
+            <Provider store={store}>
+                <Router>
+                    <LogIn/>
+                </Router>
+            </Provider>)
+    })
+
+    test('Contains the "¡Bienvenido a World Cup Online!" title',  () => {
+        expect(component.getByText('¡Bienvenido a World Cup Online!'))
+    })
+    
+    test('Contains the "Correo Electrónico:" label',  () => {
+        expect(component.getByText('Correo Electrónico:'))
+    })
+    
+    test('Contains the "Contraseña:" title',  () => {
+        expect(component.getByText('Contraseña:'))
+    })
+    
+    test('Contains the "Registrarme" option',  () => {
+        expect(component.getByText('Registrarme'))
+    })
+    
+    test('Contains the "Iniciar Sesión" option',  () => {
+        expect(component.getByText('Iniciar Sesión'))
+    })
 })
 
-test('Contains the "Correo Electrónico:" label',  () => {
-    const component = render(
-                            <Provider store={store}>
-                                <Router>
-                                    <LogIn/>
-                                </Router>
-                            </Provider>)
-    component.getByText('Correo Electrónico:')
-})
 
-test('Contains the "Contraseña:" title',  () => {
-    const component = render(
-                            <Provider store={store}>
-                                <Router>
-                                    <LogIn/>
-                                </Router>
-                            </Provider>)
-    component.getByText('Contraseña:')
-})
-
-
-
-test('Contains the "Registrarme" option',  () => {
-    const component = render(
-                            <Provider store={store}>
-                                <Router>
-                                    <LogIn/>
-                                </Router>
-                            </Provider>)
-    component.getByText('Registrarme')
-})
-
-test('Contains the "Iniciar Sesión" option',  () => {
-    const component = render(
-                            <Provider store={store}>
-                                <Router>
-                                    <LogIn/>
-                                </Router>
-                            </Provider>)
-    component.getByText('Iniciar Sesión')
-})
