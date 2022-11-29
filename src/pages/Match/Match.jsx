@@ -13,7 +13,7 @@ import { Typeahead } from "react-bootstrap-typeahead";
 import "react-bootstrap-typeahead/css/Typeahead.css";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import uniqueId from "lodash.uniqueid";
+//import uniqueId from "lodash.uniqueid";
 
 const MAX_GOALS = 99;
 
