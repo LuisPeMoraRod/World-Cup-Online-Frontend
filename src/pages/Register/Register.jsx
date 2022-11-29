@@ -9,7 +9,7 @@ import axios from "../../api/axios";
 
 const USER_REGEX = /^[A-z][A-z0-9-_]{1,23}$/;
 const NAME_REGEX = /^([A-z0-9]){1,23}$/;
-const PWD_REGEX = /^([A-z])(?=.*[0-9]).{6,8}$/;
+const PWD_REGEX = /^([A-z])(?=.*[0-9]).{5,8}$/;
 const EMAIL_REGEX = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
 
 const REGISTER_URL = '/Users';
@@ -281,7 +281,7 @@ const Register = () => {
                     <FontAwesomeIcon icon={faInfoCircle} />
                     La contraseña debe ser dentro de 6 y 8 caracteres.<br />
                     Debe contener un número.<br />
-                    Debe contener una como mínimo una letra mayúscula y una minúscula.<br />
+                    Debe contener una como mínimo una letra.<br />
                 </p>
 
                 {/* Birth Date */}
