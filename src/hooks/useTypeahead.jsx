@@ -30,6 +30,15 @@ const useTypeahead = (
   };
 
   /**
+   * Updates state on key stroke
+   * @param {event} event
+   */
+  const valueChangedHandler = (event) => {
+    updateObject({[field]: event});
+    setEnteredValue(event);
+  };
+
+  /**
    * Updates state that indicates if input is touched
    * @param {*} event
    */
@@ -46,6 +55,7 @@ const useTypeahead = (
     isValid,
     hasError,
     valueSelectedHandler,
+    valueChangedHandler,
     inputBlurHandler,
   };
 };

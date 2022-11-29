@@ -10,7 +10,7 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import MatchesTableRow from "../../components/MatchesTableRow/MatchesTableRow";
 import "./Matches.scss";
-
+import { useSelector } from "react-redux";
 
 const Matches = () => {
   const { tournamentId } = useParams();
@@ -20,6 +20,8 @@ const Matches = () => {
   const [matches, setMatches] = useState([]); //state to handle matches data
 
   const [rowsData, setRowsData] = useState([]);
+
+  const isAdmin = useSelector((state) => state.user.isAdmin);
 
    useEffect(() => {
      const options = {
@@ -36,7 +38,7 @@ const Matches = () => {
 
      //get tournament's matches
      fetch(
-       config.resources.tournaments.concat(`/${tournamentId}/Matches`),
+       config.resources.tournaments.concat(`/Matches/${tournamentId}`),
        options
     )
       .then((res) => res.json())
@@ -86,7 +88,7 @@ const Matches = () => {
   return (
     <div className="table-position">
       <h3 className="mb-5 fw-light">{tournament.name}</h3>
-      <Row>
+      {!!isAdmin && (<Row>
         <Col>
           <Link to={`/tournaments/${tournamentId}/new-match`}>
             <Button
@@ -100,7 +102,7 @@ const Matches = () => {
             </Button>
           </Link>
         </Col>
-      </Row>
+      </Row>)}
       <Table bordered hover responsive>
         <thead className="table-header">
           <tr className="rowClass">
@@ -114,7 +116,7 @@ const Matches = () => {
         </thead>
         <tbody className="table-height">
           {rowsData.map((match, i) => {
-            return <MatchesTableRow key={i} match={match} />;
+            return <MatchesTableRow key={i} match={match} tournamentId={tournamentId}/>;
           })}
         </tbody>
       </Table>

@@ -9,29 +9,33 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
+import Layout from "../../components/Layout/Layout";
 
 /**
  * Component: Table with registered tournaments and a button to add new tournament
  */
 const Tournaments = () => {
   const data = useSelector((state) => state.tournaments.tournaments);
+  const isAdmin = useSelector((state) => state.user.isAdmin);
   return (
     <div className="table-position">
-      <Row>
-        <Col>
-          <Link to="/new-tournament">
-            <Button
-              as={Col}
-              md="auto"
-              variant="outline-primary"
-              className="mb-3 mx-1"
-              title="Crear torneo"
-            >
-              <FontAwesomeIcon icon={faPlus} /> Crear torneo
-            </Button>
-          </Link>
-        </Col>
-      </Row>
+      {!!isAdmin && (
+        <Row>
+          <Col>
+            <Link to="/new-tournament">
+              <Button
+                as={Col}
+                md="auto"
+                variant="outline-primary"
+                className="mb-3 mx-1"
+                title="Crear torneo"
+              >
+                <FontAwesomeIcon icon={faPlus} /> Crear torneo
+              </Button>
+            </Link>
+          </Col>
+        </Row>
+      )}
       <Table bordered hover responsive>
         <thead className="table-header">
           <tr className="rowClass">

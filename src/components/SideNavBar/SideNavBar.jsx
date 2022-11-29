@@ -42,6 +42,16 @@ const SideNavBar = () => {
                 </CDBSidebarMenuItem>
               </NavLink>
             </div>
+            <div title="LigasPrivadas">
+              <NavLink exact="true" to="/privateLeagues">
+                <CDBSidebarMenuItem
+                  icon="fa-solid fa-users"
+                  className="navbar-item"
+                >
+                  Ligas Privadas
+                </CDBSidebarMenuItem>
+              </NavLink>
+            </div>
           </CDBSidebarMenu>
         </CDBSidebarContent>
       </CDBSidebar>

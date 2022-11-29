@@ -39,15 +39,6 @@ const NewMatch = () => {
     team2: "",
   });
 
-  const parseTeams = (teams, tournamentId) => {
-    const tournamentTeams = teams.filter((team) => {
-      return team.tournamentid == tournamentId;
-    });
-    const teamsOptions = tournamentTeams.map((team) => {
-      return { ...team, label: team.teamid };
-    });
-    return teamsOptions;
-  };
   /**
    * Updates match object. Updates fields and values passed as object
    * Example: updatedRequest({phaseid: "1", location:"Doha"})
@@ -67,18 +58,19 @@ const NewMatch = () => {
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
-        setMinDate(new Date(data.startDate));
-        setMaxDate(new Date(data.endDate));
+        setMinDate(new Date(data.startdate));
+        setMaxDate(new Date(data.enddate));
         setTournament(data);
       })
       .catch((error) => console.log(error));
 
-    // get tournament's matches
-    fetch(config.resources.teamsInTournament, options)
+    // get tournament's teams
+    fetch(config.resources.tournaments.concat(`/Teams/${tournamentId}`), options)
       .then((res) => res.json())
       .then((data) => {
-        const teamsOptions = parseTeams(data, tournamentId);
-        setTeams(teamsOptions);
+        // const teamsOptions = parseTeams(data, tournamentId);
+        console.log(data);
+        setTeams(data);
       })
       .catch((error) => console.log(error));
 
@@ -104,13 +96,13 @@ const NewMatch = () => {
 
     //new match object
     const newMatch = {
-      tournamentid: parseInt(match.tournamentId),
+      tournamentid: match.tournamentId,
       startdate: match.startDatetime,
       starttime: match.startDatetime,
       location: match.location,
       phaseid: match.phase.value,
-      team1: match.team1.teamid,
-      team2: match.team2.teamid,
+      team1: match.team1.id,
+      team2: match.team2.id,
     };
 
     console.log(newMatch);
@@ -339,13 +331,7 @@ const NewMatch = () => {
           <Button
             variant="outline-primary"
             onClick={sendNewMatch}
-            disabled={
-              phaseHasError ||
-              locationHasError ||
-              !match.startDatetime ||
-              team1HasError ||
-              team2HasError
-            }
+            disabled={!isValid}
           >
             Enviar
           </Button>
