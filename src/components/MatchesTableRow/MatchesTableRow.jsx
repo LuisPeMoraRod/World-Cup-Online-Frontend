@@ -26,6 +26,7 @@ const MatchesTableRow = ({ tournamentId, match }) => {
           minute: "2-digit",
           hour: "2-digit",
           hourCycle: "h23",
+          timeZone: "UTC"
         })}
       </td>
       <td>{match.location}</td>
