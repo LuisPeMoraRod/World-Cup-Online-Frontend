@@ -22,7 +22,11 @@ const MatchesTableRow = ({ tournamentId, match }) => {
         })}
       </td>
       <td>
-        {match.starttime}
+        {startDate.toLocaleTimeString("es-UK", {
+          minute: "2-digit",
+          hour: "2-digit",
+          hourCycle: "h23",
+        })}
       </td>
       <td>{match.location}</td>
       <td>{match.state}</td>
