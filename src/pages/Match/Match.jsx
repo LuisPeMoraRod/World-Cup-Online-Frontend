@@ -42,11 +42,23 @@ const Match = () => {
   /**
    * Receives an array of objects with an ID key
    * Returns an array of ids (ints)
-   * @param {Array} ids
+   * @param {Array}
    */
   const parsePlayersIds = (players) => {
+    console.log(players);
     return players.map((player) => {
       return player.id;
+    });
+  };
+
+  /**
+   * Receives an array of objects with an @id key
+   * Returns an array of objects with the @id property renamed to @playerId
+   * @param {Array}
+   */
+  const renamePlayersIdProperty = (players) => {
+    return players.map((player) => {
+      return { label: player.label, playerId: player.id };
     });
   };
 
@@ -77,7 +89,9 @@ const Match = () => {
     };
 
     const method = isAdmin ? "PUT" : "POST";
-    const url = isAdmin ? config.resources.matches.concat(`/${matchId}`) : config.resources.bet.concat(`/${username}/${matchId}`);
+    const url = isAdmin
+      ? config.resources.matches.concat(`/${matchId}`)
+      : config.resources.bet.concat(`/${username}/${matchId}`);
 
     const options = {
       method: method,
@@ -85,6 +99,7 @@ const Match = () => {
       body: JSON.stringify(newPrediction),
     };
 
+    console.log(newPrediction);
     return fetch(
       url,
       options
@@ -340,11 +355,12 @@ const Match = () => {
               multiple
               id="scorers1"
               onChange={(selections) => {
-                scorers1SelectedHandler(selections);
+                const lastSelection = selections.slice(-1).pop()
+                scorers1SelectedHandler([...prediction.scorersTeam1, lastSelection]);
                 // Keep the menu open when making multiple selections.
                 scorers1Ref.current.toggleMenu();
               }}
-              options={players1}
+              options={renamePlayersIdProperty(players1)}
               placeholder={`Escoja los anotadores de ${team1.name} en este partido...`}
               ref={scorers1Ref}
               selected={prediction.scorersTeam1}
