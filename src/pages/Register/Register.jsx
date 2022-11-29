@@ -13,7 +13,7 @@ const PWD_REGEX = /^([A-z])(?=.*[0-9]).{6,8}$/;
 const EMAIL_REGEX = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
 
 const REGISTER_URL = '/Users';
-const COUNTRIES_URL = '/Country';
+const COUNTRIES_URL = '/Users/Country';
 
 
 const Register = () => {

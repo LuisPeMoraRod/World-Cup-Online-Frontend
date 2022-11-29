@@ -2,9 +2,9 @@ const config = {
   resources: {
     catalogs: "http://localhost:",
     teams: "https://localhost:7140/api/Team",
-    teamsInTournament: "https://localhost:7140/api/Team_In_Tournament",
+    teamsInTournament: "https://localhost:7140/api/Team/TeamInTournament",
     tournaments: "https://localhost:7140/api/Tournament",
-    types: "https://localhost:7140/api/Type",
+    types: "https://localhost:7140/api/Tournament/Types",
     matches: "https://localhost:7140/api/Match",
     bet: "https://localhost:7140/api/Bet"
   },
