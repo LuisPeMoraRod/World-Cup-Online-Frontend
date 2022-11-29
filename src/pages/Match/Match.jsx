@@ -13,7 +13,7 @@ import { Typeahead } from "react-bootstrap-typeahead";
 import "react-bootstrap-typeahead/css/Typeahead.css";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import uniqueId from "lodash.uniqueid";
+import { toast } from "react-toastify";
 
 const MAX_GOALS = 99;
 
@@ -45,7 +45,6 @@ const Match = () => {
    * @param {Array}
    */
   const parsePlayersIds = (players) => {
-    console.log(players);
     return players.map((player) => {
       return player.id;
     });
@@ -100,11 +99,20 @@ const Match = () => {
     };
 
     console.log(newPrediction);
-    return fetch(
-      url,
-      options
-    )
-      .then((response) => response)
+    return fetch(url, options)
+      .then((response) => {
+        if (response.ok && isAdmin)
+          toast.success("Partido actualizado exitosamente", { theme: "light" });
+        else if (response.ok && !isAdmin)
+          toast.success("Prediccion enviada exitosamente", {
+            theme: "light",
+          });
+        else
+          toast.error(
+            "Error en el servidor. La tarea no se pudo completar"
+          );
+        return response;
+      })
       .catch((error) => {
         throw new Error(error);
       });
@@ -355,8 +363,12 @@ const Match = () => {
               multiple
               id="scorers1"
               onChange={(selections) => {
-                const lastSelection = selections.slice(-1).pop()
-                scorers1SelectedHandler([...prediction.scorersTeam1, lastSelection]);
+                const lastSelection = selections.slice(-1).pop();
+                scorers1SelectedHandler([
+                  ...prediction.scorersTeam1,
+                  lastSelection,
+                ]);
+                // scorers1SelectedHandler(selections);
                 // Keep the menu open when making multiple selections.
                 scorers1Ref.current.toggleMenu();
               }}
@@ -382,12 +394,16 @@ const Match = () => {
             <Typeahead
               multiple
               id="scorers2"
-              onChange={(selected) => {
-                scorers2SelectedHandler(selected);
+              onChange={(selections) => {
+                const lastSelection = selections.slice(-1).pop();
+                scorers2SelectedHandler([
+                  ...prediction.scorersTeam2,
+                  lastSelection,
+                ]);
                 // Keep the menu open when making multiple selections.
                 scorers2Ref.current.toggleMenu();
               }}
-              options={players2}
+              options={renamePlayersIdProperty(players2)}
               placeholder={`Escoja los anotadores de ${team2.name} en este partido...`}
               ref={scorers2Ref}
               selected={prediction.scorersTeam2}
@@ -405,12 +421,16 @@ const Match = () => {
             <Typeahead
               multiple
               id="assists1"
-              onChange={(selected) => {
-                assists1SelectedHandler(selected);
+              onChange={(selections) => {
+                const lastSelection = selections.slice(-1).pop();
+                assists1SelectedHandler([
+                  ...prediction.assistsTeam1,
+                  lastSelection,
+                ]);
                 // Keep the menu open when making multiple selections.
                 assists1Ref.current.toggleMenu();
               }}
-              options={players1}
+              options={renamePlayersIdProperty(players1)}
               placeholder={`Escoja los autores de las asistencias a los goles de ${team1.name}...`}
               ref={assists1Ref}
               selected={prediction.assistsTeam1}
@@ -433,12 +453,16 @@ const Match = () => {
             <Typeahead
               multiple
               id="assists2"
-              onChange={(selected) => {
-                assists2SelectedHandler(selected);
+              onChange={(selections) => {
+                const lastSelection = selections.slice(-1).pop();
+                assists2SelectedHandler([
+                  ...prediction.assistsTeam2,
+                  lastSelection,
+                ]);
                 // Keep the menu open when making multiple selections.
                 assists2Ref.current.toggleMenu();
               }}
-              options={players2}
+              options={renamePlayersIdProperty(players2)}
               placeholder={`Escoja los autores de las asistencias a los goles de ${team2.name}...`}
               ref={assists2Ref}
               selected={prediction.assistsTeam2}

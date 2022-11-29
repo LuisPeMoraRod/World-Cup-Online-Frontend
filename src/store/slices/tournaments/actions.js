@@ -3,6 +3,7 @@ import {
   postTournament,
   getTournaments,
 } from "../../../services/api.tournaments";
+import { toast } from "react-toastify";
 
 export const parseTournaments = (tournaments) => {
   const parsedTournaments = tournaments.map((tournament) => {
@@ -38,12 +39,17 @@ export const sendNewTournament = (tournament) => {
 
       response = await getTournaments(); //get Tournaments from API
       if (!response.ok) throw new Error("Couldn't fetch tournaments data");
+
+      toast.success("Torneo creado con exitosamente", { theme: "light" });
       let tournaments = await response.json();
       tournaments = parseTournaments(tournaments);
 
       //update tournaments state
       dispatch(tournamentsActions.setTournaments(tournaments));
     } catch (error) {
+      toast.error(
+        "Error en el servidor. La tarea no se pudo completar"
+      );
       console.log(error);
     }
   };

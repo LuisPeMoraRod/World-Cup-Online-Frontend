@@ -18,6 +18,7 @@ import { useParams } from "react-router-dom";
 import "./NewMatch.scss";
 import config from "../../config";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const NewMatch = () => {
   // const teams = useSelector((state) => state.catalogs.teams);
@@ -65,7 +66,10 @@ const NewMatch = () => {
       .catch((error) => console.log(error));
 
     // get tournament's teams
-    fetch(config.resources.tournaments.concat(`/Teams/${tournamentId}`), options)
+    fetch(
+      config.resources.tournaments.concat(`/Teams/${tournamentId}`),
+      options
+    )
       .then((res) => res.json())
       .then((data) => {
         // const teamsOptions = parseTeams(data, tournamentId);
@@ -105,8 +109,6 @@ const NewMatch = () => {
       team2: match.team2.id,
     };
 
-    console.log(newMatch);
-
     const options = {
       method: "POST",
       headers: headers,
@@ -114,7 +116,15 @@ const NewMatch = () => {
     };
 
     return fetch(config.resources.matches, options)
-      .then((response) => response)
+      .then((response) => {
+        if (response.ok )
+          toast.success("Partido creado exitosamente", { theme: "light" });
+        else
+          toast.error(
+            "Error en el servidor. La tarea no se pudo completar"
+          );
+        return response;
+      })
       .catch((error) => {
         throw new Error(error);
       });

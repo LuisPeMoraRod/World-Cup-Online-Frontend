@@ -23,10 +23,10 @@ const Matches = () => {
 
   const isAdmin = useSelector((state) => state.user.isAdmin);
 
-   useEffect(() => {
-     const options = {
-       method: "GET",
-     };
+  useEffect(() => {
+    const options = {
+      method: "GET",
+    };
 
     //get tournament's data
     fetch(config.resources.tournaments.concat(`/${tournamentId}`), options)
@@ -36,10 +36,10 @@ const Matches = () => {
       })
       .catch((error) => console.log(error));
 
-     //get tournament's matches
-     fetch(
-       config.resources.tournaments.concat(`/Matches/${tournamentId}`),
-       options
+    //get tournament's matches
+    fetch(
+      config.resources.tournaments.concat(`/Matches/${tournamentId}`),
+      options
     )
       .then((res) => res.json())
       .then((data) => {
@@ -47,18 +47,18 @@ const Matches = () => {
       })
       .catch((error) => console.log(error));
 
-     //get tournament's phases
-     fetch(
-       config.resources.tournaments.concat(`/Phases/${tournamentId}`),
-       options
-     )
-       .then((res) => res.json())
-       .then((data) => {
-         const updatedTournament = { ...tournament, phases: data };
-         setTournament(updatedTournament);
-       })
-       .catch((error) => console.log(error));
-   }, []);
+    //get tournament's phases
+    fetch(
+      config.resources.tournaments.concat(`/Phases/${tournamentId}`),
+      options
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        const updatedTournament = { ...tournament, phases: data };
+        setTournament(updatedTournament);
+      })
+      .catch((error) => console.log(error));
+  }, []);
 
   /**
    * Parse data from API to be useful
@@ -81,28 +81,32 @@ const Matches = () => {
   };
 
   useEffect(() => {
-    const parsedData = parseMatches(matches); //parse matches data to be compatible with table
-    setRowsData(parsedData);
+    if (!!matches) {
+      const parsedData = parseMatches(matches); //parse matches data to be compatible with table
+      setRowsData(parsedData);
+    }
   }, [matches]);
 
   return (
     <div className="table-position">
       <h3 className="mb-5 fw-light">{tournament.name}</h3>
-      {!!isAdmin && (<Row>
-        <Col>
-          <Link to={`/tournaments/${tournamentId}/new-match`}>
-            <Button
-              as={Col}
-              md="auto"
-              variant="outline-primary"
-              className="mb-3 mx-1"
-              title="Crear partido"
-            >
-              <FontAwesomeIcon icon={faPlus} /> Crear Partido
-            </Button>
-          </Link>
-        </Col>
-      </Row>)}
+      {!!isAdmin && (
+        <Row>
+          <Col>
+            <Link to={`/tournaments/${tournamentId}/new-match`}>
+              <Button
+                as={Col}
+                md="auto"
+                variant="outline-primary"
+                className="mb-3 mx-1"
+                title="Crear partido"
+              >
+                <FontAwesomeIcon icon={faPlus} /> Crear Partido
+              </Button>
+            </Link>
+          </Col>
+        </Row>
+      )}
       <Table bordered hover responsive>
         <thead className="table-header">
           <tr className="rowClass">
@@ -116,7 +120,13 @@ const Matches = () => {
         </thead>
         <tbody className="table-height">
           {rowsData.map((match, i) => {
-            return <MatchesTableRow key={i} match={match} tournamentId={tournamentId}/>;
+            return (
+              <MatchesTableRow
+                key={i}
+                match={match}
+                tournamentId={tournamentId}
+              />
+            );
           })}
         </tbody>
       </Table>

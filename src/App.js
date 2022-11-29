@@ -19,6 +19,9 @@ import Register from "./pages/Register/Register";
 import TermsAndConds from "./pages/Term&Conds/TermsAndConds";
 import Rankings from "./pages/Rankings/Rankings";
 import PrivateLeague from "./pages/PrivateLeague/PrivateLeague";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+const CLOSE_TIME = 3000; // autoclose for toast notification
 
 const Pages = () => {
   return (
@@ -93,75 +96,96 @@ function App() {
   }, []);
 
   return (
-    <Routes>
-      <Route path="/" element={<LayoutNew />}>
-        {/* public routes */}
-        <Route path="logIn" element={<LogIn />} />
-        <Route path="register" element={<Register />} />
-        <Route path="terms&conditions" element={<TermsAndConds />} />
-        
-        {/* protected admin routes */}
-        <Route element={<RequireAuth />}>
-          <Route
-            index
-            element={
-              <Layout>
-                <Tournaments />
-              </Layout>
-            }
-          />
-          <Route
-            path="tournaments"
-            element={
-              <Layout>
-                <Tournaments />
-              </Layout>
-            }
-          />
-          <Route
-            path="new-tournament"
-            element={
-              <Layout>
-                <IndexTournament tournament={null} />
-              </Layout>
-            }
-          />
-          <Route
-            path="tournaments/:tournamentId/matches"
-            element={
-              <Layout>
-                <Matches />
-              </Layout>
-            }
-          ></Route>
-          <Route
-            path="tournaments/:tournamentId/new-match"
-            element={
-              <Layout>
-                <NewMatch />
-              </Layout>
-            }
-          ></Route>
-          <Route
-            path="tournaments/:tournamentId/:matchId"
-            element={
-              <Layout>
-                <Match />
-              </Layout>
-            }
-          ></Route>
-          <Route
-            path="rankings"
-            element={
-              <Layout>
-                <Rankings />
-              </Layout>
-            }
-          ></Route>
-          <Route path="privateLeagues" element={<Layout><PrivateLeague/></Layout>}/>
+    <>
+      <Routes>
+        <Route path="/" element={<LayoutNew />}>
+          {/* public routes */}
+          <Route path="logIn" element={<LogIn />} />
+          <Route path="register" element={<Register />} />
+          <Route path="terms&conditions" element={<TermsAndConds />} />
+
+          {/* protected admin routes */}
+          <Route element={<RequireAuth />}>
+            <Route
+              index
+              element={
+                <Layout>
+                  <Tournaments />
+                </Layout>
+              }
+            />
+            <Route
+              path="tournaments"
+              element={
+                <Layout>
+                  <Tournaments />
+                </Layout>
+              }
+            />
+            <Route
+              path="new-tournament"
+              element={
+                <Layout>
+                  <IndexTournament tournament={null} />
+                </Layout>
+              }
+            />
+            <Route
+              path="tournaments/:tournamentId/matches"
+              element={
+                <Layout>
+                  <Matches />
+                </Layout>
+              }
+            ></Route>
+            <Route
+              path="tournaments/:tournamentId/new-match"
+              element={
+                <Layout>
+                  <NewMatch />
+                </Layout>
+              }
+            ></Route>
+            <Route
+              path="tournaments/:tournamentId/:matchId"
+              element={
+                <Layout>
+                  <Match />
+                </Layout>
+              }
+            ></Route>
+            <Route
+              path="rankings"
+              element={
+                <Layout>
+                  <Rankings />
+                </Layout>
+              }
+            ></Route>
+            <Route
+              path="privateLeagues"
+              element={
+                <Layout>
+                  <PrivateLeague />
+                </Layout>
+              }
+            />
+          </Route>
         </Route>
-      </Route>
-    </Routes>
+      </Routes>
+      <ToastContainer
+        position="bottom-right"
+        theme="colored"
+        autoClose={CLOSE_TIME}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss={false}
+        draggable
+        pauseOnHover
+      />
+    </>
   );
 }
 

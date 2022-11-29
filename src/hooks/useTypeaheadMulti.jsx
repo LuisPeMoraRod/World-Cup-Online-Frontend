@@ -23,11 +23,15 @@ const useTypeaheadMulti = (
    * @param {event} event
    */
   const valueSelectedHandler = (event) => {
-    const items = event.map((item) => 
-      item.playerId
-        ? { id: item.playerId, label: item.label } //condition for multiple players selections
-        : { id: item.id, label: item.label }
-    );
+    const lastSelection = event.slice(-1).pop();
+    console.log(lastSelection);
+    const items = !!lastSelection
+      ? event.map((item) =>
+          item.playerId
+            ? { id: item.playerId, label: item.label } //condition for multiple players selections
+            : { id: item.id, label: item.label }
+        )
+      : event.slice(0, -1);
     updateObject({ [field]: items });
     setEnteredValues(items);
   };
