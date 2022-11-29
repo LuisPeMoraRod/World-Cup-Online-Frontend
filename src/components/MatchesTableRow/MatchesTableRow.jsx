@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 
 const MatchesTableRow = ({ tournamentId, match }) => {
   const startDate = new Date(match.startdate);
+  const score = match.state === "Pendiente" ? "---" : `${match.goalsteam1}-${match.goalsteam2}`
   return (
     <tr className="rowClass">
       <td>
@@ -20,10 +21,12 @@ const MatchesTableRow = ({ tournamentId, match }) => {
           year: "numeric",
         })}
       </td>
-      <td>{match.starttime}</td>
+      <td>
+        {match.starttime}
+      </td>
       <td>{match.location}</td>
       <td>{match.state}</td>
-      <td>{match.score}</td>
+      <td>{score}</td>
     </tr>
   );
 };

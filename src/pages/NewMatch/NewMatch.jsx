@@ -39,16 +39,6 @@ const NewMatch = () => {
     team2: "",
   });
 
-  const parseTeams = (teams, tournamentId) => {
-    console.log(teams);
-    const tournamentTeams = teams.filter((team) => {
-      return team.tournamentid == tournamentId;
-    });
-    const teamsOptions = tournamentTeams.map((team) => {
-      return { ...team, label: team.teamid };
-    });
-    return teamsOptions;
-  };
   /**
    * Updates match object. Updates fields and values passed as object
    * Example: updatedRequest({phaseid: "1", location:"Doha"})
@@ -75,11 +65,12 @@ const NewMatch = () => {
       .catch((error) => console.log(error));
 
     // get tournament's teams
-    fetch(config.resources.teamsInTournament, options)
+    fetch(config.resources.tournaments.concat(`/Teams/${tournamentId}`), options)
       .then((res) => res.json())
       .then((data) => {
-        const teamsOptions = parseTeams(data, tournamentId);
-        setTeams(teamsOptions);
+        // const teamsOptions = parseTeams(data, tournamentId);
+        console.log(data);
+        setTeams(data);
       })
       .catch((error) => console.log(error));
 
@@ -105,13 +96,13 @@ const NewMatch = () => {
 
     //new match object
     const newMatch = {
-      tournamentid: parseInt(match.tournamentId),
+      tournamentid: match.tournamentId,
       startdate: match.startDatetime,
       starttime: match.startDatetime,
       location: match.location,
       phaseid: match.phase.value,
-      team1: match.team1.teamid,
-      team2: match.team2.teamid,
+      team1: match.team1.id,
+      team2: match.team2.id,
     };
 
     const options = {

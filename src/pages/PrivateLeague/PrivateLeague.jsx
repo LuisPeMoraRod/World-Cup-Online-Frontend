@@ -9,7 +9,7 @@ import "./PrivateLeague.scss"
 //constants used for validations and http requests
 const NAME_REGEX =  /^[A-z0-9-_]{5,30}$/;
 const ACCESSCODE_REGEX =  /^[A-z0-9-_]{1,30}$/;
-const TOURNAMENTS_URL = '/Tournaments';
+const TOURNAMENTS_URL = '/Tournament';
 const LEAGUE_URL = '/League';
 const JOIN_LEAGUE_URL = '/League';
 
