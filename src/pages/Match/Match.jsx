@@ -11,20 +11,21 @@ import "./Match.scss";
 import useTypeahead from "../../hooks/useTypeahead";
 import { Typeahead } from "react-bootstrap-typeahead";
 import "react-bootstrap-typeahead/css/Typeahead.css";
-import { PLAYERS } from "../../constants";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import uniqueId from "lodash.uniqueid";
 
 const MAX_GOALS = 99;
 
 const Match = () => {
   const username = useSelector((state) => state.user.username);
+  const isAdmin = useSelector((state) => state.user.isAdmin);
   const { tournamentId, matchId } = useParams();
 
   const [team1, setTeam1] = useState({});
-  const [players1, setPlayers1] = useState(PLAYERS);
+  const [players1, setPlayers1] = useState([]);
   const [team2, setTeam2] = useState({});
-  const [players2, setPlayers2] = useState(PLAYERS);
+  const [players2, setPlayers2] = useState([]);
   const [oficialScore, setOficialScore] = useState("Pendiente");
   const [allPlayers, setAllPlayers] = useState([]);
 
@@ -75,16 +76,17 @@ const Match = () => {
       mvpid: prediction.mvp.id,
     };
 
-    console.log(newPrediction);
+    const method = isAdmin ? "PUT" : "POST";
+    const url = isAdmin ? config.resources.matches.concat(`/${matchId}`) : config.resources.bet.concat(`/${username}/${matchId}`);
 
     const options = {
-      method: "POST",
+      method: method,
       headers: headers,
       body: JSON.stringify(newPrediction),
     };
 
     return fetch(
-      config.resources.bet.concat(`/${username}/${matchId}`),
+      url,
       options
     )
       .then((response) => response)
@@ -137,12 +139,9 @@ const Match = () => {
     return scorers.length <= MAX_GOALS;
   };
 
-  const checkAssists1 = (assists) => {
-    return assists.length <= prediction.scorersTeam1.length;
-  };
-
-  const checkAssists2 = (assists) => {
-    return assists.length <= prediction.scorersTeam2.length;
+  const checkAssists = (assists, goalsScored) => {
+    const goals = !goalsScored ? 0 : goalsScored; // if undefined, set to 0
+    return assists.length <= goals;
   };
 
   /**
@@ -188,9 +187,10 @@ const Match = () => {
     inputBlurHandler: assists1BlurHandler,
   } = useTypeaheadMulti(
     updatePrediction,
-    checkAssists1,
+    checkAssists,
     "assistsTeam1",
-    prediction.assistsTeam1
+    prediction.assistsTeam1,
+    prediction.goalsTeam1
   );
 
   /**
@@ -204,9 +204,10 @@ const Match = () => {
     inputBlurHandler: assists2BlurHandler,
   } = useTypeaheadMulti(
     updatePrediction,
-    checkAssists2,
+    checkAssists,
     "assistsTeam2",
-    prediction.assistsTeam2
+    prediction.assistsTeam2,
+    prediction.goalsTeam2
   );
 
   /**
@@ -230,6 +231,7 @@ const Match = () => {
     isValid: mvpIsValid,
     hasError: mvpHasError,
     valueSelectedHandler: mvpSelectedHandler,
+    valueChangedHandler: mvpChangedHandler,
     inputBlurHandler: mvpBlurHandler,
   } = useTypeahead(
     updatePrediction,
@@ -296,15 +298,15 @@ const Match = () => {
   //set all players array for MVP selection
   useEffect(() => {
     setAllPlayers([...players1, ...players2]);
-  }, []);
+  }, [players1, players2]);
 
   // tells if every input is valid
   const isValid =
-    !scorers1HasError &&
-    !scorers2HasError &&
-    !assists1HasError &&
-    !assists2HasError &&
-    !mvpHasError;
+    scorers1IsValid &&
+    scorers2IsValid &&
+    assists1IsValid &&
+    assists2IsValid &&
+    mvpIsValid;
 
   //redirection url
   const btnUrl = !!isValid
@@ -321,12 +323,14 @@ const Match = () => {
       </h3>
       <div className="scores-container mb-3">
         <h4 className="mb-3 fw-light text-label">
-          <strong>Mi predicción:</strong> {team1.name} {prediction.goalsTeam1} -{" "}
-          {prediction.goalsTeam2} {team2.name}
+          {!isAdmin && <strong>Mi predicción:</strong>} {team1.name}{" "}
+          {prediction.goalsTeam1} - {prediction.goalsTeam2} {team2.name}
         </h4>
-        <h4 className="mb-3 fw-light text-label">
-          <strong>Resultado oficial:</strong> {oficialScore}
-        </h4>
+        {!isAdmin && (
+          <h4 className="mb-3 fw-light text-label">
+            <strong>Resultado oficial:</strong> {oficialScore}
+          </h4>
+        )}
       </div>
       <Row>
         <Col>
@@ -335,13 +339,13 @@ const Match = () => {
             <Typeahead
               multiple
               id="scorers1"
-              onChange={(selected) => {
-                scorers1SelectedHandler(selected);
+              onChange={(selections) => {
+                scorers1SelectedHandler(selections);
                 // Keep the menu open when making multiple selections.
                 scorers1Ref.current.toggleMenu();
               }}
               options={players1}
-              placeholder="Escoja los jugadores que predice serán los anotadores en este partido..."
+              placeholder={`Escoja los anotadores de ${team1.name} en este partido...`}
               ref={scorers1Ref}
               selected={prediction.scorersTeam1}
               onBlur={scorers1BlurHandler}
@@ -368,7 +372,7 @@ const Match = () => {
                 scorers2Ref.current.toggleMenu();
               }}
               options={players2}
-              placeholder="Escoja los jugadores que predice serán los anotadores en este partido..."
+              placeholder={`Escoja los anotadores de ${team2.name} en este partido...`}
               ref={scorers2Ref}
               selected={prediction.scorersTeam2}
               onBlur={scorers2BlurHandler}
@@ -391,7 +395,7 @@ const Match = () => {
                 assists1Ref.current.toggleMenu();
               }}
               options={players1}
-              placeholder={`Escoja los jugadores que predice harán asistencias a los goles de ${team1.name}...`}
+              placeholder={`Escoja los autores de las asistencias a los goles de ${team1.name}...`}
               ref={assists1Ref}
               selected={prediction.assistsTeam1}
               onBlur={assists1BlurHandler}
@@ -419,7 +423,7 @@ const Match = () => {
                 assists2Ref.current.toggleMenu();
               }}
               options={players2}
-              placeholder={`Escoja los jugadores que predice harán asistencias a los goles de ${team2.name}...`}
+              placeholder={`Escoja los autores de las asistencias a los goles de ${team2.name}...`}
               ref={assists2Ref}
               selected={prediction.assistsTeam2}
               onBlur={assists2BlurHandler}
@@ -448,6 +452,7 @@ const Match = () => {
               placeholder="Ingrese un jugador..."
               defaultInputValue={prediction.mvp}
               onChange={mvpSelectedHandler}
+              onInputChange={mvpChangedHandler}
               onBlur={mvpBlurHandler}
             />
             {mvpHasError && <p className="error-text">Jugador no válido</p>}
@@ -459,13 +464,7 @@ const Match = () => {
           variant="outline-primary"
           onClick={sendPrediction}
           className="mt-3 mx-1"
-          disabled={
-            scorers1HasError ||
-            scorers2HasError ||
-            assists1HasError ||
-            assists2HasError ||
-            mvpHasError
-          }
+          disabled={!isValid}
         >
           Enviar
         </Button>
